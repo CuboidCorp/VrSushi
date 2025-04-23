@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Anchor
+  - Assemblable
+  - Decoupable
+  - Combinable
+  - Knife
   layers:
   - Default
   - TransparentFX
@@ -12,8 +16,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - NearGrab
+  - FarGrab
   - 
   - 
   - 
