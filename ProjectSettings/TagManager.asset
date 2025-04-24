@@ -5,10 +5,14 @@ TagManager:
   serializedVersion: 3
   tags:
   - Anchor
-  - Assemblable
   - Decoupable
   - Combinable
   - Knife
+  - Assemblable
+  - Bouillable
+  - Poelable
+  - Base
+  - Vapeurable
   layers:
   - Default
   - TransparentFX

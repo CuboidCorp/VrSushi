@@ -263,8 +263,8 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
   m_Spring:
-    spring: 0.2
-    damper: 0.15
+    spring: 1
+    damper: 3
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -438,10 +438,10 @@ HingeJoint:
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
-    spring: 0
-    damper: 0
+    spring: 1
+    damper: 3
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -813,7 +813,7 @@ GameObject:
   - component: {fileID: 7457664258722542436}
   - component: {fileID: 8018832281372748300}
   - component: {fileID: 8959755614595202367}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RightHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
