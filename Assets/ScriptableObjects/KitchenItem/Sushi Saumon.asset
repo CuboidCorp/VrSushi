@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
+  m_Name: Sushi Saumon
+  m_EditorClassIdentifier: 
+  itemName: Sushi saumon
+  icon: {fileID: 0}
+  prefab: {fileID: 0}
+  recipeSteps:
+  - stepDescription: "Combiner riz et poisson coup\xE9"
+    method: 4
+    inputItems:
+    - {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
+    - {fileID: 11400000, guid: af544d2b8cb24d943948f93fbc4ee1b3, type: 2}
+    resultItem: {fileID: 11400000}
+    spawnLocation: 0

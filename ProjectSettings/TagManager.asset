@@ -13,6 +13,7 @@ TagManager:
   - Poelable
   - Base
   - Vapeurable
+  - CookingUtensil
   layers:
   - Default
   - TransparentFX

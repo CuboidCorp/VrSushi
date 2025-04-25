@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a7042c7751e8fd44a8cd4d6345c475d, type: 3}
+  m_Name: Freezer
+  m_EditorClassIdentifier: 
+  ingredients:
+  - {fileID: 11400000, guid: d9de68da0738df142bc6ffa2a403e8a0, type: 2}
+  - {fileID: 11400000, guid: db291635d3079e5439f77e15c2c11e04, type: 2}
+  - {fileID: 11400000, guid: 1c066d66881882b438ae478f21bb520a, type: 2}
+  - {fileID: 11400000, guid: 13859a35fd97b054583bf945e9e80c6d, type: 2}

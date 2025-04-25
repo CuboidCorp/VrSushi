@@ -165,6 +165,12 @@
         "com.unity.modules.terrain": "1.0.0"
       }
     },
+    "com.unity.robotics.vhacd": {
+      "version": "file:C:/Users/natha_nkuvofk/Documents/UnityPackages/VHACD/com.unity.robotics.vhacd",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.searcher": {
       "version": "4.9.2",
       "depth": 2,
