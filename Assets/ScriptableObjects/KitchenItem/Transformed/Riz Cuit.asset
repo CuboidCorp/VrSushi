@@ -14,11 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Boiled rice
   icon: {fileID: 21300000, guid: 50418118a5b88ee4da2b5aeeaef3d1d5, type: 3}
-  prefab: {fileID: 3168664163528235768, guid: e5584cd2f6f3c474d9058ff6b2ed847c, type: 3}
-  recipeSteps:
-  - stepDescription: Boil rice
-    method: 2
-    inputItems:
-    - {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
-    resultItem: {fileID: 11400000}
-    spawnLocation: 0
+  prefab: {fileID: 8973592019675602019, guid: 5848cf43078d4234aa4b21146bab7be3, type: 3}

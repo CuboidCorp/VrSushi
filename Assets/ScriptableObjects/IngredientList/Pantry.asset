@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a7042c7751e8fd44a8cd4d6345c475d, type: 3}
-  m_Name: Fridge
+  m_Name: Pantry
   m_EditorClassIdentifier: 
-  ingredients: []
+  ingredients:
+  - {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}

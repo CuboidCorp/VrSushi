@@ -26,6 +26,7 @@ public class IngredientSpawner : MonoBehaviour
 
     private void Init()
     {
+        spawnerNameText.text = spawnerName;
         spawnBtn.onClick.AddListener(SpawnItem);
         foreach (KitchenItem item in ingredientList.ingredients)
         {

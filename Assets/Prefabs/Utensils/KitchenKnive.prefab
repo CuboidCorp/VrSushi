@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 858290266030005845}
   - component: {fileID: 1014669987857631594}
   - component: {fileID: 5334439870192746413}
+  - component: {fileID: 47408096967647791}
   m_Layer: 6
   m_Name: KitchenKnive
   m_TagString: Knife
@@ -241,10 +242,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 47408096967647791}
+        m_TargetAssemblyTypeName: PositionReset, Assembly-CSharp
+        m_MethodName: CancelReset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 47408096967647791}
+        m_TargetAssemblyTypeName: PositionReset, Assembly-CSharp
+        m_MethodName: DelayedReset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -352,3 +377,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cuttingPower: 25
+--- !u!114 &47408096967647791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403799006686178454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d07014062c4fe44b79080501c2340d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resetPosition: {x: -0.0365, y: 1.5, z: -6.410675}
+  resetDelay: 5
