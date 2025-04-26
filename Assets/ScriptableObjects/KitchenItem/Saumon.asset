@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Saumon
   m_EditorClassIdentifier: 
   itemName: Saumon
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  icon: {fileID: 21300000, guid: dbb383d0c8a464848aa4001a8aad1bfd, type: 3}
+  prefab: {fileID: 5281847400650590563, guid: 64d34dfdcb34dbe47a7b982a57d4fe3c, type: 3}
   recipeSteps:
   - stepDescription: Spawn saumon
     method: 0

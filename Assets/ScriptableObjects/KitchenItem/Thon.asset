@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Thon
   m_EditorClassIdentifier: 
-  itemName: 
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  itemName: Tuna
+  icon: {fileID: 21300000, guid: 5633505f816526e499eb1a2f58623fdf, type: 3}
+  prefab: {fileID: 55152631108329687, guid: 944bf842bc19f4444bcce2d62f266452, type: 3}
   recipeSteps:
   - stepDescription: Spawn thon
     method: 0

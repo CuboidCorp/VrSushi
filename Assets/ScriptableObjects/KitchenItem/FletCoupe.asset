@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: FletCoupe
   m_EditorClassIdentifier: 
-  itemName: Flet coupe
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  itemName: Cut flounder
+  icon: {fileID: 21300000, guid: 9c67572bfc3eca9459128268d8e63923, type: 3}
+  prefab: {fileID: 5683609227352452742, guid: 18413e813bbf60b4bb0b10874f5d35ac, type: 3}
   recipeSteps:
   - stepDescription: Cut flet
     method: 1

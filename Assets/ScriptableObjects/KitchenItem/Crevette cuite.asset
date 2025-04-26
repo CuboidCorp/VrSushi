@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Crevette cuite
   m_EditorClassIdentifier: 
   itemName: Boiled shrimp
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  icon: {fileID: 21300000, guid: 6c47f7d33cc2b6f4c98708a359fad283, type: 3}
+  prefab: {fileID: 8309801427037056936, guid: 939798fc04f96f541b394d98ac4020f0, type: 3}
   recipeSteps:
   - stepDescription: Boil shrimp
     method: 2

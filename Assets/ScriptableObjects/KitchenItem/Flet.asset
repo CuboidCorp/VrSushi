@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Flet
   m_EditorClassIdentifier: 
-  itemName: Flet
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  itemName: Flounder
+  icon: {fileID: 21300000, guid: 89ff0411be3f6d248a889a44eba93729, type: 3}
+  prefab: {fileID: 2458108208700421542, guid: efe4148f55492274e8726d904c6a8196, type: 3}
   recipeSteps:
   - stepDescription: Spawn flet
     method: 0

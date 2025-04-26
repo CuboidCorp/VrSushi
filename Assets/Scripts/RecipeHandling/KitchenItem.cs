@@ -7,7 +7,4 @@ public class KitchenItem : ScriptableObject
     public string itemName;
     public Sprite icon;
     public GameObject prefab;
-
-    // List of ways this item can be created
-    public List<RecipeStep> recipeSteps;
 }
