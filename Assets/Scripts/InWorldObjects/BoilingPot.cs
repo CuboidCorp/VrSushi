@@ -20,6 +20,7 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
     private MeshRenderer meshRenderer;
     private GameObject currentBoilingItem = null;
     private Boilable boilableCurrentItem = null;
+    private GameObject spawnedBoiledItem = null;
     private bool isFilled = false;
     private bool isBoiling = false;
     private bool hasBoiled = false;
@@ -37,10 +38,10 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Bouillable") || isBoiling)
+        // Don't allow boiling if no water or already boiling something
+        if (!other.CompareTag("Bouillable") || isBoiling || !isFilled)
             return;
 
-        // Vérifie si l'objet est grab
         XRGrabInteractable grabInteractable = other.GetComponent<XRGrabInteractable>();
         if (grabInteractable != null && grabInteractable.isSelected)
             return;
@@ -51,17 +52,18 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
             return;
         }
 
+        Debug.Log($"Boiling pot detected bouillable: {other.name}");
+
         currentBoilingItem = other.gameObject;
         boilableCurrentItem = boilable;
 
         currentBoilingTime = 0;
-        currentBoilingMaxTime = boilableCurrentItem.boilMaxTime;
-        currentOverBoilingMaxTime = boilableCurrentItem.overBoilMaxtime;
+        currentBoilingMaxTime = boilable.boilMaxTime;
+        currentOverBoilingMaxTime = boilable.overBoilMaxtime;
 
         currentBoilingItem.transform.SetParent(boilingAttachPoint);
         currentBoilingItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
-        SetWaterMaterial(waterMaterial);
         isBoiling = true;
         hasBoiled = false;
         hasOverboiled = false;
@@ -73,15 +75,84 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Bouillable") || !isBoiling)
+        if (!other.CompareTag("Bouillable"))
             return;
 
-        if (currentBoilingItem != null)
-            currentBoilingItem.transform.SetParent(null);
+        if (currentBoilingItem != null && (other.gameObject == currentBoilingItem || other.gameObject == spawnedBoiledItem))
+        {
+            Debug.Log($"Boiling pot exit bouillable: {other.name}");
 
-        currentBoilingItem = null;
-        boilableCurrentItem = null;
+            if (spawnedBoiledItem != null)
+            {
+                // Detach from pot
+                spawnedBoiledItem.transform.SetParent(null);
+
+                // The spawned item is now the main item, so we can destroy the original
+                Destroy(currentBoilingItem);
+                spawnedBoiledItem = null;
+            }
+
+            currentBoilingItem = null;
+            boilableCurrentItem = null;
+
+            // Reset pot state
+            if (isFilled)
+            {
+                SetWaterMaterial(waterMaterial); // Just reset to normal water
+            }
+            else
+            {
+                SetWaterMaterial(emptyWaterMaterial);
+            }
+
+            isBoiling = false;
+            hasBoiled = false;
+            hasOverboiled = false;
+            canvaProgressbar.SetActive(false);
+        }
+    }
+
+    public void Empty()
+    {
+        if (!isFilled && currentBoilingItem == null)
+            return;
+
+        Debug.Log("Emptying boiling pot");
+
+        SetWaterMaterial(emptyWaterMaterial);
+
+        if (currentBoilingItem != null)
+        {
+            if (spawnedBoiledItem != null)
+            {
+                spawnedBoiledItem.transform.SetParent(null);
+
+                if (spawnedBoiledItem.TryGetComponent(out Rigidbody itemRb))
+                {
+                    itemRb.AddForce((transform.up * -1 + transform.forward) * 0.5f, ForceMode.Impulse);
+                }
+
+                Destroy(currentBoilingItem);
+                spawnedBoiledItem = null;
+            }
+            else
+            {
+                currentBoilingItem.transform.SetParent(null);
+
+                if (currentBoilingItem.TryGetComponent(out Rigidbody itemRb))
+                {
+                    itemRb.AddForce((transform.up * -1 + transform.forward) * 0.5f, ForceMode.Impulse);
+                }
+            }
+
+            currentBoilingItem = null;
+            boilableCurrentItem = null;
+        }
+
+        isFilled = false;
         isBoiling = false;
+        hasBoiled = false;
+        hasOverboiled = false;
         canvaProgressbar.SetActive(false);
     }
 
@@ -90,23 +161,21 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
         if (currentBoilingItem == null || boilableCurrentItem == null || !isBoiling || !isFilled)
             return;
 
-        Debug.Log($"Doing cook damage: {cookDamage} to item: {currentBoilingItem.name}");
-
         currentBoilingTime += cookDamage;
 
-        if (currentBoilingTime < currentBoilingMaxTime)
-        {
-            boilingProgressBar.fillAmount = currentBoilingTime / currentBoilingMaxTime;
-        }
-        else if (currentBoilingTime >= currentOverBoilingMaxTime)
+        if (currentBoilingTime >= currentOverBoilingMaxTime)
         {
             if (!hasOverboiled)
             {
                 overboilingProgressBar.fillAmount = 1;
                 SetWaterMaterial(overboilingWaterMaterial);
-                GameObject overboiledItem = Instantiate(boilableCurrentItem.overboiledObjectPrefab, boilingAttachPoint.position, Quaternion.identity);
-                Destroy(currentBoilingItem);
-                currentBoilingItem = overboiledItem;
+
+                if (spawnedBoiledItem != null) Destroy(spawnedBoiledItem);
+
+                spawnedBoiledItem = Instantiate(boilableCurrentItem.overboiledObjectPrefab, boilingAttachPoint.position, Quaternion.identity);
+                spawnedBoiledItem.transform.SetParent(boilingAttachPoint);
+                spawnedBoiledItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                HideOriginalItem();
                 hasOverboiled = true;
             }
         }
@@ -116,21 +185,40 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
             {
                 boilingProgressBar.fillAmount = 1;
                 SetWaterMaterial(boilingWaterMaterial);
-                GameObject boiledItem = Instantiate(boilableCurrentItem.boiledObjectPrefab, boilingAttachPoint.position, Quaternion.identity);
-                Destroy(currentBoilingItem);
-                currentBoilingItem = boiledItem;
+
+                spawnedBoiledItem = Instantiate(boilableCurrentItem.boiledObjectPrefab, boilingAttachPoint.position, Quaternion.identity);
+                spawnedBoiledItem.transform.SetParent(boilingAttachPoint);
+                spawnedBoiledItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                HideOriginalItem();
                 hasBoiled = true;
             }
             else
             {
-                overboilingProgressBar.fillAmount = (currentBoilingTime - currentBoilingMaxTime) / (currentOverBoilingMaxTime - currentBoilingMaxTime);
+                float overboilProgress = (currentBoilingTime - currentBoilingMaxTime) / (currentOverBoilingMaxTime - currentBoilingMaxTime);
+                overboilingProgressBar.fillAmount = overboilProgress;
             }
         }
+        else
+        {
+            boilingProgressBar.fillAmount = currentBoilingTime / currentBoilingMaxTime;
+        }
+    }
+
+    private void HideOriginalItem()
+    {
+        if (currentBoilingItem == null)
+            return;
+
+        foreach (Renderer renderer in currentBoilingItem.GetComponentsInChildren<Renderer>())
+            renderer.enabled = false;
+
+        foreach (Collider collider in currentBoilingItem.GetComponentsInChildren<Collider>())
+            collider.enabled = false;
     }
 
     private void Update()
     {
-        if (Vector3.Dot(transform.up, Vector3.down) > 0.7f)
+        if (Vector3.Dot(transform.up, Vector3.down) > 0.7f && isFilled)
         {
             Empty();
         }
@@ -143,28 +231,12 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
         isFilled = true;
         SetWaterMaterial(waterMaterial);
-    }
 
-    public void Empty()
-    {
-        if (!isFilled && currentBoilingItem == null)
-            return;
-
-        Debug.Log("Emptying boiling pot");
-        SetWaterMaterial(emptyWaterMaterial);
-
-        if (currentBoilingItem != null)
+        if (currentBoilingItem != null && !isBoiling)
         {
-            currentBoilingItem.transform.SetParent(null);
-            currentBoilingItem = null;
-            boilableCurrentItem = null;
+            isBoiling = true;
+            canvaProgressbar.SetActive(true);
         }
-
-        isFilled = false;
-        isBoiling = false;
-        hasBoiled = false;
-        hasOverboiled = false;
-        canvaProgressbar.SetActive(false);
     }
 
     private void SetWaterMaterial(Material material)

@@ -51,7 +51,6 @@ public class IngredientSpawner : MonoBehaviour
         }
         selectedIngredientUI = selectIcon;
         selectedIngredientUI.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
-        Debug.Log($"Selected item: {item.name}");
         selectedItem = item;
     }
 
@@ -59,7 +58,6 @@ public class IngredientSpawner : MonoBehaviour
     {
         if (selectedItem == null)
             return;
-        Debug.Log($"Spawning item: {selectedItem.name}");
         Instantiate(selectedItem.prefab, spawnPoint.position, Quaternion.identity);
     }
 }

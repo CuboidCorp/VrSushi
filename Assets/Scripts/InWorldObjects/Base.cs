@@ -23,28 +23,32 @@ public class Base : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Collision with: " + collision.transform.name);
+        Debug.Log("Collision with tag: " + collision.transform.tag);
         if (collision.transform.CompareTag("Combinable") && collision.gameObject.TryGetComponent(out Combinable comb))
         {
             if (combinables.Contains(comb.item))
             {
                 nbCombinablesPlaced++;
-                if (nbCombinablesPlaced == combinables.Length)
+                if (hasMultipleTargetObjects)
                 {
-                    Debug.Log("All combinables placed!");
-                    if (hasMultipleTargetObjects)
-                    {
-                        //On recup l'index de l'item
-                        int index = System.Array.IndexOf(combinables, comb.item);
-                        Instantiate(targetObjectsPrefab[index], transform.position, Quaternion.identity);
-                        Destroy(gameObject);
-                    }
-                    else
+                    //On recup l'index de l'item
+                    int index = System.Array.IndexOf(combinables, comb.item);
+                    Instantiate(targetObjectsPrefab[index], transform.position, Quaternion.identity);
+                    Destroy(collision.gameObject);
+                    Destroy(gameObject);
+                    return;
+                }
+                else
+                {
+                    if (nbCombinablesPlaced == combinables.Length)
                     {
                         Instantiate(targetObjectsPrefab[0], transform.position, Quaternion.identity);
                         Destroy(gameObject);
+                        return;
                     }
-                    return;
                 }
+
                 GameObject go = collision.gameObject;
                 go.transform.SetParent(transformPositions[nbCombinablesPlaced - 1]);
                 go.transform.SetPositionAndRotation(transformPositions[nbCombinablesPlaced - 1].position, transformPositions[nbCombinablesPlaced - 1].rotation);

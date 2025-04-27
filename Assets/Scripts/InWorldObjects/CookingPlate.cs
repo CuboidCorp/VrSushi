@@ -9,9 +9,12 @@ public class CookingPlate : MonoBehaviour
     [SerializeField] private float cookDamageInterval = .1f;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("CookingUtensil"))
+        if (other.attachedRigidbody == null)
+            return;
+
+        if (other.attachedRigidbody.CompareTag("CookingUtensil"))
         {
-            if (other.TryGetComponent(out cookingUtensil))
+            if (other.attachedRigidbody.TryGetComponent(out cookingUtensil))
             {
                 cookdamageCoroutine ??= StartCoroutine(CookCoroutine());
             }
@@ -20,7 +23,9 @@ public class CookingPlate : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("CookingUtensil"))
+        if (other.attachedRigidbody == null)
+            return;
+        if (other.attachedRigidbody.CompareTag("CookingUtensil"))
         {
             if (cookdamageCoroutine != null)
             {
