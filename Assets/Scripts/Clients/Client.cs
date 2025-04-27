@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using System.Collections;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
 public class Client : MonoBehaviour
 {
     private NavMeshAgent agent;
@@ -10,18 +13,25 @@ public class Client : MonoBehaviour
     private bool isSatisfied = false;
     private bool isDespawned = false;
     private bool isWaiting = false;
+    private bool isEating = false;
+    private Animator animator;
 
-    // Événement déclenché lorsque le client commence à attendre
+    // Time settings for dining
+    [SerializeField] private float eatingDuration = 15f;
+
     public event Action<Client> OnStartWaiting;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if (!isSatisfied && HasReachedDestination(targetPosition.position))
+        UpdateAnimatorParameters();
+
+        if (!isSatisfied && HasReachedDestination())
         {
             if (!isWaiting)
             {
@@ -29,12 +39,24 @@ public class Client : MonoBehaviour
                 StartWaiting();
             }
         }
-        else if (isSatisfied && !isDespawned && HasReachedDestination(despawnPoint.position))
+        else if (isSatisfied && !isDespawned && HasReachedDestination())
         {
             Debug.Log($"Client {gameObject.name} has reached the despawn point and will be destroyed.");
             Destroy(gameObject); // Détruit le client une fois arrivé au despawnPoint
             isDespawned = true;
         }
+    }
+
+    private void UpdateAnimatorParameters()
+    {
+        float speed = agent.velocity.magnitude;
+        bool isMoving = speed > 0.1f;
+
+        animator.SetBool("isWalking", isMoving);
+
+        // Update sitting parameters
+        animator.SetBool("isSitting", isWaiting && !isSatisfied);
+        animator.SetBool("isEating", isEating);
     }
 
     public void StartClient()
@@ -45,9 +67,23 @@ public class Client : MonoBehaviour
 
     public void Satisfy()
     {
-        isSatisfied = true;
-        isWaiting = false; // Arrête l'état d'attente
+        StopAllCoroutines();
+        isWaiting = false;
+        isEating = false;
+
         Debug.Log($"Client {gameObject.name} is satisfied and moving to the despawn point.");
+
+        // Let the Sitting_End animation play before moving
+        StartCoroutine(LeaveAfterAnimation());
+    }
+
+    private IEnumerator LeaveAfterAnimation()
+    {
+        // Wait for the sitting end animation to finish
+        // Assuming Sitting_End takes about 1 second
+        yield return new WaitForSeconds(1f);
+
+        // Now move to the despawn point
         MoveToDespawnPoint();
     }
 
@@ -87,6 +123,7 @@ public class Client : MonoBehaviour
             Debug.Log($"Client {gameObject.name} is moving to despawn point at {despawnPoint.position}.");
             agent.isStopped = false; // Redémarre le mouvement si arrêté
             agent.SetDestination(despawnPoint.position);
+            isSatisfied = true;
         }
         else
         {
@@ -94,7 +131,7 @@ public class Client : MonoBehaviour
         }
     }
 
-    private bool HasReachedDestination(Vector3 destination)
+    private bool HasReachedDestination()
     {
         if (!agent.pathPending)
         {
@@ -115,5 +152,44 @@ public class Client : MonoBehaviour
         agent.isStopped = true; // Arrête le client à la targetPosition
         Debug.Log($"Client {gameObject.name} is now waiting at the target position.");
         OnStartWaiting?.Invoke(this); // Déclenche l'événement
+
+        // Start the eating sequence after sitting
+        StartCoroutine(EatingSequence());
+    }
+
+    private IEnumerator EatingSequence()
+    {
+        // Wait for the Sitting_Start animation to complete (about 1-2 seconds)
+        yield return new WaitForSeconds(1.5f);
+
+        // Client starts eating
+        isEating = true;
+        Debug.Log($"Client {gameObject.name} is eating.");
+
+        // Client eats for the specified duration
+        yield return new WaitForSeconds(eatingDuration);
+
+        // Client finishes eating but stays seated
+        isEating = false;
+        Debug.Log($"Client {gameObject.name} has finished eating.");
+
+        // Wait a bit in Sitting_Idle before being satisfied
+        yield return new WaitForSeconds(2f);
+
+        // Auto-satisfy the client after they've finished eating
+        // (You might want to replace this with your own satisfaction logic)
+        if (!isSatisfied)
+        {
+            Satisfy();
+        }
+    }
+
+    // Add this method to trigger the hit reaction when needed
+    public void TriggerHitReaction()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("gotHit");
+        }
     }
 }
