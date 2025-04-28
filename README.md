@@ -28,7 +28,7 @@ Pas encore de captures d'écran, je préfère peaufiner le jeu encore un peu.
 
 Pour le moment aucune release du jeu n'est disponible pour jouer mais il est possible de cloner le projet.
 
-Si vous installez le proje, il faudra modifier le package.json pour enlever la dépendance à VHACD car elle est stockée en local sur mon Ordinateur.
+Si vous installez le projet, il faudra modifier le package.json pour enlever la dépendance à VHACD car elle est stockée en local sur mon Ordinateur.
 
 
 ## Sources : 
