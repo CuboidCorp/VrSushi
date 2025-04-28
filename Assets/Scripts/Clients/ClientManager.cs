@@ -8,15 +8,22 @@ public class ClientManager : MonoBehaviour
     [SerializeField] private GameObject clientPrefab;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform despawnPoint;
-    [SerializeField] private Transform[] clientPositions;
+    [SerializeField] private Table[] tablePositions;
+
+    [SerializeField] private KitchenItem[] plats;
+
+    private List<Table> availableTables;
 
     private List<GameObject> clients = new List<GameObject>();
     private Coroutine spawnClientCoroutine;
-    private const int maxClients = 10;
+    private const int maxClients = 6;
+    private int nbClients = 0;
+
 
     private void Start()
     {
         spawnClientCoroutine = StartCoroutine(SpawnClientRoutine());
+        availableTables = new List<Table>(tablePositions);
     }
 
 
@@ -35,28 +42,51 @@ public class ClientManager : MonoBehaviour
 
     private void SpawnClient()
     {
+        if (availableTables.Count == 0)
+        {
+            Debug.Log("No available tables to spawn a client.");
+            return;
+        }
+
+        Table table = availableTables[Random.Range(0, availableTables.Count)];
+        availableTables.Remove(table);
+
+        nbClients++;
         GameObject clientGo = Instantiate(clientPrefab, spawnPoint.position, Quaternion.identity);
+        clientGo.name = $"Client_{nbClients}";
         Client client = clientGo.GetComponent<Client>();
-        client.SetTargetPosition(clientPositions[Random.Range(0, clientPositions.Length)]);
+        table.SetClient(client);
+        client.SetTargetTable(table);
         client.SetDespawnPoint(despawnPoint);
         client.StartClient();
         client.OnStartWaiting += OnClientStartWaiting;
+        client.OnClientSatisfaction += OnClientSatisfied;
+        client.OnClientDespawn += OnClientDespawn;
         clients.Add(clientGo);
+    }
+
+    private void OnClientDespawn(Client client)
+    {
+        //Free the table
+        Table table = client.target;
+        table.RemoveClient();
+
+        //Remove the client from the list
+        GameObject clientGo = client.gameObject;
+        clients.Remove(clientGo);
+        Destroy(clientGo);
+
     }
 
     private void OnClientStartWaiting(Client client)
     {
-        StartCoroutine(HandleClientWaiting(client));
+        //Le client affiche sur la table un plat random parmi la liste des plats
+        KitchenItem plat = plats[Random.Range(0, plats.Length)];
+
     }
 
-    private IEnumerator HandleClientWaiting(Client client)
+    private void OnClientSatisfied(Client client)
     {
-        yield return new WaitForSeconds(3f); // Le client attend 3 secondes
-        client.Satisfy();
-    }
 
-    private void RemoveClient(GameObject clientGo)
-    {
-        clients.Remove(clientGo);
     }
 }

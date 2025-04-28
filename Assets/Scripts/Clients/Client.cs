@@ -14,12 +14,17 @@ public class Client : MonoBehaviour
     private bool isDespawned = false;
     private bool isWaiting = false;
     private bool isEating = false;
+
+    private bool isServed = false; // Added to track if the client has been served
     private Animator animator;
+    [HideInInspector] public Table target;
 
     // Time settings for dining
     [SerializeField] private float eatingDuration = 15f;
 
     public event Action<Client> OnStartWaiting;
+    public event Action<Client> OnClientSatisfaction;
+    public event Action<Client> OnClientDespawn;
 
     private void Awake()
     {
@@ -41,19 +46,13 @@ public class Client : MonoBehaviour
         }
         else if (isSatisfied && !isDespawned && HasReachedDestination())
         {
-            Debug.Log($"Client {gameObject.name} has reached the despawn point and will be destroyed.");
-            Destroy(gameObject); // Détruit le client une fois arrivé au despawnPoint
-            isDespawned = true;
+            OnClientDespawn?.Invoke(this); // Trigger the despawn event
+            return; //Le client va être détruit dans tous les cas
         }
     }
 
     private void UpdateAnimatorParameters()
     {
-        float speed = agent.velocity.magnitude;
-        bool isMoving = speed > 0.1f;
-
-        animator.SetBool("isWalking", isMoving);
-
         // Update sitting parameters
         animator.SetBool("isSitting", isWaiting && !isSatisfied);
         animator.SetBool("isEating", isEating);
@@ -62,7 +61,9 @@ public class Client : MonoBehaviour
     public void StartClient()
     {
         Debug.Log($"Client {gameObject.name} initialized. Moving to target position.");
+        animator.SetTrigger("StartWalk");
         MoveToTargetPosition();
+
     }
 
     public void Satisfy()
@@ -81,22 +82,21 @@ public class Client : MonoBehaviour
     {
         // Wait for the sitting end animation to finish
         // Assuming Sitting_End takes about 1 second
-        yield return new WaitForSeconds(1f);
+        yield return WaitForAnimation("Character Armature|Sitting_End");
 
-        // Now move to the despawn point
+        animator.SetTrigger("StartWalk");
         MoveToDespawnPoint();
     }
 
-    public void SetTargetPosition(Transform target)
+    public void SetTargetTable(Table table)
     {
-        targetPosition = target;
-        Debug.Log($"Client {gameObject.name} target position set to {target.position}.");
+        target = table;
+        targetPosition = table.chairPos;
     }
 
     public void SetDespawnPoint(Transform despawn)
     {
         despawnPoint = despawn;
-        Debug.Log($"Client {gameObject.name} despawn point set to {despawn.position}.");
     }
 
     private void MoveToTargetPosition()
@@ -149,8 +149,13 @@ public class Client : MonoBehaviour
     private void StartWaiting()
     {
         isWaiting = true;
-        agent.isStopped = true; // Arrête le client à la targetPosition
+        agent.isStopped = true;
+        animator.SetTrigger("StopWalk");
         Debug.Log($"Client {gameObject.name} is now waiting at the target position.");
+
+        Vector3 targetRotation = new(0, -90, 0);
+        transform.rotation = Quaternion.Euler(targetRotation);
+
         OnStartWaiting?.Invoke(this); // Déclenche l'événement
 
         // Start the eating sequence after sitting
@@ -159,8 +164,11 @@ public class Client : MonoBehaviour
 
     private IEnumerator EatingSequence()
     {
-        // Wait for the Sitting_Start animation to complete (about 1-2 seconds)
-        yield return new WaitForSeconds(1.5f);
+        //Wait for the Sitting_Start animation to finish
+        yield return WaitForAnimation("Character Armature|Sitting_Start");
+
+        Debug.Log($"Client {gameObject.name} attend d'être servi.");
+        yield return new WaitUntil(() => isServed);
 
         // Client starts eating
         isEating = true;
@@ -182,6 +190,21 @@ public class Client : MonoBehaviour
         {
             Satisfy();
         }
+    }
+
+    private IEnumerator WaitForAnimation(string animationName)
+    {
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(animationName) &&
+               animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        {
+            yield return null; // Attendre la fin de l'image
+        }
+    }
+
+    public void ServeClient()
+    {
+        isServed = true;
+        Debug.Log($"Client {gameObject.name} a été servi.");
     }
 
     // Add this method to trigger the hit reaction when needed
