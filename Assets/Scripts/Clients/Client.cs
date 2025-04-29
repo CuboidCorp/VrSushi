@@ -15,15 +15,16 @@ public class Client : MonoBehaviour
     private bool isWaiting = false;
     private bool isEating = false;
 
-    private bool isServed = false; // Added to track if the client has been served
+    private bool isServed = false;
+    private bool hasOverwaited = false;
     private Animator animator;
-    [HideInInspector] public Table target;
+    [HideInInspector] public Table targetTable;
 
     // Time settings for dining
     [SerializeField] private float eatingDuration = 15f;
 
     public event Action<Client> OnStartWaiting;
-    public event Action<Client> OnClientSatisfaction;
+    public event Action<Client, float> OnClientSatisfaction;
     public event Action<Client> OnClientDespawn;
 
     private void Awake()
@@ -66,22 +67,28 @@ public class Client : MonoBehaviour
 
     }
 
-    public void Satisfy()
+    public void Satisfy(float satifactionLevel)
     {
         StopAllCoroutines();
         isWaiting = false;
         isEating = false;
 
-        Debug.Log($"Client {gameObject.name} is satisfied and moving to the despawn point.");
+        if (satifactionLevel < 0)
+        {
+            Debug.Log($"Client {gameObject.name} is unsatisfied and leaving.");
+        }
+        else
+        {
+            Debug.Log($"Client {gameObject.name} is satisfied and leaving.");
+        }
 
-        // Let the Sitting_End animation play before moving
+        OnClientSatisfaction?.Invoke(this, satifactionLevel);
+
         StartCoroutine(LeaveAfterAnimation());
     }
 
     private IEnumerator LeaveAfterAnimation()
     {
-        // Wait for the sitting end animation to finish
-        // Assuming Sitting_End takes about 1 second
         yield return WaitForAnimation("Character Armature|Sitting_End");
 
         animator.SetTrigger("StartWalk");
@@ -90,7 +97,7 @@ public class Client : MonoBehaviour
 
     public void SetTargetTable(Table table)
     {
-        target = table;
+        targetTable = table;
         targetPosition = table.chairPos;
     }
 
@@ -156,41 +163,63 @@ public class Client : MonoBehaviour
         Vector3 targetRotation = new(0, -90, 0);
         transform.rotation = Quaternion.Euler(targetRotation);
 
-        OnStartWaiting?.Invoke(this); // Déclenche l'événement
+        //On ajoute des listeners au events de la table 
+        targetTable.OnPlatPlaced += Serve;
+        targetTable.OnPlatTimeout += WaitTimeOut;
+        OnStartWaiting?.Invoke(this);
 
-        // Start the eating sequence after sitting
         StartCoroutine(EatingSequence());
+    }
+
+    private void Serve(bool isCorrectPlat)
+    {
+        isServed = true;
+        if (isCorrectPlat)
+        {
+            Debug.Log($"Client {gameObject.name} has been served correctly.");
+        }
+        else
+        {
+            Debug.Log($"Client {gameObject.name} has been served incorrectly.");
+        }
+    }
+
+    private void WaitTimeOut()
+    {
+        hasOverwaited = true;
     }
 
     private IEnumerator EatingSequence()
     {
-        //Wait for the Sitting_Start animation to finish
         yield return WaitForAnimation("Character Armature|Sitting_Start");
 
         Debug.Log($"Client {gameObject.name} attend d'être servi.");
-        yield return new WaitUntil(() => isServed);
 
-        // Client starts eating
+        yield return new WaitUntil(() => isServed || hasOverwaited);
+
+        if (hasOverwaited)
+        {
+            Debug.Log($"Client {gameObject.name} a overwait et part sans manger.");
+            Satisfy(-5);
+            yield break;
+        }
+
         isEating = true;
-        Debug.Log($"Client {gameObject.name} is eating.");
+        Debug.Log($"Client {gameObject.name} commence à manger.");
 
-        // Client eats for the specified duration
         yield return new WaitForSeconds(eatingDuration);
 
-        // Client finishes eating but stays seated
         isEating = false;
-        Debug.Log($"Client {gameObject.name} has finished eating.");
+        Debug.Log($"Client {gameObject.name} a terminé de manger.");
 
-        // Wait a bit in Sitting_Idle before being satisfied
         yield return new WaitForSeconds(2f);
 
-        // Auto-satisfy the client after they've finished eating
-        // (You might want to replace this with your own satisfaction logic)
         if (!isSatisfied)
         {
-            Satisfy();
+            Satisfy(5);
         }
     }
+
 
     private IEnumerator WaitForAnimation(string animationName)
     {
@@ -207,7 +236,6 @@ public class Client : MonoBehaviour
         Debug.Log($"Client {gameObject.name} a été servi.");
     }
 
-    // Add this method to trigger the hit reaction when needed
     public void TriggerHitReaction()
     {
         if (animator != null)

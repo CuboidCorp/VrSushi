@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using Unity.AI.Navigation;
 public enum OffMeshLinkMoveMethod
 {
     Teleport,
@@ -45,14 +46,27 @@ public class AgentLinkMoverCustom : MonoBehaviour
     {
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
-        doorScript.OpenDoor(gameObject);
+
+        //TODO : Système de rotation quand un agent traverse un OffMeshLink
+
+        NavMeshLink currentLink = data.owner as NavMeshLink;
+
+        if (currentLink != null && currentLink.gameObject.name == "DoorLink" && doorScript != null)
+        {
+            doorScript.OpenDoor(gameObject);
+        }
+
         while (agent.transform.position != endPos)
         {
             agent.transform.position =
                 Vector3.MoveTowards(agent.transform.position, endPos, agent.speed * Time.deltaTime);
             yield return null;
         }
-        doorScript.CloseDoor(gameObject); //Fermeture de la porte
+        if (currentLink != null && currentLink.gameObject.name == "DoorLink" && doorScript != null)
+        {
+            doorScript.CloseDoor(gameObject); //Fermeture de la porte
+        }
+
     }
 
     IEnumerator Parabola(NavMeshAgent agent, float height, float duration)

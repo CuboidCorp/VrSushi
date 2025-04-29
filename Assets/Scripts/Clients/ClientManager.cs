@@ -4,35 +4,42 @@ using UnityEngine;
 
 public class ClientManager : MonoBehaviour
 {
-    [SerializeField] private float clientInterval = 60f;
+    [Header("Settings")]
+    [SerializeField, Tooltip("Time between each client")] private float clientInterval = 60f;
+    [SerializeField, Tooltip("Maximum time the client waits before leaving")] private float clientWaitTime = 20f;
+
+
+    [Header("References")]
     [SerializeField] private GameObject clientPrefab;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform despawnPoint;
-    [SerializeField] private Table[] tablePositions;
-
+    [SerializeField] private Table[] tables;
     [SerializeField] private KitchenItem[] plats;
 
     private List<Table> availableTables;
 
-    private List<GameObject> clients = new List<GameObject>();
+    private List<GameObject> clients = new();
     private Coroutine spawnClientCoroutine;
-    private const int maxClients = 6;
+    private const int MAX_CLIENTS = 6;
     private int nbClients = 0;
 
 
     private void Start()
     {
+        availableTables = new List<Table>(tables);
         spawnClientCoroutine = StartCoroutine(SpawnClientRoutine());
-        availableTables = new List<Table>(tablePositions);
     }
 
-
+    private void OnDisable()
+    {
+        spawnClientCoroutine = null;
+    }
 
     private IEnumerator SpawnClientRoutine()
     {
         while (true)
         {
-            if (clients.Count < maxClients)
+            if (clients.Count < MAX_CLIENTS)
             {
                 SpawnClient();
             }
@@ -68,7 +75,7 @@ public class ClientManager : MonoBehaviour
     private void OnClientDespawn(Client client)
     {
         //Free the table
-        Table table = client.target;
+        Table table = client.targetTable;
         table.RemoveClient();
 
         //Remove the client from the list
@@ -82,10 +89,10 @@ public class ClientManager : MonoBehaviour
     {
         //Le client affiche sur la table un plat random parmi la liste des plats
         KitchenItem plat = plats[Random.Range(0, plats.Length)];
-
+        client.targetTable.SetPlat(plat, clientWaitTime);
     }
 
-    private void OnClientSatisfied(Client client)
+    private void OnClientSatisfied(Client client, float satisfactionLevel)
     {
 
     }
