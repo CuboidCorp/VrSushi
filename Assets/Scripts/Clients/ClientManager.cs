@@ -5,8 +5,10 @@ using UnityEngine;
 public class ClientManager : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField, Tooltip("Time between each client")] private float clientInterval = 60f;
-    [SerializeField, Tooltip("Maximum time the client waits before leaving")] private float clientWaitTime = 20f;
+    [SerializeField, Tooltip("Min Time between each client")] private float minClientInterval = 40f;
+    [SerializeField, Tooltip("Max Time between each client")] private float maxClientInterval = 80f;
+    [SerializeField, Tooltip("Min time the client waits before leaving")] private float minClientWaitTime = 20f;
+    [SerializeField, Tooltip("Maximum time the client waits before leaving")] private float maxClientWaitTime = 40f;
 
 
     [Header("References")]
@@ -39,11 +41,12 @@ public class ClientManager : MonoBehaviour
     {
         while (true)
         {
+            float randomInterval = Random.Range(minClientInterval, maxClientInterval);
+            yield return new WaitForSeconds(randomInterval);
             if (clients.Count < MAX_CLIENTS)
             {
                 SpawnClient();
             }
-            yield return new WaitForSeconds(clientInterval);
         }
     }
 
@@ -89,7 +92,7 @@ public class ClientManager : MonoBehaviour
     {
         //Le client affiche sur la table un plat random parmi la liste des plats
         KitchenItem plat = plats[Random.Range(0, plats.Length)];
-        client.targetTable.SetPlat(plat, clientWaitTime);
+        client.targetTable.SetPlat(plat, Random.Range(minClientWaitTime, maxClientWaitTime));
     }
 
     private void OnClientSatisfied(Client client, float satisfactionLevel)

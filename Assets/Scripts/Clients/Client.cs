@@ -70,7 +70,6 @@ public class Client : MonoBehaviour
     public void Satisfy(float satifactionLevel)
     {
         StopAllCoroutines();
-        isWaiting = false;
         isEating = false;
 
         if (satifactionLevel < 0)
@@ -127,10 +126,12 @@ public class Client : MonoBehaviour
     {
         if (despawnPoint != null)
         {
+            isWaiting = false;
+            isSatisfied = true;
             Debug.Log($"Client {gameObject.name} is moving to despawn point at {despawnPoint.position}.");
             agent.isStopped = false; // Redémarre le mouvement si arrêté
             agent.SetDestination(despawnPoint.position);
-            isSatisfied = true;
+
         }
         else
         {

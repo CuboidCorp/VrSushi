@@ -64,10 +64,8 @@ public class Table : MonoBehaviour
         }
     }
 
-    public void RemovePlat()
+    public void RemovePlat(GameObject socketedPlate)
     {
-        socketInteractor.enabled = false;
-
         expectedPlat = null;
 
         if (progressCoroutine != null)
@@ -83,11 +81,7 @@ public class Table : MonoBehaviour
             progressBarImage.fillAmount = 0f;
         }
 
-        // Détruit l'objet placé dans le socket, s'il y en a un
-        if (socketInteractor.firstInteractableSelected != null)
-        {
-            Destroy(socketInteractor.firstInteractableSelected.transform.gameObject);
-        }
+        Destroy(socketedPlate);
     }
 
     private void OnPlatPlacedInSocket(SelectEnterEventArgs args)
@@ -104,23 +98,13 @@ public class Table : MonoBehaviour
             Debug.LogWarning("L'objet placé n'a pas de script Plat.");
             return;
         }
-
+        GameObject plateGameObject = args.interactableObject.transform.gameObject;
+        socketInteractor.enabled = false;
         bool isCorrectPlat = placedPlat.Equals(expectedPlat);
 
         OnPlatPlaced?.Invoke(isCorrectPlat);
 
-        if (progressCoroutine != null)
-        {
-            StopCoroutine(progressCoroutine);
-            progressCoroutine = null;
-        }
-
-        if (progressBar != null)
-        {
-            progressBar.SetActive(false);
-            itemImage.sprite = null;
-            progressBarImage.fillAmount = 0f;
-        }
+        RemovePlat(plateGameObject);
     }
 
     private IEnumerator FillProgressBar()

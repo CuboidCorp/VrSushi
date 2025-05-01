@@ -690,7 +690,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {fileID: 0}
   despawnPoint: {fileID: 0}
-  eatingDuration: 15
+  targetTable: {fileID: 0}
+  eatingDuration: 7
 --- !u!95 &6911440811261893896
 Animator:
   serializedVersion: 7
