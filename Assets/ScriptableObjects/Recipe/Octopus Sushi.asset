@@ -12,6 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21194f8b597003547a8322827752d254, type: 3}
   m_Name: Octopus Sushi
   m_EditorClassIdentifier: 
-  recipeName: Octobus sushi
+  recipeName: Octopus sushi
   finalProduct: {fileID: 11400000, guid: 0b995da0932ffa2478c9229183f59bc3, type: 2}
-  steps: []
+  steps:
+  - stepDescription: Spawn rice
+    method: 0
+    inputItems: []
+    resultItem: {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
+    spawnLocation: 3
+  - stepDescription: Spawn octopus
+    method: 0
+    inputItems: []
+    resultItem: {fileID: 11400000, guid: 4050a683c0a755a4c8ba14ee41786e17, type: 2}
+    spawnLocation: 2
+  - stepDescription: Boil rice
+    method: 2
+    inputItems:
+    - {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
+    resultItem: {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
+    spawnLocation: 0
+  - stepDescription: Cut octopus
+    method: 1
+    inputItems:
+    - {fileID: 11400000, guid: 4050a683c0a755a4c8ba14ee41786e17, type: 2}
+    resultItem: {fileID: 11400000, guid: 8959cfd4cd6a1b6448b57463cbe25849, type: 2}
+    spawnLocation: 0
+  - stepDescription: Assemble rice into nigiri form
+    method: 3
+    inputItems:
+    - {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
+    resultItem: {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
+    spawnLocation: 0
+  - stepDescription: Combine rice and cut octopus
+    method: 4
+    inputItems:
+    - {fileID: 11400000, guid: 8959cfd4cd6a1b6448b57463cbe25849, type: 2}
+    - {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
+    resultItem: {fileID: 11400000, guid: 0b995da0932ffa2478c9229183f59bc3, type: 2}
+    spawnLocation: 0

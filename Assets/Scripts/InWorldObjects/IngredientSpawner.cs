@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class IngredientSpawner : MonoBehaviour
 {
-
     [Header("Spawner Settings")]
     [SerializeField] private string spawnerName;
     [SerializeField] private TMP_Text spawnerNameText;
@@ -20,11 +19,6 @@ public class IngredientSpawner : MonoBehaviour
     private KitchenItem selectedItem;
 
     private void Start()
-    {
-        Init();
-    }
-
-    private void Init()
     {
         spawnerNameText.text = spawnerName;
         spawnBtn.onClick.AddListener(SpawnItem);

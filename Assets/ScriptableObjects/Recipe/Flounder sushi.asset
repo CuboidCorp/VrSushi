@@ -14,4 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeName: Flounder sushi
   finalProduct: {fileID: 11400000, guid: 3e41865b17582bd4990d38c3be899a1c, type: 2}
-  steps: []
+  steps:
+  - stepDescription: Spawn rice
+    method: 0
+    inputItems: []
+    resultItem: {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
+    spawnLocation: 3
+  - stepDescription: Spawn flounder
+    method: 0
+    inputItems: []
+    resultItem: {fileID: 11400000, guid: db291635d3079e5439f77e15c2c11e04, type: 2}
+    spawnLocation: 2
+  - stepDescription: Boil rice
+    method: 2
+    inputItems:
+    - {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
+    resultItem: {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
+    spawnLocation: 0
+  - stepDescription: Cut flounder
+    method: 1
+    inputItems:
+    - {fileID: 11400000, guid: db291635d3079e5439f77e15c2c11e04, type: 2}
+    resultItem: {fileID: 11400000, guid: 4a9e46cde398b464ea5d667c063980d2, type: 2}
+    spawnLocation: 0
+  - stepDescription: Assemble rice into nigiri form
+    method: 3
+    inputItems:
+    - {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
+    resultItem: {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
+    spawnLocation: 0
+  - stepDescription: Combine rice and cut flounder
+    method: 1
+    inputItems:
+    - {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
+    - {fileID: 11400000, guid: 4a9e46cde398b464ea5d667c063980d2, type: 2}
+    resultItem: {fileID: 11400000, guid: 3e41865b17582bd4990d38c3be899a1c, type: 2}
+    spawnLocation: 0

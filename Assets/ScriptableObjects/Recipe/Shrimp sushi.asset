@@ -12,6 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21194f8b597003547a8322827752d254, type: 3}
   m_Name: Shrimp sushi
   m_EditorClassIdentifier: 
-  recipeName: 
-  finalProduct: {fileID: 0}
-  steps: []
+  recipeName: Shrimp sushi
+  finalProduct: {fileID: 11400000, guid: f7508a465d0d39247a9b7fc7cb194cc4, type: 2}
+  steps:
+  - stepDescription: Spawn rice
+    method: 0
+    inputItems: []
+    resultItem: {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
+    spawnLocation: 3
+  - stepDescription: Spawn shrimp
+    method: 0
+    inputItems: []
+    resultItem: {fileID: 11400000, guid: d9de68da0738df142bc6ffa2a403e8a0, type: 2}
+    spawnLocation: 2
+  - stepDescription: Boil shrimp
+    method: 2
+    inputItems:
+    - {fileID: 11400000, guid: d9de68da0738df142bc6ffa2a403e8a0, type: 2}
+    resultItem: {fileID: 11400000, guid: ec7730beedef0e64693e5f66d2ef4975, type: 2}
+    spawnLocation: 0
+  - stepDescription: Boil rice
+    method: 2
+    inputItems:
+    - {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
+    resultItem: {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
+    spawnLocation: 0
+  - stepDescription: Assemble rice into nigiri form
+    method: 3
+    inputItems:
+    - {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
+    resultItem: {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
+    spawnLocation: 0
+  - stepDescription: Combine rice and shrimp
+    method: 4
+    inputItems:
+    - {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
+    - {fileID: 11400000, guid: ec7730beedef0e64693e5f66d2ef4975, type: 2}
+    resultItem: {fileID: 11400000, guid: f7508a465d0d39247a9b7fc7cb194cc4, type: 2}
+    spawnLocation: 0

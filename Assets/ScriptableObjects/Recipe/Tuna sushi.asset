@@ -12,6 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21194f8b597003547a8322827752d254, type: 3}
   m_Name: Tuna sushi
   m_EditorClassIdentifier: 
-  recipeName: 
-  finalProduct: {fileID: 0}
-  steps: []
+  recipeName: Tuna sushi
+  finalProduct: {fileID: 11400000, guid: 91218c98badb8c848afaae47ce5baad4, type: 2}
+  steps:
+  - stepDescription: Spawn rice
+    method: 0
+    inputItems: []
+    resultItem: {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
+    spawnLocation: 3
+  - stepDescription: Spawn tuna
+    method: 0
+    inputItems: []
+    resultItem: {fileID: 11400000, guid: 13859a35fd97b054583bf945e9e80c6d, type: 2}
+    spawnLocation: 2
+  - stepDescription: Boil rice
+    method: 2
+    inputItems:
+    - {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
+    resultItem: {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
+    spawnLocation: 0
+  - stepDescription: Cut tuna
+    method: 1
+    inputItems:
+    - {fileID: 11400000, guid: 13859a35fd97b054583bf945e9e80c6d, type: 2}
+    resultItem: {fileID: 11400000, guid: 3ca180738ad1f3741b6a059d60906e71, type: 2}
+    spawnLocation: 0
+  - stepDescription: Assemble rice in nigiri form
+    method: 3
+    inputItems:
+    - {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
+    resultItem: {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
+    spawnLocation: 0
+  - stepDescription: Combine rice and tuna
+    method: 4
+    inputItems:
+    - {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
+    - {fileID: 11400000, guid: 3ca180738ad1f3741b6a059d60906e71, type: 2}
+    resultItem: {fileID: 11400000, guid: 91218c98badb8c848afaae47ce5baad4, type: 2}
+    spawnLocation: 0

@@ -1078,6 +1078,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6984c48aed9a154294088f4265d8478, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2097050747096092410}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6984c48aed9a154294088f4265d8478, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4920335498909699444}
   m_SourcePrefab: {fileID: 100100000, guid: c6984c48aed9a154294088f4265d8478, type: 3}
 --- !u!137 &1187309534400555121 stripped
 SkinnedMeshRenderer:
@@ -1309,6 +1312,30 @@ MonoBehaviour:
   m_MinAngleAllowed: 0.1
   m_MaxAngleAllowed: 5
   m_TimeUntilThresholdReachesMaxAngle: 3
+--- !u!114 &4920335498909699444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248379093139885362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c23e5159a09b742b1a1cd06095e619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipes:
+  - {fileID: 11400000, guid: d42b878ff069f31448b64e45ddbc8976, type: 2}
+  - {fileID: 11400000, guid: 38e934f4f4202354395e9aefb3491335, type: 2}
+  - {fileID: 11400000, guid: ad7456d322e55f2479b10677c704c0b7, type: 2}
+  - {fileID: 11400000, guid: d4609f721853d214a9ac6c0faf224a3e, type: 2}
+  - {fileID: 11400000, guid: 5bbca30562c0b6b42b1d288b8b6d7b9b, type: 2}
+  recipeListUI: {fileID: 7156361860377988619}
+  recipeListContent: {fileID: 7767159981409529418}
+  recipeViewerUI: {fileID: 0}
+  recipeViewerContent: {fileID: 0}
+  ingredientUIPrefab: {fileID: 503124242087143238, guid: 7a6fa71b8cbf7784f8a1c95f8914c06d, type: 3}
+  transformationUIPrefab: {fileID: 1629140400740738877, guid: 2b1589641595c8c4c9dc29f249616e49, type: 3}
 --- !u!4 &6772678277395175304 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c6984c48aed9a154294088f4265d8478, type: 3}
@@ -1685,6 +1712,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7156361860377988619 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 487833529046422131, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
+  m_PrefabInstance: {fileID: 7319936199063084152}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7767159981409529418 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1035790433963668018, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
