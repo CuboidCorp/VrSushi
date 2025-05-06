@@ -44,7 +44,7 @@ MonoBehaviour:
     resultItem: {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
     spawnLocation: 0
   - stepDescription: Combine rice and cut flounder
-    method: 1
+    method: 4
     inputItems:
     - {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
     - {fileID: 11400000, guid: 4a9e46cde398b464ea5d667c063980d2, type: 2}

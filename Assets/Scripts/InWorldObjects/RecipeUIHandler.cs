@@ -6,58 +6,55 @@ using UnityEngine.UI;
 
 public class RecipeUIHandler : MonoBehaviour
 {
-    [SerializeField] private Recipe[] recipes;
+    [SerializeField, Tooltip("List of all recipes to show")] private Recipe[] recipes;
 
     [Header("UI Elements")]
-    [SerializeField] private GameObject recipeListUI;
-    [SerializeField] private Transform recipeListContent;
+    [SerializeField, Tooltip("Gameobject that shows the list of all recipes")] private GameObject recipeListUI;
+    [SerializeField, Tooltip("Transform that will hold the recipes")] private Transform recipeListContent;
 
-    [SerializeField] private GameObject recipeViewerUI;
-    [SerializeField] private RectTransform recipeViewerContent;
+    [SerializeField, Tooltip("Gameobject that show the recipe graph for a recipe")] private GameObject recipeViewerUI;
+    [SerializeField, Tooltip("Transform that will hold the recipe graph")] private Transform recipeViewerContent;
 
-    [SerializeField] private GameObject ingredientUIPrefab;
-    [SerializeField] private GameObject transformationUIPrefab;
+    [SerializeField, Tooltip("Prefab that shows the info for a recipe")] private GameObject recipeUiPrefab;
+    [SerializeField, Tooltip("Prefab that shows the info for a ingredient or an item")] private GameObject nodeUIPrefab;
 
-    [Header("Graph Settings")]
-    [SerializeField] private float nodeHorizontalSpacing = 120f;
-    [SerializeField] private float nodeVerticalSpacing = 100f;
-    [SerializeField] private float nodeSize = 80f;
-    [SerializeField] private float lineThickness = 3f;
-    [SerializeField] private float graphScaleFactor = 1f;
-    [SerializeField] private Vector2 initialContentOffset = new Vector2(20f, 20f);
-    [SerializeField] private bool fitToScrollView = true;
+    [SerializeField, Tooltip("Sprites of all spawn locations")] private Sprite[] spawnLocations;
+    [SerializeField, Tooltip("Sprite of ustensils")] private Sprite[] utensils;
 
-    private class Node
-    {
-        public KitchenItem item;
-        public List<Node> children = new();
-        public List<Node> parents = new();
-        public Vector2 position;
-        public GameObject uiObject;
-        public int depth;
-        public int horizontalPosition;
-    }
-
-    private Dictionary<KitchenItem, Node> itemNodes = new();
-    private Dictionary<KitchenItem, List<RecipeStep>> itemUsedInSteps = new();
+    [Header("Recipe Graph")]
+    [SerializeField, Tooltip("Size of nodes")] private float nodeSize = 64f;
+    [SerializeField, Tooltip("Margin between nodes")] private float margin = 6f;
+    [SerializeField, Tooltip("Start pos of graph")] private Vector2 startPos = new(42f, -32f);
 
     private void Start()
     {
         recipeViewerUI.SetActive(false);
         recipeListUI.SetActive(true);
 
-        foreach (Recipe item in recipes)
+        foreach (Recipe recipe in recipes)
         {
-            KitchenItem resultItem = item.finalProduct;
-            GameObject ingredientUI = Instantiate(ingredientUIPrefab, recipeListContent);
-            Image image = ingredientUI.transform.GetChild(1).GetChild(2).GetComponent<Image>();
-            image.sprite = resultItem.icon;
+            KitchenItem resultItem = recipe.finalProduct;
+            GameObject ingredientUI = Instantiate(recipeUiPrefab, recipeListContent);
+
+            // Vérifions que la structure du prefab est correcte
+            Transform iconTransform = ingredientUI.transform.GetChild(1).GetChild(2);
+            if (iconTransform != null)
+            {
+                Image image = iconTransform.GetComponent<Image>();
+                if (image != null && resultItem.icon != null)
+                {
+                    image.sprite = resultItem.icon;
+                }
+            }
 
             TMP_Text text = ingredientUI.GetComponentInChildren<TMP_Text>();
-            text.text = resultItem.name;
+            if (text != null)
+            {
+                text.text = resultItem.name;
+            }
 
             Button button = ingredientUI.GetComponent<Button>();
-            button.onClick.AddListener(() => ShowRecipe(item));
+            button.onClick.AddListener(() => ShowRecipe(recipe));
         }
     }
 
@@ -66,430 +63,168 @@ public class RecipeUIHandler : MonoBehaviour
         recipeListUI.SetActive(false);
         recipeViewerUI.SetActive(true);
 
-        // Clear previous recipe view
         foreach (Transform child in recipeViewerContent)
             Destroy(child.gameObject);
 
-        itemNodes.Clear();
-        itemUsedInSteps.Clear();
+        List<List<KitchenItem>> branches = GetBranches(recipe.steps);
 
-        // Reset scroll position
-        ScrollRect scrollRect = recipeViewerContent.GetComponentInParent<ScrollRect>();
-        if (scrollRect != null)
+        Dictionary<KitchenItem, GameObject> itemToNodeMap = new();
+        Dictionary<KitchenItem, Vector2> itemToPositionMap = new();
+
+        float branchSpacingY = nodeSize + margin;
+        float currentX = startPos.x;
+        float currentY = startPos.y;
+
+        for (int branchIndex = 0; branchIndex < branches.Count; branchIndex++)
         {
-            scrollRect.normalizedPosition = new Vector2(0.5f, 0); // Reset to center-top view
+            List<KitchenItem> branch = branches[branchIndex];
+
+            foreach (KitchenItem item in branch)
+            {
+                GameObject node = Instantiate(nodeUIPrefab, recipeViewerContent);
+                node.name = item.name;
+                node.transform.localPosition = new Vector2(currentX, currentY);
+
+                if (node.TryGetComponent(out RectTransform rectTransform))
+                {
+                    rectTransform.sizeDelta = new Vector2(nodeSize, nodeSize);
+                }
+
+                Image icon = node.GetComponentInChildren<Image>();
+                if (icon != null && item.icon != null)
+                {
+                    icon.sprite = item.icon;
+                }
+
+                TMP_Text text = node.GetComponentInChildren<TMP_Text>();
+                if (text != null)
+                {
+                    text.text = item.name;
+                }
+
+                itemToNodeMap[item] = node;
+                itemToPositionMap[item] = new Vector2(currentX, currentY);
+
+                currentX += nodeSize + margin;
+            }
+
+            currentX = startPos.x;
+            currentY += -branchSpacingY;
         }
 
-        // Reset scale factor
-        graphScaleFactor = 1f;
-
-        // Map item -> steps that use it
+        //Création des connexions
         foreach (var step in recipe.steps)
         {
-            foreach (var input in step.inputItems)
+            if (step.inputItems != null && step.inputItems.Count > 0)
             {
-                if (!itemUsedInSteps.ContainsKey(input))
-                    itemUsedInSteps[input] = new List<RecipeStep>();
-                itemUsedInSteps[input].Add(step);
-            }
-        }
-
-        // Build graph connections
-        foreach (var step in recipe.steps)
-        {
-            var resultNode = GetOrCreateNode(step.resultItem);
-            foreach (var input in step.inputItems)
-            {
-                var inputNode = GetOrCreateNode(input);
-                inputNode.children.Add(resultNode);
-                resultNode.parents.Add(inputNode);
-            }
-        }
-
-        // Find root and terminal nodes
-        List<Node> rootNodes = new List<Node>();
-        List<Node> terminalNodes = new List<Node>();
-
-        foreach (var nodePair in itemNodes)
-        {
-            Node node = nodePair.Value;
-            if (node.parents.Count == 0)
-                rootNodes.Add(node);
-            if (node.children.Count == 0)
-                terminalNodes.Add(node);
-        }
-
-        // Compact the graph if there are many nodes
-        CompactLayoutSettings(itemNodes.Count);
-
-        // Layout the graph
-        AssignNodeDepths(rootNodes);
-        AssignHorizontalPositions(rootNodes);
-        OptimizePositions();
-
-        // Calculate the size needed for the content
-        CalculateContentSize();
-
-        // Create a container for all graph elements
-        GameObject graphContainer = new GameObject("GraphContainer");
-        graphContainer.transform.SetParent(recipeViewerContent, false);
-        RectTransform containerRect = graphContainer.AddComponent<RectTransform>();
-        containerRect.anchorMin = new Vector2(0, 0);
-        containerRect.anchorMax = new Vector2(1, 1);
-        containerRect.pivot = new Vector2(0.5f, 0.5f);
-        containerRect.anchoredPosition = Vector2.zero;
-        containerRect.sizeDelta = Vector2.zero; // Fill the entire content area
-
-        // Draw lines first so they appear behind nodes
-        foreach (var node in itemNodes.Values)
-        {
-            foreach (var childNode in node.children)
-            {
-                GameObject edge = Instantiate(transformationUIPrefab, graphContainer.transform);
-                DrawLineBetween(edge, node.position, childNode.position);
-            }
-        }
-
-        // Instantiate UI nodes
-        foreach (var node in itemNodes.Values)
-        {
-            GameObject ui = Instantiate(ingredientUIPrefab, graphContainer.transform);
-            var rt = ui.GetComponent<RectTransform>();
-            rt.pivot = new Vector2(0.5f, 0.5f);
-            rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0); // Bottom-center anchoring
-            rt.anchoredPosition = node.position;
-            rt.sizeDelta = new Vector2(nodeSize * graphScaleFactor, nodeSize * graphScaleFactor);
-
-            Image img = ui.transform.GetChild(1).GetChild(2).GetComponent<Image>();
-            if (img != null) img.sprite = node.item.icon;
-
-            TMP_Text txt = ui.GetComponentInChildren<TMP_Text>();
-            if (txt != null)
-            {
-                txt.text = node.item.name;
-                // Adjust text size based on scale factor
-                txt.fontSize *= graphScaleFactor;
-            }
-
-            node.uiObject = ui;
-        }
-    }
-
-    private void CompactLayoutSettings(int nodeCount)
-    {
-        // Dynamically adjust spacing based on number of nodes
-        if (nodeCount > 15)
-        {
-            nodeHorizontalSpacing = Mathf.Min(nodeHorizontalSpacing, 100f);
-            nodeVerticalSpacing = Mathf.Min(nodeVerticalSpacing, 80f);
-            nodeSize = Mathf.Min(nodeSize, 70f);
-        }
-
-        if (nodeCount > 25)
-        {
-            nodeHorizontalSpacing = Mathf.Min(nodeHorizontalSpacing, 80f);
-            nodeVerticalSpacing = Mathf.Min(nodeVerticalSpacing, 70f);
-            nodeSize = Mathf.Min(nodeSize, 60f);
-        }
-    }
-
-    private Node GetOrCreateNode(KitchenItem item)
-    {
-        if (!itemNodes.TryGetValue(item, out var node))
-        {
-            node = new Node { item = item };
-            itemNodes[item] = node;
-        }
-        return node;
-    }
-
-    private void AssignNodeDepths(List<Node> rootNodes)
-    {
-        // Reset all depths
-        foreach (var node in itemNodes.Values)
-            node.depth = -1;
-
-        // IMPORTANT: For our recipe tree, we want ingredients at the top,
-        // and final products at the bottom - so we need to invert our depth logic
-
-        // First find the terminal nodes (final products)
-        List<Node> terminalNodes = new List<Node>();
-        foreach (var nodePair in itemNodes)
-        {
-            if (nodePair.Value.children.Count == 0)
-                terminalNodes.Add(nodePair.Value);
-        }
-
-        // If no terminal nodes found, fall back to roots
-        if (terminalNodes.Count == 0)
-            terminalNodes = rootNodes;
-
-        // BFS to assign depths from terminal nodes upward
-        Queue<Node> queue = new Queue<Node>();
-        foreach (var terminalNode in terminalNodes)
-        {
-            terminalNode.depth = 0;
-            queue.Enqueue(terminalNode);
-        }
-
-        while (queue.Count > 0)
-        {
-            Node current = queue.Dequeue();
-            foreach (var parent in current.parents)
-            {
-                int newDepth = current.depth + 1;
-                if (parent.depth < newDepth)
+                foreach (KitchenItem inputItem in step.inputItems)
                 {
-                    parent.depth = newDepth;
-                    queue.Enqueue(parent);
-                }
-            }
-        }
-    }
-
-    private void AssignHorizontalPositions(List<Node> rootNodes)
-    {
-        // Group nodes by depth
-        Dictionary<int, List<Node>> nodesByDepth = new Dictionary<int, List<Node>>();
-        foreach (var nodePair in itemNodes)
-        {
-            Node node = nodePair.Value;
-            if (!nodesByDepth.ContainsKey(node.depth))
-                nodesByDepth[node.depth] = new List<Node>();
-            nodesByDepth[node.depth].Add(node);
-        }
-
-        // Sort depths
-        List<int> depths = nodesByDepth.Keys.ToList();
-        depths.Sort();
-
-        // Assign horizontal positions by depth
-        foreach (int depth in depths)
-        {
-            List<Node> nodes = nodesByDepth[depth];
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                nodes[i].horizontalPosition = i;
-            }
-        }
-
-        // Convert to actual positions - positive Y values (top = 0)
-        foreach (var nodePair in itemNodes)
-        {
-            Node node = nodePair.Value;
-            node.position = new Vector2(
-                node.horizontalPosition * nodeHorizontalSpacing + nodeHorizontalSpacing / 2,
-                node.depth * nodeVerticalSpacing + nodeVerticalSpacing
-            );
-        }
-    }
-
-    private void OptimizePositions()
-    {
-        // Group nodes by depth
-        Dictionary<int, List<Node>> nodesByDepth = new Dictionary<int, List<Node>>();
-        foreach (var nodePair in itemNodes)
-        {
-            Node node = nodePair.Value;
-            if (!nodesByDepth.ContainsKey(node.depth))
-                nodesByDepth[node.depth] = new List<Node>();
-            nodesByDepth[node.depth].Add(node);
-        }
-
-        // Sort depths
-        List<int> depths = nodesByDepth.Keys.ToList();
-        depths.Sort();
-
-        // Center child nodes under their parents
-        foreach (int depth in depths)
-        {
-            if (depth == 0) continue; // Skip root nodes
-
-            List<Node> nodes = nodesByDepth[depth];
-            foreach (var node in nodes)
-            {
-                if (node.parents.Count > 0)
-                {
-                    float avgX = node.parents.Average(p => p.position.x);
-                    node.position = new Vector2(avgX, node.position.y);
-                }
-            }
-        }
-
-        // Adjust positions to avoid overlaps
-        foreach (int depth in depths)
-        {
-            List<Node> nodes = nodesByDepth[depth];
-            nodes = nodes.OrderBy(n => n.position.x).ToList();
-
-            for (int i = 1; i < nodes.Count; i++)
-            {
-                Node prev = nodes[i - 1];
-                Node current = nodes[i];
-
-                float minDistance = nodeHorizontalSpacing;
-                if (current.position.x - prev.position.x < minDistance)
-                {
-                    float adjustment = minDistance - (current.position.x - prev.position.x);
-                    current.position = new Vector2(current.position.x + adjustment, current.position.y);
-
-                    // Adjust all subsequent nodes in this level
-                    for (int j = i + 1; j < nodes.Count; j++)
+                    if (itemToNodeMap.TryGetValue(inputItem, out GameObject fromNode) &&
+                        itemToNodeMap.TryGetValue(step.resultItem, out GameObject toNode))
                     {
-                        nodes[j].position = new Vector2(nodes[j].position.x + adjustment, nodes[j].position.y);
+                        CreateConnection(fromNode, toNode);
                     }
                 }
             }
         }
     }
 
-    private void CalculateContentSize()
+    /// <summary>
+    /// Renvoie les branches de la recette sous forme de liste de listes d'items de cuisine.
+    /// Une branche represente la suite des transformations sur un ingrédient que l'on spawn.
+    /// </summary>
+    /// <param name="recipeSteps">La recette dont on veut les branches</param>
+    /// <returns>Une liste de liste de kitchen item donc la liste des branches</returns>
+    private List<List<KitchenItem>> GetBranches(List<RecipeStep> recipeSteps)
     {
-        if (itemNodes.Count == 0) return;
-
-        // Calculate the bounds of all nodes
-        float minX = float.MaxValue, maxX = float.MinValue;
-        float minY = float.MaxValue, maxY = float.MinValue;
-
-        foreach (var node in itemNodes.Values)
+        List<List<KitchenItem>> branches = new(); // Liste des branches
+        foreach (var step in recipeSteps)
         {
-            minX = Mathf.Min(minX, node.position.x - nodeSize / 2);
-            maxX = Mathf.Max(maxX, node.position.x + nodeSize / 2);
-            minY = Mathf.Min(minY, node.position.y - nodeSize / 2);
-            maxY = Mathf.Max(maxY, node.position.y + nodeSize / 2);
-        }
-
-        // Add padding
-        float padding = nodeSize;
-        minX -= padding;
-        maxX += padding;
-        minY -= padding;
-        maxY += padding;
-
-        float width = maxX - minX;
-        float height = maxY - minY;
-
-        // Get the scroll view rect for automatic fitting
-        if (fitToScrollView)
-        {
-            // Get parent scroll rect if available
-            ScrollRect scrollRect = recipeViewerContent.GetComponentInParent<ScrollRect>();
-            if (scrollRect != null)
+            switch (step.method)
             {
-                RectTransform scrollViewport = scrollRect.viewport;
-                if (scrollViewport != null)
-                {
-                    float viewportWidth = scrollViewport.rect.width;
-                    float viewportHeight = scrollViewport.rect.height;
+                case ObtentionMethod.SPAWN:
+                    // Créer une nouvelle branche pour SPAWN
+                    branches.Add(new List<KitchenItem> { step.resultItem });
+                    break;
 
-                    // Calculate scale to fit within the viewport (with some margins)
-                    float marginFactor = 0.8f; // 80% of viewport size
-                    float widthScale = (viewportWidth * marginFactor) / width;
+                case ObtentionMethod.COMBINE:
+                    var branchesContainingInputs = branches
+                        .Where(branch => step.inputItems.Any(item => branch.Contains(item)))
+                        .ToList();
 
-                    // For height, we want to ensure the recipe is fully visible
-                    // but we don't want to shrink it too much if it's tall
-                    float heightScale = (viewportHeight * 0.7f) / height;
+                    if (branchesContainingInputs.Count > 0)
+                    {
+                        var targetBranch = branchesContainingInputs
+                            .OrderByDescending(branch => branch.Count)
+                            .First();
 
-                    // Use the width scale as primary, but don't go below minimum scale
-                    graphScaleFactor = widthScale;
+                        //On ajoute le resultat a la branche la plus longue qui a les inputs
+                        targetBranch.Add(step.resultItem);
+                    }
+                    else
+                    {
+                        // Si aucune branche ne contient les inputItems, on fait une au cas ou mais ce sera jamais utilisé
+                        branches.Add(new List<KitchenItem> { step.resultItem });
+                    }
+                    break;
 
-                    // Only apply height scaling if it's severely limiting visibility
-                    if (heightScale < widthScale * 0.7f)
-                        graphScaleFactor = Mathf.Lerp(heightScale, widthScale, 0.3f);
+                default:
+                    // Par defaut on ajoute le resultat a la suite logique
+                    var targetBranchDefault = branches
+                        .FirstOrDefault(branch => step.inputItems.All(item => branch.Contains(item)));
 
-                    // Don't let it get too small
-                    graphScaleFactor = Mathf.Max(graphScaleFactor, 0.4f);
-
-                    // Don't enlarge if it already fits
-                    if (graphScaleFactor > 1f)
-                        graphScaleFactor = 1f;
-                }
+                    if (targetBranchDefault != null)
+                    {
+                        targetBranchDefault.Add(step.resultItem);
+                    }
+                    else
+                    {
+                        // Si aucune branche ne correspond, on crée une nouvelle mais là aussi jamais utilisé
+                        branches.Add(new List<KitchenItem> { step.resultItem });
+                    }
+                    break;
             }
         }
-
-        // Apply the scale factor to all positions
-        if (graphScaleFactor != 1f)
-        {
-            foreach (var node in itemNodes.Values)
-            {
-                node.position = new Vector2(
-                    node.position.x * graphScaleFactor,
-                    node.position.y * graphScaleFactor);
-            }
-
-            // Recalculate bounds after scaling
-            minX *= graphScaleFactor;
-            maxX *= graphScaleFactor;
-            minY *= graphScaleFactor;
-            maxY *= graphScaleFactor;
-            width = maxX - minX;
-            height = maxY - minY;
-        }
-
-        // Set content size
-        recipeViewerContent.sizeDelta = new Vector2(
-            Mathf.Max(width + initialContentOffset.x * 2, recipeViewerContent.parent.GetComponent<RectTransform>().rect.width),
-            height + initialContentOffset.y * 2);
-
-        // Center nodes horizontally and position from bottom
-        Vector2 centerOffset = new Vector2(
-            recipeViewerContent.sizeDelta.x / 2,
-            initialContentOffset.y);
-
-        // Adjust all nodes to be centered and positioned from bottom
-        foreach (var node in itemNodes.Values)
-        {
-            node.position = new Vector2(
-                node.position.x + centerOffset.x - (minX + maxX) / 2,
-                node.position.y + centerOffset.y - minY
-            );
-        }
+        return branches;
     }
 
-    private void DrawLineBetween(GameObject lineObj, Vector2 from, Vector2 to)
+
+    private void CreateConnection(GameObject fromNode, GameObject toNode)
     {
-        var rt = lineObj.GetComponent<RectTransform>();
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0); // Bottom-center anchoring
+        GameObject connection = new("Connection");
+        connection.transform.SetParent(recipeViewerContent, false);
 
-        Vector2 direction = to - from;
-        float distance = direction.magnitude;
+        Image connectionImage = connection.AddComponent<Image>();
+        connectionImage.color = Color.white;
 
-        // Scale line thickness based on graph scale factor
-        float actualThickness = lineThickness * graphScaleFactor;
-        rt.sizeDelta = new Vector2(distance, actualThickness);
-        rt.anchoredPosition = from + direction / 2f;
-        rt.localRotation = Quaternion.FromToRotation(Vector3.right, direction.normalized);
+        connectionImage.rectTransform.sizeDelta = new Vector2(2, 2);
 
-        // Add arrowhead
-        AddArrowhead(lineObj, from, to);
+        Vector3 fromPosition = fromNode.transform.localPosition;
+        Vector3 toPosition = toNode.transform.localPosition;
+
+        Vector3 direction = (toPosition - fromPosition).normalized;
+
+        Vector3 adjustedFromPosition = fromPosition + direction * (nodeSize / 2);
+        Vector3 adjustedToPosition = toPosition - direction * (nodeSize / 2);
+
+        connection.transform.SetLocalPositionAndRotation(
+            (adjustedFromPosition + adjustedToPosition) / 2,
+            Quaternion.FromToRotation(Vector3.right, adjustedToPosition - adjustedFromPosition)
+        );
+
+        connection.GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(adjustedFromPosition, adjustedToPosition), 5);
+
+        connection.transform.SetAsFirstSibling();
     }
 
-    private void AddArrowhead(GameObject lineObj, Vector2 from, Vector2 to)
+
+
+
+    private Sprite GetSprite(ObtentionMethod method, SpawnLocation? spawn)
     {
-        // Create arrowhead
-        GameObject arrowhead = new GameObject("Arrowhead");
-        arrowhead.transform.SetParent(lineObj.transform, false);
-
-        // Add image component
-        Image arrowImage = arrowhead.AddComponent<Image>();
-        arrowImage.color = lineObj.GetComponent<Image>().color;
-
-        // Set up RectTransform
-        RectTransform arrowRT = arrowhead.GetComponent<RectTransform>();
-        arrowRT.pivot = new Vector2(0.5f, 0.5f);
-        arrowRT.anchorMin = arrowRT.anchorMax = new Vector2(0.5f, 0.5f);
-
-        // Size based on line thickness
-        float arrowSize = lineThickness * 3f * graphScaleFactor;
-        arrowRT.sizeDelta = new Vector2(arrowSize, arrowSize);
-
-        // Position at end of line
-        Vector2 direction = (to - from).normalized;
-        arrowRT.anchoredPosition = direction * (Vector2.Distance(from, to) / 2f - arrowSize / 2);
-
-        // Rotate to point in direction of line
-        arrowRT.localRotation = Quaternion.FromToRotation(Vector2.up, direction);
+        if (method == ObtentionMethod.SPAWN)
+            return spawnLocations[(int)spawn];
+        return utensils[(int)method];
     }
 
     public void ReturnToList()
@@ -497,4 +232,6 @@ public class RecipeUIHandler : MonoBehaviour
         recipeViewerUI.SetActive(false);
         recipeListUI.SetActive(true);
     }
+
+
 }
