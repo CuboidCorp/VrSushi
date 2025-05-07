@@ -2067,7 +2067,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   nodeSize: 64
-  margin: 6
+  margin: 12
   startPos: {x: 42, y: -32}
 --- !u!137 &7749893897109634572 stripped
 SkinnedMeshRenderer:

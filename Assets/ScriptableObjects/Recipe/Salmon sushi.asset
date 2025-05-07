@@ -27,7 +27,8 @@ MonoBehaviour:
     spawnLocation: 2
   - stepDescription: Boil rice
     method: 2
-    inputItems: []
+    inputItems:
+    - {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
     resultItem: {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
     spawnLocation: 0
   - stepDescription: Cut salmon

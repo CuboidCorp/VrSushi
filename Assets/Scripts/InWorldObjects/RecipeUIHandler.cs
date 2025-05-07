@@ -66,53 +66,164 @@ public class RecipeUIHandler : MonoBehaviour
         foreach (Transform child in recipeViewerContent)
             Destroy(child.gameObject);
 
-        List<List<KitchenItem>> branches = GetBranches(recipe.steps);
+        // Calculate item depths - how far each item is from the final product
+        Dictionary<KitchenItem, int> itemDepths = CalculateItemDepths(recipe);
 
-        Dictionary<KitchenItem, GameObject> itemToNodeMap = new();
-        Dictionary<KitchenItem, Vector2> itemToPositionMap = new();
+        // Find the maximum depth to determine column layout
+        int maxDepth = itemDepths.Values.Count > 0 ? itemDepths.Values.Max() : 0;
 
-        float branchSpacingY = nodeSize + margin;
-        float currentX = startPos.x;
-        float currentY = startPos.y;
+        // Calculate item positions by depth
+        Dictionary<KitchenItem, Vector2> itemPositions = PositionItemsByDepth(recipe, itemDepths, maxDepth);
 
-        for (int branchIndex = 0; branchIndex < branches.Count; branchIndex++)
+        // Create nodes for all items
+        Dictionary<KitchenItem, GameObject> itemToNodeMap = CreateNodes(recipe, itemPositions);
+
+        // Create connections between nodes
+        CreateConnections(recipe, itemToNodeMap);
+    }
+
+    /// <summary>
+    /// Calculates how many steps each item is from the final product
+    /// </summary>
+    private Dictionary<KitchenItem, int> CalculateItemDepths(Recipe recipe)
+    {
+        Dictionary<KitchenItem, int> depths = new Dictionary<KitchenItem, int>();
+
+        // Set final product at depth 0
+        depths[recipe.finalProduct] = 0;
+
+        // Use BFS to determine depths starting from the final product
+        Queue<KitchenItem> queue = new Queue<KitchenItem>();
+        queue.Enqueue(recipe.finalProduct);
+
+        while (queue.Count > 0)
         {
-            List<KitchenItem> branch = branches[branchIndex];
+            KitchenItem current = queue.Dequeue();
+            int currentDepth = depths[current];
 
-            foreach (KitchenItem item in branch)
+            // Find all steps that produce this item
+            var stepsProducingItem = recipe.steps.Where(s => s.resultItem == current).ToList();
+
+            foreach (var step in stepsProducingItem)
             {
-                GameObject node = Instantiate(nodeUIPrefab, recipeViewerContent);
-                node.name = item.name;
-                node.transform.localPosition = new Vector2(currentX, currentY);
-
-                if (node.TryGetComponent(out RectTransform rectTransform))
+                // For each input item to this step
+                if (step.inputItems != null)
                 {
-                    rectTransform.sizeDelta = new Vector2(nodeSize, nodeSize);
+                    foreach (var input in step.inputItems)
+                    {
+                        // If we haven't assigned a depth yet, or if the new depth is greater
+                        if (!depths.ContainsKey(input) || depths[input] < currentDepth + 1)
+                        {
+                            depths[input] = currentDepth + 1;
+                            queue.Enqueue(input);
+                        }
+                    }
                 }
-
-                Image icon = node.GetComponentInChildren<Image>();
-                if (icon != null && item.icon != null)
-                {
-                    icon.sprite = item.icon;
-                }
-
-                TMP_Text text = node.GetComponentInChildren<TMP_Text>();
-                if (text != null)
-                {
-                    text.text = item.name;
-                }
-
-                itemToNodeMap[item] = node;
-                itemToPositionMap[item] = new Vector2(currentX, currentY);
-
-                currentX += nodeSize + margin;
             }
-
-            currentX = startPos.x;
-            currentY += -branchSpacingY;
         }
 
-        //Création des connexions
+        return depths;
+    }
+
+    /// <summary>
+    /// Positions items based on their depth from the final product
+    /// </summary>
+    private Dictionary<KitchenItem, Vector2> PositionItemsByDepth(Recipe recipe, Dictionary<KitchenItem, int> itemDepths, int maxDepth)
+    {
+        Dictionary<KitchenItem, Vector2> positions = new Dictionary<KitchenItem, Vector2>();
+        Dictionary<int, List<KitchenItem>> depthToItems = new Dictionary<int, List<KitchenItem>>();
+
+        // Group items by depth
+        foreach (var kvp in itemDepths)
+        {
+            if (!depthToItems.ContainsKey(kvp.Value))
+                depthToItems[kvp.Value] = new List<KitchenItem>();
+
+            depthToItems[kvp.Value].Add(kvp.Key);
+        }
+
+        // Position items from right to left (starting with final product)
+        for (int depth = 0; depth <= maxDepth; depth++)
+        {
+            if (!depthToItems.ContainsKey(depth))
+                continue;
+
+            List<KitchenItem> itemsAtDepth = depthToItems[depth];
+
+            // Calculate x position - rightmost for final product (depth 0)
+            float xPos = startPos.x + (maxDepth - depth) * (nodeSize + margin);
+
+            // Position items vertically within this column
+            for (int i = 0; i < itemsAtDepth.Count; i++)
+            {
+                float yPos = startPos.y - i * (nodeSize + margin);
+                positions[itemsAtDepth[i]] = new Vector2(xPos, yPos);
+            }
+        }
+
+        return positions;
+    }
+
+    /// <summary>
+    /// Creates UI nodes for all items using calculated positions
+    /// </summary>
+    private Dictionary<KitchenItem, GameObject> CreateNodes(Recipe recipe, Dictionary<KitchenItem, Vector2> itemPositions)
+    {
+        Dictionary<KitchenItem, GameObject> itemToNodeMap = new Dictionary<KitchenItem, GameObject>();
+
+        // Create a node for each item in the recipe
+        HashSet<KitchenItem> allItems = new HashSet<KitchenItem>();
+        allItems.Add(recipe.finalProduct);
+
+        foreach (var step in recipe.steps)
+        {
+            allItems.Add(step.resultItem);
+            if (step.inputItems != null)
+            {
+                foreach (var input in step.inputItems)
+                {
+                    allItems.Add(input);
+                }
+            }
+        }
+
+        foreach (KitchenItem item in allItems)
+        {
+            if (!itemPositions.ContainsKey(item))
+                continue;
+
+            GameObject node = Instantiate(nodeUIPrefab, recipeViewerContent);
+            node.name = item.itemName;
+            node.transform.localPosition = itemPositions[item];
+
+            if (node.TryGetComponent(out RectTransform rectTransform))
+            {
+                rectTransform.sizeDelta = new Vector2(nodeSize, nodeSize);
+            }
+
+            Image icon = node.GetComponentInChildren<Image>();
+            if (icon != null && item.icon != null)
+            {
+                icon.sprite = item.icon;
+            }
+
+            TMP_Text text = node.GetComponentInChildren<TMP_Text>();
+            if (text != null)
+            {
+                text.text = item.itemName;
+            }
+
+            itemToNodeMap[item] = node;
+        }
+
+        return itemToNodeMap;
+    }
+
+    /// <summary>
+    /// Creates visual connections between nodes
+    /// </summary>
+    private void CreateConnections(Recipe recipe, Dictionary<KitchenItem, GameObject> itemToNodeMap)
+    {
         foreach (var step in recipe.steps)
         {
             if (step.inputItems != null && step.inputItems.Count > 0)
@@ -128,66 +239,6 @@ public class RecipeUIHandler : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// Renvoie les branches de la recette sous forme de liste de listes d'items de cuisine.
-    /// Une branche represente la suite des transformations sur un ingrédient que l'on spawn.
-    /// </summary>
-    /// <param name="recipeSteps">La recette dont on veut les branches</param>
-    /// <returns>Une liste de liste de kitchen item donc la liste des branches</returns>
-    private List<List<KitchenItem>> GetBranches(List<RecipeStep> recipeSteps)
-    {
-        List<List<KitchenItem>> branches = new(); // Liste des branches
-        foreach (var step in recipeSteps)
-        {
-            switch (step.method)
-            {
-                case ObtentionMethod.SPAWN:
-                    // Créer une nouvelle branche pour SPAWN
-                    branches.Add(new List<KitchenItem> { step.resultItem });
-                    break;
-
-                case ObtentionMethod.COMBINE:
-                    var branchesContainingInputs = branches
-                        .Where(branch => step.inputItems.Any(item => branch.Contains(item)))
-                        .ToList();
-
-                    if (branchesContainingInputs.Count > 0)
-                    {
-                        var targetBranch = branchesContainingInputs
-                            .OrderByDescending(branch => branch.Count)
-                            .First();
-
-                        //On ajoute le resultat a la branche la plus longue qui a les inputs
-                        targetBranch.Add(step.resultItem);
-                    }
-                    else
-                    {
-                        // Si aucune branche ne contient les inputItems, on fait une au cas ou mais ce sera jamais utilisé
-                        branches.Add(new List<KitchenItem> { step.resultItem });
-                    }
-                    break;
-
-                default:
-                    // Par defaut on ajoute le resultat a la suite logique
-                    var targetBranchDefault = branches
-                        .FirstOrDefault(branch => step.inputItems.All(item => branch.Contains(item)));
-
-                    if (targetBranchDefault != null)
-                    {
-                        targetBranchDefault.Add(step.resultItem);
-                    }
-                    else
-                    {
-                        // Si aucune branche ne correspond, on crée une nouvelle mais là aussi jamais utilisé
-                        branches.Add(new List<KitchenItem> { step.resultItem });
-                    }
-                    break;
-            }
-        }
-        return branches;
-    }
-
 
     private void CreateConnection(GameObject fromNode, GameObject toNode)
     {
@@ -217,9 +268,6 @@ public class RecipeUIHandler : MonoBehaviour
         connection.transform.SetAsFirstSibling();
     }
 
-
-
-
     private Sprite GetSprite(ObtentionMethod method, SpawnLocation? spawn)
     {
         if (method == ObtentionMethod.SPAWN)
@@ -232,6 +280,4 @@ public class RecipeUIHandler : MonoBehaviour
         recipeViewerUI.SetActive(false);
         recipeListUI.SetActive(true);
     }
-
-
 }

@@ -12,13 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Saumon coupe
   m_EditorClassIdentifier: 
-  itemName: Saumon coupe
+  itemName: Cut salmon
   icon: {fileID: 21300000, guid: 7a8ba8dc63c34594884d55ccc79dc56d, type: 3}
   prefab: {fileID: 8272976984949342053, guid: 441a5dd9bef7eea409873a4f17c1a390, type: 3}
-  recipeSteps:
-  - stepDescription: Coupe saumon
-    method: 1
-    inputItems:
-    - {fileID: 11400000, guid: 1c066d66881882b438ae478f21bb520a, type: 2}
-    resultItem: {fileID: 11400000}
-    spawnLocation: 0
