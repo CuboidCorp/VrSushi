@@ -8,6 +8,8 @@ public class RecipeUIHandler : MonoBehaviour
 {
     [SerializeField, Tooltip("List of all recipes to show")] private Recipe[] recipes;
 
+    [SerializeField] private RecipeStepPopup recipeStepPopup;
+
     [Header("UI Elements")]
     [SerializeField, Tooltip("Gameobject that shows the list of all recipes")] private GameObject recipeListUI;
     [SerializeField, Tooltip("Transform that will hold the recipes")] private Transform recipeListContent;
@@ -18,13 +20,13 @@ public class RecipeUIHandler : MonoBehaviour
     [SerializeField, Tooltip("Prefab that shows the info for a recipe")] private GameObject recipeUiPrefab;
     [SerializeField, Tooltip("Prefab that shows the info for a ingredient or an item")] private GameObject nodeUIPrefab;
 
-    [SerializeField, Tooltip("Sprites of all spawn locations")] private Sprite[] spawnLocations;
-    [SerializeField, Tooltip("Sprite of ustensils")] private Sprite[] utensils;
+
 
     [Header("Recipe Graph")]
     [SerializeField, Tooltip("Size of nodes")] private float nodeSize = 64f;
     [SerializeField, Tooltip("Margin between nodes")] private float margin = 6f;
     [SerializeField, Tooltip("Start pos of graph")] private Vector2 startPos = new(42f, -32f);
+    [SerializeField] private Button btnBack;
 
     private void Start()
     {
@@ -63,8 +65,12 @@ public class RecipeUIHandler : MonoBehaviour
         recipeListUI.SetActive(false);
         recipeViewerUI.SetActive(true);
 
+        btnBack.onClick.AddListener(ReturnToList);
+
         foreach (Transform child in recipeViewerContent)
             Destroy(child.gameObject);
+
+
 
         // Calculate item depths - how far each item is from the final product
         Dictionary<KitchenItem, int> itemDepths = CalculateItemDepths(recipe);
@@ -171,7 +177,7 @@ public class RecipeUIHandler : MonoBehaviour
     {
         Dictionary<KitchenItem, GameObject> itemToNodeMap = new Dictionary<KitchenItem, GameObject>();
 
-        // Create a node for each item in the recipe
+        // Créez un ensemble de tous les items dans la recette
         HashSet<KitchenItem> allItems = new HashSet<KitchenItem>();
         allItems.Add(recipe.finalProduct);
 
@@ -201,7 +207,7 @@ public class RecipeUIHandler : MonoBehaviour
                 rectTransform.sizeDelta = new Vector2(nodeSize, nodeSize);
             }
 
-            Image icon = node.GetComponentInChildren<Image>();
+            Image icon = node.transform.GetChild(0).GetChild(0).GetComponent<Image>();
             if (icon != null && item.icon != null)
             {
                 icon.sprite = item.icon;
@@ -213,11 +219,24 @@ public class RecipeUIHandler : MonoBehaviour
                 text.text = item.itemName;
             }
 
+            // Ajoutez un événement onClick pour afficher la popup
+            Button button = node.GetComponent<Button>();
+            if (button != null)
+            {
+                // Trouvez l'étape associée à cet item
+                RecipeStep associatedStep = recipe.steps.FirstOrDefault(s => s.resultItem == item);
+                if (associatedStep != null)
+                {
+                    button.onClick.AddListener(() => recipeStepPopup.Show(associatedStep));
+                }
+            }
+
             itemToNodeMap[item] = node;
         }
 
         return itemToNodeMap;
     }
+
 
     /// <summary>
     /// Creates visual connections between nodes
@@ -266,13 +285,6 @@ public class RecipeUIHandler : MonoBehaviour
         connection.GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(adjustedFromPosition, adjustedToPosition), 5);
 
         connection.transform.SetAsFirstSibling();
-    }
-
-    private Sprite GetSprite(ObtentionMethod method, SpawnLocation? spawn)
-    {
-        if (method == ObtentionMethod.SPAWN)
-            return spawnLocations[(int)spawn];
-        return utensils[(int)method];
     }
 
     public void ReturnToList()
