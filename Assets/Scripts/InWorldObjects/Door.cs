@@ -14,7 +14,7 @@ public class Door : MonoBehaviour
 
     public void OpenDoor(GameObject go)
     {
-        Debug.Log($"Client {go.name} is opening the door.");
+        Debug.Log($"{go.name} is opening the door.");
         users.Add(go);
         Debug.Log($"Users in the door: {users.Count}");
         if (users.Count == 1)
@@ -23,7 +23,7 @@ public class Door : MonoBehaviour
 
     public void CloseDoor(GameObject go)
     {
-        Debug.Log($"Client {go.name} is closing the door.");
+        Debug.Log($"{go.name} is closing the door.");
         users.Remove(go);
         Debug.Log($"Users in the door: {users.Count}");
         if (users.Count == 0)

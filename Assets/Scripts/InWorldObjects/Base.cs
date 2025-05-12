@@ -23,8 +23,6 @@ public class Base : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision with: " + collision.transform.name);
-        Debug.Log("Collision with tag: " + collision.transform.tag);
         if (collision.transform.CompareTag("Combinable") && collision.gameObject.TryGetComponent(out Combinable comb))
         {
             if (combinables.Contains(comb.item))

@@ -18,7 +18,7 @@ public class Table : MonoBehaviour
     [SerializeField] private Image progressBarImage;
     [SerializeField] private Image itemImage;
 
-    private KitchenItem expectedPlat;
+    public KitchenItem expectedPlat;
     private float timeLimit; // Temps limite pour placer le plat
     private Coroutine progressCoroutine;
 

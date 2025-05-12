@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Riz Cuit
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 6762833342464
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Boiled rice
   icon: {fileID: 21300000, guid: 50418118a5b88ee4da2b5aeeaef3d1d5, type: 3}
   prefab: {fileID: 8973592019675602019, guid: 5848cf43078d4234aa4b21146bab7be3, type: 3}
+  references:
+    version: 2
+    RefIds: []

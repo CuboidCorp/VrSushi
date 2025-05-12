@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Riz
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 5346567876608
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Rice
   icon: {fileID: 21300000, guid: 11027746264ae6643bb762674f5ff375, type: 3}
   prefab: {fileID: 3168664163528235768, guid: e5584cd2f6f3c474d9058ff6b2ed847c, type: 3}
-  recipeSteps:
-  - stepDescription: Spawn Rice
-    method: 0
-    inputItems: []
-    resultItem: {fileID: 11400000}
-    spawnLocation: 3
+  references:
+    version: 2
+    RefIds: []

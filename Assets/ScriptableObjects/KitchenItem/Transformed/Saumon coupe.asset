@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Saumon coupe
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 7345409585152
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Cut salmon
   icon: {fileID: 21300000, guid: 7a8ba8dc63c34594884d55ccc79dc56d, type: 3}
   prefab: {fileID: 8272976984949342053, guid: 441a5dd9bef7eea409873a4f17c1a390, type: 3}
+  references:
+    version: 2
+    RefIds: []

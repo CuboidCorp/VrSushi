@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class IngredientSpawner : MonoBehaviour
@@ -31,8 +32,8 @@ public class IngredientSpawner : MonoBehaviour
             Button button = ingredientUI.GetComponent<Button>();
             button.onClick.AddListener(() => SelectItem(item, ingredientUI));
 
-            TMP_Text text = ingredientUI.GetComponentInChildren<TMP_Text>();
-            text.text = item.name;
+            LocalizeStringEvent localizeStringEvent = ingredientUI.GetComponentInChildren<LocalizeStringEvent>();
+            localizeStringEvent.StringReference = item.itemNameLocalized;
 
         }
     }

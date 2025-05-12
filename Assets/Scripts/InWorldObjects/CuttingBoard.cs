@@ -4,7 +4,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-[RequireComponent(typeof(Collider))]
 public class CuttingStation : MonoBehaviour
 {
     [SerializeField] private XRSocketInteractor socketInteractor;
@@ -51,6 +50,7 @@ public class CuttingStation : MonoBehaviour
         if (currentItem.TryGetComponent(out Cuttable cuttable))
         {
             currentTargetMaxHealth = cuttable.cutMaxHealth;
+            cuttable.OnCut.AddListener(CutDamage);
         }
         else
         {
@@ -63,6 +63,10 @@ public class CuttingStation : MonoBehaviour
     {
         currentTargetMaxHealth = 0;
         currentDamage = 0;
+        if (currentItem != null && currentItem.TryGetComponent(out Cuttable cuttable))
+        {
+            cuttable.OnCut.RemoveListener(CutDamage);
+        }
         currentItem = null;
         if (cutProgressGameObject != null)
         {
@@ -70,37 +74,32 @@ public class CuttingStation : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void CutDamage(int damage)
     {
-        if (!socketInteractor.hasSelection || currentItem == null)
-            return;
-        if (other.TryGetComponent(out Knife knifeScript))
+        currentDamage += damage;
+        if (cutProgressGameObject != null)
         {
-            currentDamage += knifeScript.cuttingPower;
-            if (cutProgressGameObject != null)
-            {
-                cutProgressGameObject.SetActive(true);
-            }
-            if (cutProgressImage != null)
-            {
-                cutProgressImage.fillAmount = (float)currentDamage / (float)currentTargetMaxHealth;
-            }
-            //TODO : Barre de progression au dessus de l'objet qui affiche a combien de degats on est
-            if (currentDamage >= currentTargetMaxHealth)
-            {
-                Cuttable cuttable = currentItem.GetComponent<Cuttable>();
-                GameObject cutPrefab = cuttable.cutObjectPrefab;
+            cutProgressGameObject.SetActive(true);
+        }
+        if (cutProgressImage != null)
+        {
+            cutProgressImage.fillAmount = (float)currentDamage / (float)currentTargetMaxHealth;
+        }
+        //TODO : Barre de progression au dessus de l'objet qui affiche a combien de degats on est
+        if (currentDamage >= currentTargetMaxHealth)
+        {
+            Cuttable cuttable = currentItem.GetComponent<Cuttable>();
+            GameObject cutPrefab = cuttable.cutObjectPrefab;
 
-                GameObject cuttedObject = currentItem; //Cache pour supprimer l'objet
-                IXRSelectInteractable interactable = socketInteractor.firstInteractableSelected;
-                socketInteractor.interactionManager.CancelInteractableSelection(interactable);
+            GameObject cuttedObject = currentItem; //Cache pour supprimer l'objet
+            IXRSelectInteractable interactable = socketInteractor.firstInteractableSelected;
+            socketInteractor.interactionManager.CancelInteractableSelection(interactable);
 
-                GameObject cutGO = Instantiate(cutPrefab);
-                cutGO.transform.SetPositionAndRotation(cuttedObject.transform.position, Quaternion.Euler(cuttable.cutObjectPrefabPreferredRotation));
+            GameObject cutGO = Instantiate(cutPrefab);
+            cutGO.transform.SetPositionAndRotation(cuttedObject.transform.position, Quaternion.Euler(cuttable.cutObjectPrefabPreferredRotation));
 
-                Destroy(cuttedObject);
+            Destroy(cuttedObject);
 
-            }
         }
     }
 }

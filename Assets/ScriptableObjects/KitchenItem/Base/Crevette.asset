@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Crevette
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 5041465815040
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Shrimp
   icon: {fileID: 21300000, guid: 0f526798a3e15c744a82a0d8b581d42c, type: 3}
   prefab: {fileID: 4312927505365112262, guid: 852880eaf772e524ba5df2dc037043a7, type: 3}
-  recipeSteps:
-  - stepDescription: Spawn crevette
-    method: 0
-    inputItems: []
-    resultItem: {fileID: 11400000}
-    spawnLocation: 2
+  references:
+    version: 2
+    RefIds: []

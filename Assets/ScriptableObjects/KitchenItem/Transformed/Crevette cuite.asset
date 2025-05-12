@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Crevette cuite
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 6218551095296
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Boiled shrimp
   icon: {fileID: 21300000, guid: 6c47f7d33cc2b6f4c98708a359fad283, type: 3}
   prefab: {fileID: 8309801427037056936, guid: 939798fc04f96f541b394d98ac4020f0, type: 3}
-  recipeSteps:
-  - stepDescription: Boil shrimp
-    method: 2
-    inputItems:
-    - {fileID: 11400000, guid: d9de68da0738df142bc6ffa2a403e8a0, type: 2}
-    resultItem: {fileID: 11400000}
-    spawnLocation: 0
+  references:
+    version: 2
+    RefIds: []

@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Thon coupe
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 7422651887616
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Cut tuna
   icon: {fileID: 21300000, guid: 25f3942941ef7c84c8f18e1362576ce8, type: 3}
   prefab: {fileID: 5547321453584117300, guid: 84ffae9604f57654493614cb13361851, type: 3}
-  recipeSteps:
-  - stepDescription: Coupe le thon
-    method: 1
-    inputItems:
-    - {fileID: 11400000, guid: 13859a35fd97b054583bf945e9e80c6d, type: 2}
-    resultItem: {fileID: 11400000}
-    spawnLocation: 0
+  references:
+    version: 2
+    RefIds: []

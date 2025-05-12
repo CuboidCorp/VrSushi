@@ -5,6 +5,13 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 {
     [SerializeField] private Transform boilingAttachPoint;
+    [SerializeField] private GameObject boilingParticles;
+
+
+    [Header("Audio")]
+    private AudioSource audioSource;
+    [SerializeField] private float baseVolume;
+    [SerializeField] private float overboilingVolume;
 
     [Header("WaterMaterials")]
     [SerializeField] private Material emptyWaterMaterial;
@@ -32,6 +39,9 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = baseVolume;
+        boilingParticles.SetActive(false);
         meshRenderer = GetComponent<MeshRenderer>();
         SetWaterMaterial(emptyWaterMaterial);
     }
@@ -63,14 +73,7 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
         currentBoilingItem.transform.SetParent(boilingAttachPoint);
         currentBoilingItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-
         isBoiling = true;
-        hasBoiled = false;
-        hasOverboiled = false;
-
-        canvaProgressbar.SetActive(true);
-        boilingProgressBar.fillAmount = 0;
-        overboilingProgressBar.fillAmount = 0;
     }
 
     private void OnTriggerExit(Collider other)
@@ -80,6 +83,9 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
         if (currentBoilingItem != null && (other.gameObject == currentBoilingItem || other.gameObject == spawnedBoiledItem))
         {
+            boilingParticles.SetActive(false);
+            audioSource.Stop();
+            audioSource.volume = baseVolume;
             Debug.Log($"Boiling pot exit bouillable: {other.name}");
 
             if (spawnedBoiledItem != null)
@@ -119,7 +125,11 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
         Debug.Log("Emptying boiling pot");
 
+        audioSource.Stop();
+        audioSource.volume = baseVolume;
+
         SetWaterMaterial(emptyWaterMaterial);
+        boilingParticles.SetActive(false);
 
         if (currentBoilingItem != null)
         {
@@ -161,12 +171,26 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
         if (currentBoilingItem == null || boilableCurrentItem == null || !isBoiling || !isFilled)
             return;
 
+        if (currentBoilingTime == 0)
+        {
+            audioSource.Play();
+            boilingParticles.SetActive(true);
+
+            canvaProgressbar.SetActive(true);
+            boilingProgressBar.fillAmount = 0;
+            overboilingProgressBar.fillAmount = 0;
+
+            hasBoiled = false;
+            hasOverboiled = false;
+        }
+
         currentBoilingTime += cookDamage;
 
         if (currentBoilingTime >= currentOverBoilingMaxTime)
         {
             if (!hasOverboiled)
             {
+
                 overboilingProgressBar.fillAmount = 1;
                 SetWaterMaterial(overboilingWaterMaterial);
 
@@ -183,6 +207,7 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
         {
             if (!hasBoiled)
             {
+                audioSource.volume = overboilingVolume;
                 boilingProgressBar.fillAmount = 1;
                 SetWaterMaterial(boilingWaterMaterial);
 
@@ -218,7 +243,7 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
     private void Update()
     {
-        if (Vector3.Dot(transform.up, Vector3.down) > 0.7f && isFilled)
+        if (Vector3.Dot(transform.up, Vector3.down) > 0.6f && isFilled)
         {
             Empty();
         }

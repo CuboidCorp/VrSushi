@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: FletCoupe
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 6656805531648
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Cut flounder
   icon: {fileID: 21300000, guid: 9c67572bfc3eca9459128268d8e63923, type: 3}
   prefab: {fileID: 5683609227352452742, guid: 18413e813bbf60b4bb0b10874f5d35ac, type: 3}
-  recipeSteps:
-  - stepDescription: Cut flet
-    method: 1
-    inputItems:
-    - {fileID: 11400000, guid: db291635d3079e5439f77e15c2c11e04, type: 2}
-    resultItem: {fileID: 11400000}
-    spawnLocation: 0
+  references:
+    version: 2
+    RefIds: []

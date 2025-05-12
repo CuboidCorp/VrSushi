@@ -2048,27 +2048,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad7456d322e55f2479b10677c704c0b7, type: 2}
   - {fileID: 11400000, guid: d4609f721853d214a9ac6c0faf224a3e, type: 2}
   - {fileID: 11400000, guid: 5bbca30562c0b6b42b1d288b8b6d7b9b, type: 2}
+  recipeStepPopup: {fileID: 0}
   recipeListUI: {fileID: 5457043097354468066}
   recipeListContent: {fileID: 4837341140011178659}
   recipeViewerUI: {fileID: 712882571624222593}
   recipeViewerContent: {fileID: 4645140724172226669}
   recipeUiPrefab: {fileID: 503124242087143238, guid: 7a6fa71b8cbf7784f8a1c95f8914c06d, type: 3}
   nodeUIPrefab: {fileID: 503124242087143238, guid: 751bafa9dac23894090b0a9f9bf61df9, type: 3}
-  spawnLocations:
-  - {fileID: 0}
-  - {fileID: 21300000, guid: d746d6e7070071b4aab2085348921499, type: 3}
-  - {fileID: 21300000, guid: 928c565cd7b47b34e96cbb1ba5dfc204, type: 3}
-  - {fileID: 21300000, guid: 04a044c11fb12e64f895d683c6de33ea, type: 3}
-  utensils:
-  - {fileID: 0}
-  - {fileID: 21300000, guid: 520fa0dbcb64fb341b150dc1bc346cb3, type: 3}
-  - {fileID: 21300000, guid: ee019f104fc13ac408b00fe633ba4b57, type: 3}
-  - {fileID: 21300000, guid: aea4f91f97d2a314294d3b75f087478c, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
   nodeSize: 64
   margin: 12
   startPos: {x: 42, y: -32}
+  btnBack: {fileID: 0}
 --- !u!137 &7749893897109634572 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: c6984c48aed9a154294088f4265d8478, type: 3}
@@ -2374,6 +2364,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1298362423970111924}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8309909814154274042, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3000499244293943799}
     - targetCorrespondingSourceObject: {fileID: 9213841042329470732, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4897386453095590398}
@@ -2423,6 +2416,51 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8072890477496077224, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
   m_PrefabInstance: {fileID: 5584021303907133585}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4480192368631057515 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8309909814154274042, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
+  m_PrefabInstance: {fileID: 5584021303907133585}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3000499244293943799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4480192368631057515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:4251a1dec2d6b9441a70f2e023cf38c3
+    m_TableEntryReference:
+      m_KeyId: 3697686310912
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6281835355506713994}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!224 &4837341140011178659 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1035790433963668018, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
@@ -2433,3 +2471,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 487833529046422131, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
   m_PrefabInstance: {fileID: 5584021303907133585}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6281835355506713994 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1897108578803551515, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
+  m_PrefabInstance: {fileID: 5584021303907133585}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4480192368631057515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

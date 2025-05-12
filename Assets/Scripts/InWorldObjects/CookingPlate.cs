@@ -1,12 +1,20 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class CookingPlate : MonoBehaviour
 {
-    private ICookingUtensil cookingUtensil;
+
     private Coroutine cookdamageCoroutine;
 
+    [Header("Cooking Settings")]
+    [SerializeField] private bool isActive = false;
+    [SerializeField] private GameObject particles;
+
     [SerializeField] private float cookDamageInterval = .1f;
+
+    private Rigidbody currentRigidbody;
+    private ICookingUtensil cookingUtensil;
     private void OnTriggerEnter(Collider other)
     {
         if (other.attachedRigidbody == null)
@@ -16,7 +24,12 @@ public class CookingPlate : MonoBehaviour
         {
             if (other.attachedRigidbody.TryGetComponent(out cookingUtensil))
             {
-                cookdamageCoroutine ??= StartCoroutine(CookCoroutine());
+                Debug.Log("Cooking plate trigger");
+                currentRigidbody = other.attachedRigidbody;
+                if (isActive)
+                {
+                    cookdamageCoroutine ??= StartCoroutine(CookCoroutine());
+                }
             }
         }
     }
@@ -27,11 +40,42 @@ public class CookingPlate : MonoBehaviour
             return;
         if (other.attachedRigidbody.CompareTag("CookingUtensil"))
         {
-            if (cookdamageCoroutine != null)
+            StopCooking();
+            if (other.attachedRigidbody.TryGetComponent(out cookingUtensil))
             {
-                StopCoroutine(cookdamageCoroutine);
-                cookdamageCoroutine = null;
+                currentRigidbody = null;
+                cookingUtensil = null;
             }
+        }
+    }
+
+    public void Enable()
+    {
+        Debug.Log("Cooking plate enable");
+        isActive = true;
+        particles.SetActive(true);
+        if (currentRigidbody != null)
+        {
+            if (currentRigidbody.TryGetComponent(out cookingUtensil))
+            {
+                cookdamageCoroutine ??= StartCoroutine(CookCoroutine());
+            }
+        }
+    }
+
+    public void Disable()
+    {
+        isActive = false;
+        particles.SetActive(false);
+        StopCooking();
+    }
+
+    private void StopCooking()
+    {
+        if (cookdamageCoroutine != null)
+        {
+            StopCoroutine(cookdamageCoroutine);
+            cookdamageCoroutine = null;
         }
     }
 
@@ -43,4 +87,7 @@ public class CookingPlate : MonoBehaviour
             cookingUtensil.DoCookDamage(cookDamageInterval);
         }
     }
+
+
+
 }

@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: RizFormeNigiri
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 6885344768000
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Nigiri form rice
   icon: {fileID: 21300000, guid: a08de32f7c2392c4a8ad802c2b463ad1, type: 3}
   prefab: {fileID: 646410039525803883, guid: 4e87d416cd24d6748810f8bfc1c5e9bc, type: 3}
+  references:
+    version: 2
+    RefIds: []

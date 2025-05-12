@@ -284,3 +284,8 @@ MonoBehaviour:
   cutObjectPrefab: {fileID: 5547321453584117300, guid: 84ffae9604f57654493614cb13361851, type: 3}
   cutMaxHealth: 250
   cutObjectPrefabPreferredRotation: {x: 0, y: 90, z: 0}
+  cutObjectAttachPoint: {x: 0.26, y: 0, z: 0}
+  cutObjectAttachRotation: {x: 0, y: 0, z: 0}
+  OnCut:
+    m_PersistentCalls:
+      m_Calls: []

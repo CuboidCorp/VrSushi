@@ -47,7 +47,7 @@ public class AssemblingStation : MonoBehaviour
                 GameObject ingredientUI = Instantiate(ingredientUIPrefab, uiHolder);
                 ingredientUI.transform.GetChild(1).GetChild(2).GetComponent<Image>().sprite = item.icon;
                 ingredientUI.GetComponent<Button>().onClick.AddListener(() => SelectItem(item));
-                ingredientUI.GetComponentInChildren<TMP_Text>().text = item.name;
+                ingredientUI.GetComponentInChildren<TMP_Text>().text = item.itemName;
             }
         }
         else

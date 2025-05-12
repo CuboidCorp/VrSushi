@@ -8,14 +8,14 @@ using System.Collections;
 public class Client : MonoBehaviour
 {
     private NavMeshAgent agent;
-    [SerializeField] private Transform targetPosition;
-    [SerializeField] private Transform despawnPoint;
+    private Transform targetPosition;
+    private Transform despawnPoint;
     private bool isSatisfied = false;
-    private bool isDespawned = false;
     private bool isWaiting = false;
     private bool isEating = false;
 
     private bool isServed = false;
+    private bool isServedCorrectly = false;
     private bool hasOverwaited = false;
     private Animator animator;
     [HideInInspector] public Table targetTable;
@@ -23,14 +23,23 @@ public class Client : MonoBehaviour
     // Time settings for dining
     [SerializeField] private float eatingDuration = 15f;
 
+    [Header("Emotions")]
+    [SerializeField] private GameObject emotionGo;
+    private ParticleSystemRenderer emotionsPs;
+
+    [SerializeField] private Material angryMaterial;
+    [SerializeField] private Material happyMaterial;
+    [SerializeField] private Material disappointedMaterial;
+
     public event Action<Client> OnStartWaiting;
-    public event Action<Client, float> OnClientSatisfaction;
+    public event Action<Client, ClientResult, float> OnClientFinished;
     public event Action<Client> OnClientDespawn;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        emotionsPs = emotionGo.GetComponent<ParticleSystemRenderer>();
     }
 
     private void Update()
@@ -41,11 +50,11 @@ public class Client : MonoBehaviour
         {
             if (!isWaiting)
             {
-                Debug.Log($"Client {gameObject.name} has reached the target position and is starting to wait.");
+                Debug.Log($"{gameObject.name} has reached the target position and is starting to wait.");
                 StartWaiting();
             }
         }
-        else if (isSatisfied && !isDespawned && HasReachedDestination())
+        else if (isSatisfied && HasReachedDestination())
         {
             OnClientDespawn?.Invoke(this); // Trigger the despawn event
             return; //Le client va être détruit dans tous les cas
@@ -61,27 +70,45 @@ public class Client : MonoBehaviour
 
     public void StartClient()
     {
-        Debug.Log($"Client {gameObject.name} initialized. Moving to target position.");
+        Debug.Log($"{gameObject.name} initialized. Moving to target position.");
         animator.SetTrigger("StartWalk");
         MoveToTargetPosition();
 
     }
 
-    public void Satisfy(float satifactionLevel)
+    public void Satisfy(ClientResult result)
     {
+        Debug.Log($"{gameObject.name} is being satisfied with result: {result}.");
         StopAllCoroutines();
         isEating = false;
+        emotionGo.SetActive(true);
+        float satifactionLevel = 0;
 
+        switch (result)
+        {
+            case ClientResult.Satisfied:
+                emotionsPs.sharedMaterial = happyMaterial;
+                satifactionLevel = 1;
+                break;
+            case ClientResult.Unsatisfied:
+                emotionsPs.sharedMaterial = disappointedMaterial;
+                satifactionLevel = 0;
+                break;
+            case ClientResult.NotServed:
+                emotionsPs.sharedMaterial = angryMaterial;
+                satifactionLevel = -1;
+                break;
+        }
         if (satifactionLevel < 0)
         {
-            Debug.Log($"Client {gameObject.name} is unsatisfied and leaving.");
+            Debug.Log($"{gameObject.name} is unsatisfied and leaving.");
         }
         else
         {
-            Debug.Log($"Client {gameObject.name} is satisfied and leaving.");
+            Debug.Log($"{gameObject.name} is satisfied and leaving.");
         }
 
-        OnClientSatisfaction?.Invoke(this, satifactionLevel);
+        OnClientFinished?.Invoke(this, result, satifactionLevel);
 
         StartCoroutine(LeaveAfterAnimation());
     }
@@ -109,16 +136,16 @@ public class Client : MonoBehaviour
     {
         if (targetPosition != null)
         {
-            Debug.Log($"Client {gameObject.name} is moving to target position at {targetPosition.position}.");
+            Debug.Log($"{gameObject.name} is moving to target position at {targetPosition.position}.");
             bool hasWorked = agent.SetDestination(targetPosition.position);
             if (!hasWorked)
             {
-                Debug.LogError($"Client {gameObject.name} failed to set destination to {targetPosition.position}.");
+                Debug.LogError($"{gameObject.name} failed to set destination to {targetPosition.position}.");
             }
         }
         else
         {
-            Debug.LogWarning($"Client {gameObject.name} has no target position set.");
+            Debug.LogWarning($"{gameObject.name} has no target position set.");
         }
     }
 
@@ -128,14 +155,14 @@ public class Client : MonoBehaviour
         {
             isWaiting = false;
             isSatisfied = true;
-            Debug.Log($"Client {gameObject.name} is moving to despawn point at {despawnPoint.position}.");
+            Debug.Log($"{gameObject.name} is moving to despawn point at {despawnPoint.position}.");
             agent.isStopped = false; // Redémarre le mouvement si arrêté
             agent.SetDestination(despawnPoint.position);
 
         }
         else
         {
-            Debug.LogWarning($"Client {gameObject.name} has no despawn point set.");
+            Debug.LogWarning($"{gameObject.name} has no despawn point set.");
         }
     }
 
@@ -159,7 +186,7 @@ public class Client : MonoBehaviour
         isWaiting = true;
         agent.isStopped = true;
         animator.SetTrigger("StopWalk");
-        Debug.Log($"Client {gameObject.name} is now waiting at the target position.");
+        Debug.Log($"{gameObject.name} is now waiting at the target position.");
 
         Vector3 targetRotation = new(0, -90, 0);
         transform.rotation = Quaternion.Euler(targetRotation);
@@ -175,13 +202,14 @@ public class Client : MonoBehaviour
     private void Serve(bool isCorrectPlat)
     {
         isServed = true;
+        isServedCorrectly = isCorrectPlat;
         if (isCorrectPlat)
         {
-            Debug.Log($"Client {gameObject.name} has been served correctly.");
+            Debug.Log($"{gameObject.name} has been served correctly.");
         }
         else
         {
-            Debug.Log($"Client {gameObject.name} has been served incorrectly.");
+            Debug.Log($"{gameObject.name} has been served incorrectly.");
         }
     }
 
@@ -194,30 +222,30 @@ public class Client : MonoBehaviour
     {
         yield return WaitForAnimation("Character Armature|Sitting_Start");
 
-        Debug.Log($"Client {gameObject.name} attend d'être servi.");
+        Debug.Log($"{gameObject.name} attend d'être servi.");
 
         yield return new WaitUntil(() => isServed || hasOverwaited);
 
         if (hasOverwaited)
         {
-            Debug.Log($"Client {gameObject.name} a overwait et part sans manger.");
-            Satisfy(-5);
+            Debug.Log($"{gameObject.name} a overwait et part sans manger.");
+            Satisfy(ClientResult.NotServed);
             yield break;
         }
 
         isEating = true;
-        Debug.Log($"Client {gameObject.name} commence à manger.");
+        Debug.Log($"{gameObject.name} commence à manger.");
 
         yield return new WaitForSeconds(eatingDuration);
 
         isEating = false;
-        Debug.Log($"Client {gameObject.name} a terminé de manger.");
+        Debug.Log($"{gameObject.name} a terminé de manger.");
 
         yield return new WaitForSeconds(2f);
 
         if (!isSatisfied)
         {
-            Satisfy(5);
+            Satisfy(isServedCorrectly ? ClientResult.Satisfied : ClientResult.Unsatisfied);
         }
     }
 
@@ -227,14 +255,8 @@ public class Client : MonoBehaviour
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(animationName) &&
                animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         {
-            yield return null; // Attendre la fin de l'image
+            yield return null; // Attendre la fin de l'animation
         }
-    }
-
-    public void ServeClient()
-    {
-        isServed = true;
-        Debug.Log($"Client {gameObject.name} a été servi.");
     }
 
     public void TriggerHitReaction()

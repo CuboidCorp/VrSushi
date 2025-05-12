@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Octopus sushi
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 5704560111616
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Octopus sushi
   icon: {fileID: 21300000, guid: 00f72f5b96d455c4ebd1354de12b54dc, type: 3}
   prefab: {fileID: 1899927051369582469, guid: bcd5e02f678bc664490499c80322de62, type: 3}
+  references:
+    version: 2
+    RefIds: []

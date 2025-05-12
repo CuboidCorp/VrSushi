@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: KitchenItems_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 49c8ac2d71d89d4429456a7339914b2b, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 5041465815040
+    m_Localized: Shrimp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5149733384192
+    m_Localized: Flounder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5254494515200
+    m_Localized: Octopus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5346567876608
+    m_Localized: Rice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5402368897024
+    m_Localized: Salmon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5503665532928
+    m_Localized: Tuna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5610041470976
+    m_Localized: Flounder sushi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5704560111616
+    m_Localized: Octopus sushi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845824270336
+    m_Localized: Salmon sushi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5946789556224
+    m_Localized: Shrimp sushi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6061885452288
+    m_Localized: Tuna sushi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6218551095296
+    m_Localized: Boiled shrimp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6355750973440
+    m_Localized: Cut octopus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6656805531648
+    m_Localized: Cut flounder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6762833342464
+    m_Localized: Boiled rice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6885344768000
+    m_Localized: Shaped rice for nigiri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7345409585152
+    m_Localized: Cut salmon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7422651887616
+    m_Localized: Cut tuna
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

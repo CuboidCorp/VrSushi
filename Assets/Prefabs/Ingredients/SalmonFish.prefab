@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 22245e6204967d742b9f4abae88c50ce, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 22245e6204967d742b9f4abae88c50ce, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 22245e6204967d742b9f4abae88c50ce, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 22245e6204967d742b9f4abae88c50ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -284,3 +284,8 @@ MonoBehaviour:
   cutObjectPrefab: {fileID: 8272976984949342053, guid: 441a5dd9bef7eea409873a4f17c1a390, type: 3}
   cutMaxHealth: 150
   cutObjectPrefabPreferredRotation: {x: 0, y: -90, z: 0}
+  cutObjectAttachPoint: {x: 0, y: 0.04, z: 0}
+  cutObjectAttachRotation: {x: 0, y: -37, z: 0}
+  OnCut:
+    m_PersistentCalls:
+      m_Calls: []

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 4251a1dec2d6b9441a70f2e023cf38c3, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1811344224256
+    m_Localized: "R\xE9frigirateur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1888968208384
+    m_Localized: "Cong\xE9lateur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1977203781632
+    m_Localized: "R\xE9serve"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2143533101056
+    m_Localized: "G\xE9n\xE9ration"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2252790525952
+    m_Localized: Assemblage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3697686310912
+    m_Localized: Recettes
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

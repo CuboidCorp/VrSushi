@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5badb9ac41fe5084d9537ca51778fa61, type: 3}
   m_Name: Cut octopus
   m_EditorClassIdentifier: 
+  itemNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:49c8ac2d71d89d4429456a7339914b2b
+    m_TableEntryReference:
+      m_KeyId: 6355750973440
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemName: Tentacle
   icon: {fileID: 21300000, guid: 6d14f439a0779cb439d5d7bd43d4c16c, type: 3}
   prefab: {fileID: 7763093868023336529, guid: 12eb37bc23d13e940ab66edf31e5fed0, type: 3}
+  references:
+    version: 2
+    RefIds: []

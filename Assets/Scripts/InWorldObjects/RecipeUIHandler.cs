@@ -2,6 +2,7 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class RecipeUIHandler : MonoBehaviour
@@ -49,11 +50,8 @@ public class RecipeUIHandler : MonoBehaviour
                 }
             }
 
-            TMP_Text text = ingredientUI.GetComponentInChildren<TMP_Text>();
-            if (text != null)
-            {
-                text.text = resultItem.name;
-            }
+            LocalizeStringEvent localizeStringEvent = ingredientUI.GetComponentInChildren<LocalizeStringEvent>();
+            localizeStringEvent.StringReference = resultItem.itemNameLocalized;
 
             Button button = ingredientUI.GetComponent<Button>();
             button.onClick.AddListener(() => ShowRecipe(recipe));
@@ -178,15 +176,17 @@ public class RecipeUIHandler : MonoBehaviour
         Dictionary<KitchenItem, GameObject> itemToNodeMap = new Dictionary<KitchenItem, GameObject>();
 
         // Créez un ensemble de tous les items dans la recette
-        HashSet<KitchenItem> allItems = new HashSet<KitchenItem>();
-        allItems.Add(recipe.finalProduct);
+        HashSet<KitchenItem> allItems = new()
+        {
+            recipe.finalProduct
+        };
 
-        foreach (var step in recipe.steps)
+        foreach (RecipeStep step in recipe.steps)
         {
             allItems.Add(step.resultItem);
             if (step.inputItems != null)
             {
-                foreach (var input in step.inputItems)
+                foreach (KitchenItem input in step.inputItems)
                 {
                     allItems.Add(input);
                 }
@@ -213,11 +213,8 @@ public class RecipeUIHandler : MonoBehaviour
                 icon.sprite = item.icon;
             }
 
-            TMP_Text text = node.GetComponentInChildren<TMP_Text>();
-            if (text != null)
-            {
-                text.text = item.itemName;
-            }
+            LocalizeStringEvent localizeStringEvent = node.GetComponentInChildren<LocalizeStringEvent>();
+            localizeStringEvent.StringReference = item.itemNameLocalized;
 
             // Ajoutez un événement onClick pour afficher la popup
             Button button = node.GetComponent<Button>();
