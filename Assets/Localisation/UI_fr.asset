@@ -42,6 +42,71 @@ MonoBehaviour:
     m_Localized: Recettes
     m_Metadata:
       m_Items: []
+  - m_Id: 12121660682240
+    m_Localized: "Param\xE8tres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12426989236224
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12642345775104
+    m_Localized: Volume Principal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12852178415616
+    m_Localized: "D\xE9placement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13120601288704
+    m_Localized: Direction du mouvement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13347425054720
+    m_Localized: "T\xEAte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13578489262080
+    m_Localized: Main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13829568688128
+    m_Localized: "Vitesse de d\xE9placement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14544420696064
+    m_Localized: "Rotation instantan\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14827385221120
+    m_Localized: Effet de vignette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15289459109888
+    m_Localized: "D\xE9placement a\xE9rien"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15663297425408
+    m_Localized: Quitter l'application
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15825130450944
+    m_Localized: "<b>Attention</b>\n\nVous \xEAtes sur le point de quitter l'application
+      et de retourner sur le menu syst\xE8me."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16092727046144
+    m_Localized: Annuler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16283987308544
+    m_Localized: Confirmer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16829553012736
+    m_Localized: Langue
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

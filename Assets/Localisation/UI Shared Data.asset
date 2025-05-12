@@ -39,6 +39,70 @@ MonoBehaviour:
     m_Key: RECIPES
     m_Metadata:
       m_Items: []
+  - m_Id: 12121660682240
+    m_Key: SETTINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12426989236224
+    m_Key: AUDIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12642345775104
+    m_Key: MAINVOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12852178415616
+    m_Key: LOCOMOTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13120601288704
+    m_Key: MOVEMENTORIENTATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13347425054720
+    m_Key: HEAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13578489262080
+    m_Key: HAND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13829568688128
+    m_Key: MOVEMENTSPEED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14544420696064
+    m_Key: SNAPTURN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14827385221120
+    m_Key: VIGNETTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15289459109888
+    m_Key: FLIGHTLOCOMOTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15663297425408
+    m_Key: QUIT_APP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15825130450944
+    m_Key: QUIT_TEXT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16092727046144
+    m_Key: CANCEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16283987308544
+    m_Key: CONFIRM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16829553012736
+    m_Key: LANGUE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

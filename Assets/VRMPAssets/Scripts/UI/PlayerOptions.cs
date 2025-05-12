@@ -30,6 +30,7 @@ namespace XRMultiplayer
         [SerializeField] Vector2 m_MinMaxTurnAmount = new Vector2(15.0f, 180.0f);
         [SerializeField] float m_SnapTurnUpdateAmount = 15.0f;
 
+
         DynamicMoveProvider m_MoveProvider;
         SnapTurnProvider m_TurnProvider;
         UnityEngine.XR.Interaction.Toolkit.Locomotion.Comfort.TunnelingVignetteController m_TunnelingVignetteController;
@@ -69,7 +70,7 @@ namespace XRMultiplayer
 
         private void Update()
         {
-            m_TimeText.text = $"{DateTime.Now:h:mm}<size=4><voffset=1em>{DateTime.Now:tt}</size></voffset>";
+            m_TimeText.text = $"{DateTime.Now:hh:mm}";
         }
 
         public void TogglePanel(int panelID)

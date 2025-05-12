@@ -42,6 +42,74 @@ MonoBehaviour:
     m_Localized: Recipes
     m_Metadata:
       m_Items: []
+  - m_Id: 12121660682240
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12426989236224
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12642345775104
+    m_Localized: Main Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12852178415616
+    m_Localized: Locomotion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13120601288704
+    m_Localized: Movement Orientation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13347425054720
+    m_Localized: Head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13578489262080
+    m_Localized: Hand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13829568688128
+    m_Localized: Movement Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14544420696064
+    m_Localized: Snap Turn Angle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14827385221120
+    m_Localized: Tunneling Vignette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15289459109888
+    m_Localized: Flight Locomotion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15663297425408
+    m_Localized: Quit App
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15825130450944
+    m_Localized: '<b>Warning</b>
+
+
+      You are about to quit the app and return
+      to the system menu.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16092727046144
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16283987308544
+    m_Localized: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16829553012736
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -24,7 +24,6 @@ public class CookingPlate : MonoBehaviour
         {
             if (other.attachedRigidbody.TryGetComponent(out cookingUtensil))
             {
-                Debug.Log("Cooking plate trigger");
                 currentRigidbody = other.attachedRigidbody;
                 if (isActive)
                 {

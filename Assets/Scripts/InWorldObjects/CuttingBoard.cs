@@ -4,6 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
+
 public class CuttingStation : MonoBehaviour
 {
     [SerializeField] private XRSocketInteractor socketInteractor;
@@ -19,11 +20,6 @@ public class CuttingStation : MonoBehaviour
 
     private void Awake()
     {
-        if (GetComponent<Collider>().isTrigger == false)
-        {
-            Debug.LogError("CuttingStation collider must be a trigger");
-            Destroy(this);
-        }
         if (socketInteractor == null)
         {
             Debug.LogError("CuttingStation must have a socket interactor");
@@ -85,7 +81,6 @@ public class CuttingStation : MonoBehaviour
         {
             cutProgressImage.fillAmount = (float)currentDamage / (float)currentTargetMaxHealth;
         }
-        //TODO : Barre de progression au dessus de l'objet qui affiche a combien de degats on est
         if (currentDamage >= currentTargetMaxHealth)
         {
             Cuttable cuttable = currentItem.GetComponent<Cuttable>();
