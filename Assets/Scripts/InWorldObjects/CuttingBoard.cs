@@ -14,12 +14,15 @@ public class CuttingStation : MonoBehaviour
     [Tooltip("The image used to make a progress bar (circle)")]
     [SerializeField] private Image cutProgressImage;
 
+    private AudioSource audioSourceCutSFX;
+
     private GameObject currentItem = null;
     private int currentTargetMaxHealth = 0;
     private int currentDamage = 0;
 
     private void Awake()
     {
+        audioSourceCutSFX = GetComponent<AudioSource>();
         if (socketInteractor == null)
         {
             Debug.LogError("CuttingStation must have a socket interactor");
@@ -72,6 +75,7 @@ public class CuttingStation : MonoBehaviour
 
     private void CutDamage(int damage)
     {
+        audioSourceCutSFX.Play();
         currentDamage += damage;
         if (cutProgressGameObject != null)
         {

@@ -100,7 +100,7 @@ public class Table : MonoBehaviour
         }
         GameObject plateGameObject = args.interactableObject.transform.gameObject;
         socketInteractor.enabled = false;
-        bool isCorrectPlat = placedPlat.Equals(expectedPlat);
+        bool isCorrectPlat = placedPlat.item.Equals(expectedPlat);
 
         OnPlatPlaced?.Invoke(isCorrectPlat);
 

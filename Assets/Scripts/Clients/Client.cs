@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 using System.Collections;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -20,8 +21,9 @@ public class Client : MonoBehaviour
     private Animator animator;
     [HideInInspector] public Table targetTable;
 
-    // Time settings for dining
+    [Header("Eating")]
     [SerializeField] private float eatingDuration = 15f;
+    [SerializeField] private AudioSource eatingAudioSource;
 
     [Header("Emotions")]
     [SerializeField] private GameObject emotionGo;
@@ -30,6 +32,13 @@ public class Client : MonoBehaviour
     [SerializeField] private Material angryMaterial;
     [SerializeField] private Material happyMaterial;
     [SerializeField] private Material disappointedMaterial;
+
+    [Header("Footsteps")]
+    [SerializeField] private AudioClip[] footstepSounds;
+    [SerializeField] private AudioSource footstepAudioSource;
+    [SerializeField] private float footstepInterval = 0.5f;
+
+    private float lastFootstepTime = 0f;
 
     public event Action<Client> OnStartWaiting;
     public event Action<Client, ClientResult, float> OnClientFinished;
@@ -46,6 +55,11 @@ public class Client : MonoBehaviour
     {
         UpdateAnimatorParameters();
 
+        if (agent.velocity.sqrMagnitude > 0.1f)
+        {
+            PlayFootsteps();
+        }
+
         if (!isSatisfied && HasReachedDestination())
         {
             if (!isWaiting)
@@ -58,6 +72,20 @@ public class Client : MonoBehaviour
         {
             OnClientDespawn?.Invoke(this); // Trigger the despawn event
             return; //Le client va être détruit dans tous les cas
+        }
+    }
+
+    private void PlayFootsteps()
+    {
+        if (Time.time - lastFootstepTime >= footstepInterval)
+        {
+            lastFootstepTime = Time.time;
+
+            if (footstepSounds.Length > 0)
+            {
+                AudioClip footstep = footstepSounds[UnityEngine.Random.Range(0, footstepSounds.Length)];
+                footstepAudioSource.PlayOneShot(footstep);
+            }
         }
     }
 
@@ -236,6 +264,7 @@ public class Client : MonoBehaviour
         isEating = true;
         Debug.Log($"{gameObject.name} commence à manger.");
 
+        eatingAudioSource.Play();
         yield return new WaitForSeconds(eatingDuration);
 
         isEating = false;

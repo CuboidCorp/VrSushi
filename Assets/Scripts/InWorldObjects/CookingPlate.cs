@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
 
 public class CookingPlate : MonoBehaviour
 {
@@ -13,8 +12,15 @@ public class CookingPlate : MonoBehaviour
 
     [SerializeField] private float cookDamageInterval = .1f;
 
+    private AudioSource audioSourceGazStoveSfx;
+
     private Rigidbody currentRigidbody;
     private ICookingUtensil cookingUtensil;
+
+    private void Awake()
+    {
+        audioSourceGazStoveSfx = GetComponent<AudioSource>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.attachedRigidbody == null)
@@ -50,7 +56,7 @@ public class CookingPlate : MonoBehaviour
 
     public void Enable()
     {
-        Debug.Log("Cooking plate enable");
+        audioSourceGazStoveSfx.Play();
         isActive = true;
         particles.SetActive(true);
         if (currentRigidbody != null)
@@ -64,6 +70,7 @@ public class CookingPlate : MonoBehaviour
 
     public void Disable()
     {
+        audioSourceGazStoveSfx.Stop();
         isActive = false;
         particles.SetActive(false);
         StopCooking();
