@@ -18,10 +18,7 @@ public class ClientManager : MonoBehaviour
     [SerializeField] private Table[] tables;
     [SerializeField] private KitchenItem[] plats;
 
-    [SerializeField] private DayManager dayManager;
-
-
-
+    private DayManager dayManager;
 
     private List<Table> availableTables;
 
@@ -34,14 +31,21 @@ public class ClientManager : MonoBehaviour
 
     private void Start()
     {
+        dayManager = DayManager.Instance;
         availableTables = new List<Table>(tables);
         spawnClientCoroutine = StartCoroutine(SpawnClientRoutine());
+        dayManager.OnDayEnd.AddListener(OnDayEnd);
     }
 
     private void OnDisable()
     {
         StopCoroutine(spawnClientCoroutine);
         spawnClientCoroutine = null;
+    }
+
+    private void OnDayEnd()
+    {
+        StopCoroutine(spawnClientCoroutine);
     }
 
     private IEnumerator SpawnClientRoutine()
@@ -101,6 +105,7 @@ public class ClientManager : MonoBehaviour
         Table table = client.targetTable;
         table.RemoveClient();
         availableTables.Add(table);
+        Debug.Log($"Table {table.name} is now available.");
 
         //Remove the client from the list
         GameObject clientGo = client.gameObject;
@@ -117,6 +122,8 @@ public class ClientManager : MonoBehaviour
 
     private void OnClientFinished(Client client, ClientResult result, float satisfactionLevel)
     {
+        client.targetTable.RemovePlat();
+
         KitchenItem dish = client.targetTable.expectedPlat;
         dayManager.dayStats.RecordClient(result, satisfactionLevel, dish);
     }

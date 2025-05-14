@@ -103,6 +103,38 @@ MonoBehaviour:
     m_Key: LANGUE
     m_Metadata:
       m_Items: []
+  - m_Id: 338489892106240
+    m_Key: ENDMENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 339052994195456
+    m_Key: QUIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 339960540917760
+    m_Key: RESTART
+    m_Metadata:
+      m_Items: []
+  - m_Id: 353101576368128
+    m_Key: TOTALCLIENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354347423068160
+    m_Key: SATISFIED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354602399002624
+    m_Key: UNSATISFIED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354774537433088
+    m_Key: NOTSERVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 355116226408448
+    m_Key: SATISFACTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -8,7 +8,6 @@ public class MusicManager : MonoBehaviour
     public AudioClip[] musicClips; // 8 clips, from calm to intense
 
     private AudioSource audioSource;
-    private Coroutine musicRoutine;
     private int currentClipIndex = -1;
 
     private void Start()
@@ -16,7 +15,7 @@ public class MusicManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.loop = false;
 
-        musicRoutine = StartCoroutine(MusicLoopRoutine());
+        StartCoroutine(MusicLoopRoutine());
     }
 
     private IEnumerator MusicLoopRoutine()
@@ -39,7 +38,6 @@ public class MusicManager : MonoBehaviour
 
             audioSource.Play();
 
-            // Wait until the clip finishes playing
             while (audioSource.isPlaying)
             {
                 yield return null;
@@ -48,7 +46,6 @@ public class MusicManager : MonoBehaviour
 
         // Day is over
         audioSource.Stop();
-        musicRoutine = null;
     }
 
 }

@@ -47,14 +47,7 @@ public class AgentLinkMoverCustom : MonoBehaviour
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
 
-        //TODO : Système de rotation quand un agent traverse un OffMeshLink
-
-        NavMeshLink currentLink = data.owner as NavMeshLink;
-
-        if (currentLink != null && currentLink.gameObject.name == "DoorLink" && doorScript != null)
-        {
-            doorScript.OpenDoor(gameObject);
-        }
+        doorScript.OpenDoor(gameObject);
 
         while (agent.transform.position != endPos)
         {
@@ -62,10 +55,7 @@ public class AgentLinkMoverCustom : MonoBehaviour
                 Vector3.MoveTowards(agent.transform.position, endPos, agent.speed * Time.deltaTime);
             yield return null;
         }
-        if (currentLink != null && currentLink.gameObject.name == "DoorLink" && doorScript != null)
-        {
-            doorScript.CloseDoor(gameObject); //Fermeture de la porte
-        }
+        doorScript.CloseDoor(gameObject);
 
     }
 

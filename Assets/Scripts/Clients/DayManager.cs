@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class DayManager : MonoBehaviour
 {
@@ -18,9 +19,10 @@ public class DayManager : MonoBehaviour
     public Vector3 sunsetRotation = new Vector3(170f, 0f, 0f);
 
     private float dayTimer = 0f;
-    private bool dayActive = false;
 
     public DayStats dayStats = new();
+
+    [HideInInspector] public UnityEvent OnDayEnd;
 
     public float CurrentTimePercent => Mathf.Clamp01(dayTimer / dayDurationInSeconds);
 
@@ -39,7 +41,6 @@ public class DayManager : MonoBehaviour
     public void StartDay()
     {
         dayTimer = 0f;
-        dayActive = true;
         StartCoroutine(DayRoutine());
     }
 
@@ -67,7 +68,6 @@ public class DayManager : MonoBehaviour
             yield return null;
         }
 
-        dayActive = false;
         DayEnd();
     }
 
@@ -80,6 +80,7 @@ public class DayManager : MonoBehaviour
 
     private void DayEnd()
     {
+        OnDayEnd?.Invoke();
         dayStats.PrintSummary();
     }
 

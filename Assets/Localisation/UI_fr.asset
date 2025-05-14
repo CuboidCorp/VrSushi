@@ -107,6 +107,38 @@ MonoBehaviour:
     m_Localized: Langue
     m_Metadata:
       m_Items: []
+  - m_Id: 338489892106240
+    m_Localized: Statistiques
+    m_Metadata:
+      m_Items: []
+  - m_Id: 339052994195456
+    m_Localized: Quitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 339960540917760
+    m_Localized: Recommencer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 353101576368128
+    m_Localized: Nombre de clients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354347423068160
+    m_Localized: Clients satisfaits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354602399002624
+    m_Localized: Clients insatisfaits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354774537433088
+    m_Localized: Clients non servis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 355116226408448
+    m_Localized: Satisfaction totale
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

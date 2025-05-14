@@ -106,6 +106,9 @@ public class Client : MonoBehaviour
 
     public void Satisfy(ClientResult result)
     {
+        targetTable.OnPlatPlaced -= Serve;
+        targetTable.OnPlatTimeout -= WaitTimeOut;
+
         Debug.Log($"{gameObject.name} is being satisfied with result: {result}.");
         StopAllCoroutines();
         isEating = false;

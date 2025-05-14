@@ -64,7 +64,7 @@ public class Table : MonoBehaviour
         }
     }
 
-    public void RemovePlat(GameObject socketedPlate)
+    public void RemovePlat(GameObject socketedPlate = null)
     {
         expectedPlat = null;
 
@@ -81,7 +81,10 @@ public class Table : MonoBehaviour
             progressBarImage.fillAmount = 0f;
         }
 
-        Destroy(socketedPlate);
+        if (socketedPlate != null)
+        {
+            Destroy(socketedPlate);
+        }
     }
 
     private void OnPlatPlacedInSocket(SelectEnterEventArgs args)
