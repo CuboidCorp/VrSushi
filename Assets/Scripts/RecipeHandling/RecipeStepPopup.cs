@@ -1,5 +1,6 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class RecipeStepPopup : MonoBehaviour
@@ -19,10 +20,16 @@ public class RecipeStepPopup : MonoBehaviour
 
     [SerializeField] private Button closeButton;
 
+    [SerializeField] private LocalizeStringEvent descText;
+
     [Header("Sprites")]
     [SerializeField, Tooltip("Sprites of all spawn locations")] private Sprite[] spawnLocations;
+
     [SerializeField, Tooltip("Sprite of ustensils")] private Sprite[] utensils;
     [SerializeField, Tooltip("Arrow sprite")] private Sprite arrowSprite;
+
+    [Header("Localization")]
+    [SerializeField] private LocalizedString[] spawnNames;
 
     private RecipeStep currentStep;
 
@@ -69,18 +76,20 @@ public class RecipeStepPopup : MonoBehaviour
             transformationGo.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GetSprite(step.method, step.spawnLocation);
 
         }
-        transformationGo.GetComponentInChildren<TMP_Text>().text = step.method.ToString();
+        transformationGo.GetComponentInChildren<LocalizeStringEvent>().StringReference = spawnNames[(int)step.method];
 
 
         resultGo.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = step.resultItem.icon;
-        resultGo.GetComponentInChildren<TMP_Text>().text = step.resultItem.itemName;
+        resultGo.GetComponentInChildren<LocalizeStringEvent>().StringReference = step.resultItem.itemNameLocalized;
+
+        descText.StringReference = step.stepDescriptionLocalized;
 
     }
 
     private static void SetKitchenInfo(GameObject go, KitchenItem item)
     {
         go.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = item.icon;
-        go.GetComponentInChildren<TMP_Text>().text = item.itemName;
+        go.GetComponentInChildren<LocalizeStringEvent>().StringReference = item.itemNameLocalized;
     }
 
     public void Hide()

@@ -9,7 +9,7 @@ public class EndMenuUI : MonoBehaviour
     [SerializeField] private TMP_Text nbSatisfied;
     [SerializeField] private TMP_Text nbUnsatisfied;
     [SerializeField] private TMP_Text nbUnserved;
-    [SerializeField] private TMP_Text totalSatisfaction;
+    [SerializeField] private TMP_Text score;
 
 
     private void Start()
@@ -19,14 +19,14 @@ public class EndMenuUI : MonoBehaviour
 
     private void ShowEndMenu()
     {
-        gameObject.SetActive(true);
+        Debug.Log("Day ended. Showing end menu...");
+        transform.GetChild(0).gameObject.SetActive(true);
         DayStats dayStats = DayManager.Instance.dayStats;
         nbClients.text = dayStats.totalClients.ToString();
         nbSatisfied.text = dayStats.satisfiedClients.ToString();
         nbUnsatisfied.text = dayStats.unsatisfiedClients.ToString();
         nbUnserved.text = dayStats.notServedClients.ToString();
-        totalSatisfaction.text = dayStats.AverageSatisfaction.ToString("F2");
-
+        score.text = dayStats.GetScore().ToString();
     }
 
     /// <summary>

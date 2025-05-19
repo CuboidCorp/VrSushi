@@ -16,37 +16,94 @@ MonoBehaviour:
   finalProduct: {fileID: 11400000, guid: f7508a465d0d39247a9b7fc7cb194cc4, type: 2}
   steps:
   - stepDescription: Spawn rice
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 76538146816
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 0
     inputItems: []
     resultItem: {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
     spawnLocation: 3
   - stepDescription: Spawn shrimp
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 4836574064640
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 0
     inputItems: []
     resultItem: {fileID: 11400000, guid: d9de68da0738df142bc6ffa2a403e8a0, type: 2}
     spawnLocation: 2
   - stepDescription: Boil shrimp
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 4931335974912
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 2
     inputItems:
     - {fileID: 11400000, guid: d9de68da0738df142bc6ffa2a403e8a0, type: 2}
     resultItem: {fileID: 11400000, guid: ec7730beedef0e64693e5f66d2ef4975, type: 2}
     spawnLocation: 0
   - stepDescription: Boil rice
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 412036329472
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 2
     inputItems:
     - {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
     resultItem: {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
     spawnLocation: 0
   - stepDescription: Assemble rice into nigiri form
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 738625810432
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 3
     inputItems:
     - {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
     resultItem: {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
     spawnLocation: 0
   - stepDescription: Combine rice and shrimp
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 5090383982592
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 4
     inputItems:
     - {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
     - {fileID: 11400000, guid: ec7730beedef0e64693e5f66d2ef4975, type: 2}
     resultItem: {fileID: 11400000, guid: f7508a465d0d39247a9b7fc7cb194cc4, type: 2}
     spawnLocation: 0
+  references:
+    version: 2
+    RefIds: []

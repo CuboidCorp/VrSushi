@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: StepDesc Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: StepDesc
+  m_TableCollectionNameGuidString: a2b7e6ac348214945becced77c06290c
+  m_Entries:
+  - m_Id: 76538146816
+    m_Key: SPAWN_RICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 271619420160
+    m_Key: SPAWN_FLOUNDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 412036329472
+    m_Key: BOIL_RICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 518206746624
+    m_Key: CUT_FLOUNDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 738625810432
+    m_Key: ASSEMBLE_RICE_NIGIRI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092323078144
+    m_Key: COMBINE_RICE_FLOUNDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1445252788224
+    m_Key: SPAWN_OCTOPUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825697132544
+    m_Key: CUT_OCTOPUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3235155243008
+    m_Key: COMBINE_RICE_OCTOPUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4053178740736
+    m_Key: SPAWN_SALMON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4153741373440
+    m_Key: CUT_SALMON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4283701882880
+    m_Key: COMBINE_RICE_SALMON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4836574064640
+    m_Key: SPAWN_SHRIMP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4931335974912
+    m_Key: BOIL_SHRIMP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5090383982592
+    m_Key: COMBINE_RICE_SHRIMP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5833044226048
+    m_Key: SPAWN_TUNA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6039173296128
+    m_Key: CUT_TUNA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6222514712576
+    m_Key: COMBINE_RICE_TUNA
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4337670574034124888
+  references:
+    version: 2
+    RefIds:
+    - rid: 4337670574034124888
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1747671839078

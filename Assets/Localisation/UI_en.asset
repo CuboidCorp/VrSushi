@@ -142,6 +142,14 @@ MonoBehaviour:
     m_Localized: Total satisfaction
     m_Metadata:
       m_Items: []
+  - m_Id: 2484415519748096
+    m_Localized: Step description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2498939274620928
+    m_Localized: Score
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

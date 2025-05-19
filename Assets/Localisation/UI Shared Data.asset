@@ -135,6 +135,14 @@ MonoBehaviour:
     m_Key: SATISFACTION
     m_Metadata:
       m_Items: []
+  - m_Id: 2484415519748096
+    m_Key: STEP_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2498939274620928
+    m_Key: SCORE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

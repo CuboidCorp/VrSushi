@@ -16,37 +16,94 @@ MonoBehaviour:
   finalProduct: {fileID: 11400000, guid: 8bba0efe3f1d5da40b3268645730fe0c, type: 2}
   steps:
   - stepDescription: Spawn riz
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 76538146816
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 0
     inputItems: []
     resultItem: {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
     spawnLocation: 3
   - stepDescription: Spawn salmon
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 4053178740736
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 0
     inputItems: []
     resultItem: {fileID: 11400000, guid: 1c066d66881882b438ae478f21bb520a, type: 2}
     spawnLocation: 2
   - stepDescription: Boil rice
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 412036329472
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 2
     inputItems:
     - {fileID: 11400000, guid: c3b2e094a04819a44848b1cd68ecf54a, type: 2}
     resultItem: {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
     spawnLocation: 0
   - stepDescription: Cut salmon
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 4153741373440
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 1
     inputItems:
     - {fileID: 11400000, guid: 1c066d66881882b438ae478f21bb520a, type: 2}
     resultItem: {fileID: 11400000, guid: af544d2b8cb24d943948f93fbc4ee1b3, type: 2}
     spawnLocation: 0
   - stepDescription: Assemble rice into nigiri form
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 738625810432
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 3
     inputItems:
     - {fileID: 11400000, guid: 1429fd38137d3fc4fa8a404da57d8d9b, type: 2}
     resultItem: {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
     spawnLocation: 0
   - stepDescription: Combine rice nigiri form and cut salmon
+    stepDescriptionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:a2b7e6ac348214945becced77c06290c
+      m_TableEntryReference:
+        m_KeyId: 4283701882880
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     method: 4
     inputItems:
     - {fileID: 11400000, guid: 5f41ad8fbc9cfac4d8c7bf59f1b4bde8, type: 2}
     - {fileID: 11400000, guid: af544d2b8cb24d943948f93fbc4ee1b3, type: 2}
     resultItem: {fileID: 11400000, guid: 8bba0efe3f1d5da40b3268645730fe0c, type: 2}
     spawnLocation: 0
+  references:
+    version: 2
+    RefIds: []

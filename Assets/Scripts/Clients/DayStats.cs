@@ -8,11 +8,13 @@ public class DayStats
     public int unsatisfiedClients;
     public int notServedClients;
     public float totalSatisfaction;
+    public int wastedIngredients;
 
     public List<KitchenItem> recipesServed = new();
 
     public float AverageSatisfaction =>
         satisfiedClients == 0 ? 0f : totalSatisfaction / satisfiedClients;
+
 
     public void RecordClient(ClientResult result, float satisfactionLevel, KitchenItem dish = null)
     {
@@ -35,6 +37,11 @@ public class DayStats
                 notServedClients++;
                 break;
         }
+    }
+
+    public int GetScore()
+    {
+        return 30 * satisfiedClients - 30 * notServedClients - 10 * unsatisfiedClients - 5 * wastedIngredients;
     }
 
     public void PrintSummary()
