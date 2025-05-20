@@ -90,6 +90,22 @@ MonoBehaviour:
     m_Localized: "Combiner le riz forme nigiri et le thon coup\xE9"
     m_Metadata:
       m_Items: []
+  - m_Id: 378437642973184
+    m_Localized: Couper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378574901571584
+    m_Localized: Bouillir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378742342381568
+    m_Localized: Assembler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378884206325760
+    m_Localized: Combiner
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

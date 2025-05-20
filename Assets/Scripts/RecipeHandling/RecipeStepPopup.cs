@@ -30,6 +30,7 @@ public class RecipeStepPopup : MonoBehaviour
 
     [Header("Localization")]
     [SerializeField] private LocalizedString[] spawnNames;
+    [SerializeField] private LocalizedString[] methodNames;
 
     private RecipeStep currentStep;
 
@@ -76,7 +77,10 @@ public class RecipeStepPopup : MonoBehaviour
             transformationGo.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GetSprite(step.method, step.spawnLocation);
 
         }
-        transformationGo.GetComponentInChildren<LocalizeStringEvent>().StringReference = spawnNames[(int)step.method];
+        if (step.method == ObtentionMethod.SPAWN)
+            transformationGo.GetComponentInChildren<LocalizeStringEvent>().StringReference = spawnNames[(int)step.spawnLocation];
+        else
+            transformationGo.GetComponentInChildren<LocalizeStringEvent>().StringReference = methodNames[(int)step.method];
 
 
         resultGo.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = step.resultItem.icon;

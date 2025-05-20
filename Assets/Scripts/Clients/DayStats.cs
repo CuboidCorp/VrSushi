@@ -41,7 +41,7 @@ public class DayStats
 
     public int GetScore()
     {
-        return 30 * satisfiedClients - 30 * notServedClients - 10 * unsatisfiedClients - 5 * wastedIngredients;
+        return 30 * satisfiedClients - 30 * notServedClients - 10 * unsatisfiedClients - WasteManager.Instance.CalculateWastePenalty();
     }
 
     public void PrintSummary()

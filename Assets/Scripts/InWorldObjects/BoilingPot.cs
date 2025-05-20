@@ -94,6 +94,7 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
                 spawnedBoiledItem.transform.SetParent(null);
 
                 // The spawned item is now the main item, so we can destroy the original
+                WasteManager.Instance.UseIngredient(currentBoilingItem);
                 Destroy(currentBoilingItem);
                 spawnedBoiledItem = null;
             }
@@ -141,7 +142,7 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
                 {
                     itemRb.AddForce((transform.up * -1 + transform.forward) * 0.5f, ForceMode.Impulse);
                 }
-
+                WasteManager.Instance.UseIngredient(currentBoilingItem);
                 Destroy(currentBoilingItem);
                 spawnedBoiledItem = null;
             }
@@ -199,6 +200,7 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
                 spawnedBoiledItem = Instantiate(boilableCurrentItem.overboiledObjectPrefab, boilingAttachPoint.position, Quaternion.identity);
                 spawnedBoiledItem.transform.SetParent(boilingAttachPoint);
                 spawnedBoiledItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                WasteManager.Instance.AddIngredient(spawnedBoiledItem);
                 HideOriginalItem();
                 hasOverboiled = true;
             }
@@ -210,10 +212,11 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
                 audioSource.volume = overboilingVolume;
                 boilingProgressBar.fillAmount = 1;
                 SetWaterMaterial(boilingWaterMaterial);
-
+                WasteManager.Instance.UseIngredient(spawnedBoiledItem);
                 spawnedBoiledItem = Instantiate(boilableCurrentItem.boiledObjectPrefab, boilingAttachPoint.position, Quaternion.identity);
                 spawnedBoiledItem.transform.SetParent(boilingAttachPoint);
                 spawnedBoiledItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                WasteManager.Instance.AddIngredient(spawnedBoiledItem);
                 HideOriginalItem();
                 hasBoiled = true;
             }

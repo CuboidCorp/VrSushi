@@ -87,6 +87,22 @@ MonoBehaviour:
     m_Key: COMBINE_RICE_TUNA
     m_Metadata:
       m_Items: []
+  - m_Id: 378437642973184
+    m_Key: CUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378574901571584
+    m_Key: BOIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378742342381568
+    m_Key: ASSEMBLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378884206325760
+    m_Key: COMBINE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

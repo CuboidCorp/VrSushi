@@ -83,6 +83,7 @@ public class Table : MonoBehaviour
 
         if (socketedPlate != null)
         {
+            WasteManager.Instance.UseIngredient(socketedPlate);
             Destroy(socketedPlate);
         }
     }

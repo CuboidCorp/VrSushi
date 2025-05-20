@@ -97,6 +97,8 @@ public class CuttingStation : MonoBehaviour
             GameObject cutGO = Instantiate(cutPrefab);
             cutGO.transform.SetPositionAndRotation(cuttedObject.transform.position, Quaternion.Euler(cuttable.cutObjectPrefabPreferredRotation));
 
+            WasteManager.Instance.AddIngredient(cutGO);
+            WasteManager.Instance.UseIngredient(cuttedObject);
             Destroy(cuttedObject);
 
         }

@@ -828,8 +828,9 @@ GameObject:
   - component: {fileID: 68445272}
   - component: {fileID: 68445273}
   - component: {fileID: 68445274}
+  - component: {fileID: 68445275}
   m_Layer: 0
-  m_Name: ClientManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1022,6 +1023,19 @@ MonoBehaviour:
   OnDayEnd:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &68445275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68445271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19fed3c95eb27c844b7fd38e784ace11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  penaltyPerIngredient: 5
 --- !u!1001 &68732387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13893,6 +13907,42 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2403745270983745902, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: methodNames.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403745270983745902, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: methodNames.Array.data[1].m_TableEntryReference.m_KeyId
+      value: 378437642973184
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403745270983745902, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: methodNames.Array.data[2].m_TableEntryReference.m_KeyId
+      value: 378574901571584
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403745270983745902, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: methodNames.Array.data[3].m_TableEntryReference.m_KeyId
+      value: 378742342381568
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403745270983745902, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: methodNames.Array.data[4].m_TableEntryReference.m_KeyId
+      value: 378884206325760
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403745270983745902, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: methodNames.Array.data[1].m_TableReference.m_TableCollectionName
+      value: GUID:a2b7e6ac348214945becced77c06290c
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403745270983745902, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: methodNames.Array.data[2].m_TableReference.m_TableCollectionName
+      value: GUID:a2b7e6ac348214945becced77c06290c
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403745270983745902, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: methodNames.Array.data[3].m_TableReference.m_TableCollectionName
+      value: GUID:a2b7e6ac348214945becced77c06290c
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403745270983745902, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: methodNames.Array.data[4].m_TableReference.m_TableCollectionName
+      value: GUID:a2b7e6ac348214945becced77c06290c
+      objectReference: {fileID: 0}
     - target: {fileID: 2437163656578997459, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -15762,7 +15812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2628149806244387547, guid: 77ac6b10722bcca4a8baf70e44d89e78, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -402.55
       objectReference: {fileID: 0}
     - target: {fileID: 2630688503350210231, guid: 77ac6b10722bcca4a8baf70e44d89e78, type: 3}
       propertyPath: m_Enabled
@@ -16042,7 +16092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7734365733774555178, guid: 77ac6b10722bcca4a8baf70e44d89e78, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7748295992987968085, guid: 77ac6b10722bcca4a8baf70e44d89e78, type: 3}
       propertyPath: m_IsActive
@@ -30908,6 +30958,6 @@ SceneRoots:
   - {fileID: 787225355}
   - {fileID: 118208071}
   - {fileID: 1139670844}
+  - {fileID: 794962376}
   - {fileID: 68445272}
   - {fileID: 85008723}
-  - {fileID: 794962376}

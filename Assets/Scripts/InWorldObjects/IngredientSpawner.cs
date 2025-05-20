@@ -53,6 +53,7 @@ public class IngredientSpawner : MonoBehaviour
     {
         if (selectedItem == null)
             return;
-        Instantiate(selectedItem.prefab, spawnPoint.position, Quaternion.identity);
+        GameObject go = Instantiate(selectedItem.prefab, spawnPoint.position, Quaternion.identity);
+        WasteManager.Instance.AddIngredient(go);
     }
 }

@@ -90,6 +90,22 @@ MonoBehaviour:
     m_Localized: Combine nigiri form rice and cut tuna
     m_Metadata:
       m_Items: []
+  - m_Id: 378437642973184
+    m_Localized: Cut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378574901571584
+    m_Localized: Boil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378742342381568
+    m_Localized: Assemble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378884206325760
+    m_Localized: Combine
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

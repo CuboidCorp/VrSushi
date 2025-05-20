@@ -32,17 +32,24 @@ public class Base : MonoBehaviour
                 {
                     //On recup l'index de l'item
                     int index = System.Array.IndexOf(combinables, comb.item);
-                    Instantiate(targetObjectsPrefab[index], transform.position, Quaternion.identity);
+                    GameObject newGo = Instantiate(targetObjectsPrefab[index], transform.position, Quaternion.identity);
+                    WasteManager.Instance.AddIngredient(newGo);
+                    WasteManager.Instance.UseIngredient(collision.gameObject);
                     Destroy(collision.gameObject);
+                    WasteManager.Instance.UseIngredient(gameObject);
                     Destroy(gameObject);
+
                     return;
                 }
                 else
                 {
                     if (nbCombinablesPlaced == combinables.Length)
                     {
-                        Instantiate(targetObjectsPrefab[0], transform.position, Quaternion.identity);
+                        GameObject newGo = Instantiate(targetObjectsPrefab[0], transform.position, Quaternion.identity);
+                        WasteManager.Instance.AddIngredient(newGo);
+                        WasteManager.Instance.UseIngredient(gameObject);
                         Destroy(gameObject);
+
                         return;
                     }
                 }
