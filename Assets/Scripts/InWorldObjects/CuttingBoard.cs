@@ -17,8 +17,8 @@ public class CuttingStation : MonoBehaviour
     private AudioSource audioSourceCutSFX;
 
     private GameObject currentItem = null;
-    private int currentTargetMaxHealth = 0;
-    private int currentDamage = 0;
+    private float currentTargetMaxHealth = 0;
+    private float currentDamage = 0;
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class CuttingStation : MonoBehaviour
         currentItem = args.interactableObject.transform.gameObject;
         if (currentItem.TryGetComponent(out Cuttable cuttable))
         {
-            currentTargetMaxHealth = cuttable.cutMaxHealth;
+            currentTargetMaxHealth = cuttable.cutMaxHealth * GameData.Instance.fishLifeMultiplier;
             cuttable.OnCut.AddListener(CutDamage);
         }
         else
@@ -76,7 +76,7 @@ public class CuttingStation : MonoBehaviour
     private void CutDamage(int damage)
     {
         audioSourceCutSFX.Play();
-        currentDamage += damage;
+        currentDamage += damage * GameData.Instance.knifeDamageMultiplier;
         if (cutProgressGameObject != null)
         {
             cutProgressGameObject.SetActive(true);

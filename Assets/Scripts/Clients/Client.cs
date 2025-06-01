@@ -8,6 +8,7 @@ using UnityEngine.Audio;
 [RequireComponent(typeof(Animator))]
 public class Client : MonoBehaviour
 {
+    public int clientId;
     private NavMeshAgent agent;
     private Transform targetPosition;
     private Transform despawnPoint;

@@ -5,7 +5,6 @@ using UnityEngine;
 public class ClientManager : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField, Tooltip("Spawn rate of clients per minute")] private float baseSpawnRatePerMinute = 1f;
     [SerializeField, Tooltip("Min time the client waits before leaving")] private float minClientWaitTime = 90f;
     [SerializeField, Tooltip("Maximum time the client waits before leaving")] private float maxClientWaitTime = 120f;
     [SerializeField, Tooltip("How many seconds ahead to look when evaluating rush hour intensity (helps shift rush earlier)")]
@@ -24,16 +23,19 @@ public class ClientManager : MonoBehaviour
 
 
     private readonly List<GameObject> clients = new();
+    private List<float> clientSpawnTimes = new();
+
     private Coroutine spawnClientCoroutine;
     private const int MAX_CLIENTS = 6;
-    private int nbClients = 0;
+    private int nbClients = 1;
 
 
     private void Start()
     {
         dayManager = DayManager.Instance;
-        availableTables = new List<Table>(tables);
+        ComputeClientSpawnTimes();
         spawnClientCoroutine = StartCoroutine(SpawnClientRoutine());
+        availableTables = new List<Table>(tables);
         dayManager.OnDayEnd.AddListener(OnDayEnd);
     }
 
@@ -48,30 +50,68 @@ public class ClientManager : MonoBehaviour
         StopCoroutine(spawnClientCoroutine);
     }
 
+    private void ComputeClientSpawnTimes()
+    {
+        clientSpawnTimes.Clear();
+
+        int sampleCount = 1000;
+        float totalCurveValue = 0f;
+        float[] curveValues = new float[sampleCount];
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            float t = i / (float)(sampleCount - 1);
+            float curveValue = dayManager.rushHourCurve.Evaluate(t);
+            curveValues[i] = curveValue;
+            totalCurveValue += curveValue;
+        }
+
+        float[] cumulativeDistribution = new float[sampleCount];
+        float runningTotal = 0f;
+        for (int i = 0; i < sampleCount; i++)
+        {
+            runningTotal += curveValues[i];
+            cumulativeDistribution[i] = runningTotal / totalCurveValue;
+        }
+
+        for (int c = 0; c < GameData.Instance.nbClients; c++)
+        {
+            float target = (c + 0.5f) / GameData.Instance.nbClients;
+            int index = System.Array.FindIndex(cumulativeDistribution, val => val >= target);
+            float timePercent = index / (float)(sampleCount - 1);
+            float spawnTime = timePercent * dayManager.dayDurationInSeconds;
+            clientSpawnTimes.Add(spawnTime);
+        }
+
+        foreach (float spawnTime in clientSpawnTimes)
+        {
+            Debug.Log($"Client will spawn at: {spawnTime} seconds");
+        }
+        clientSpawnTimes.Sort();
+    }
+
+
     private IEnumerator SpawnClientRoutine()
     {
-        yield return new WaitForSeconds(20f); //Delai initial avant de spawn le premier client
+        int nextClientIndex = 0;
 
-        while (true)
+        while (nextClientIndex < clientSpawnTimes.Count)
         {
-            float currentPercent = dayManager.CurrentTimePercent;
-            float futureSeconds = currentPercent * dayManager.dayDurationInSeconds + rushHourLookAheadSeconds;
-            float lookAheadPercent = Mathf.Clamp01(futureSeconds / dayManager.dayDurationInSeconds);
+            float currentTime = dayManager.CurrentTimePercent * dayManager.dayDurationInSeconds;
 
-            float rushMultiplier = dayManager.rushHourCurve.Evaluate(lookAheadPercent);
-            float spawnRate = baseSpawnRatePerMinute * rushMultiplier;
-
-            float timeBetweenSpawns = 60f / spawnRate; // in seconds
-            timeBetweenSpawns = Mathf.Clamp(timeBetweenSpawns, 5f, 120f); // Safety clamp
-
-            if (clients.Count < MAX_CLIENTS)
+            if (currentTime >= clientSpawnTimes[nextClientIndex])
             {
-                SpawnClient();
+                if (clients.Count < MAX_CLIENTS)
+                {
+                    SpawnClient();
+                    nextClientIndex++;
+                }
             }
 
-            yield return new WaitForSeconds(timeBetweenSpawns);
+            yield return null;
         }
     }
+
 
     private void SpawnClient()
     {
@@ -84,11 +124,12 @@ public class ClientManager : MonoBehaviour
         Table table = availableTables[Random.Range(0, availableTables.Count)];
         availableTables.Remove(table);
 
-        nbClients++;
+
         GameObject clientPrefab = clientPrefabs[Random.Range(0, clientPrefabs.Length)];
         GameObject clientGo = Instantiate(clientPrefab, spawnPoint.position, Quaternion.identity);
         clientGo.name = $"Client_{nbClients}";
         Client client = clientGo.GetComponent<Client>();
+        client.clientId = nbClients;
         table.SetClient(client);
         client.SetTargetTable(table);
         client.SetDespawnPoint(despawnPoint);
@@ -97,6 +138,7 @@ public class ClientManager : MonoBehaviour
         client.OnClientFinished += OnClientFinished;
         client.OnClientDespawn += OnClientDespawn;
         clients.Add(clientGo);
+        nbClients++;
     }
 
     private void OnClientDespawn(Client client)
@@ -110,6 +152,12 @@ public class ClientManager : MonoBehaviour
         //Remove the client from the list
         GameObject clientGo = client.gameObject;
         clients.Remove(clientGo);
+
+        if (client.clientId == GameData.Instance.nbClients)
+        {
+            dayManager.DayEnd();
+        }
+
         Destroy(clientGo);
     }
 
@@ -117,7 +165,8 @@ public class ClientManager : MonoBehaviour
     {
         //Le client affiche sur la table un plat random parmi la liste des plats
         KitchenItem plat = plats[Random.Range(0, plats.Length)];
-        client.targetTable.SetPlat(plat, Random.Range(minClientWaitTime, maxClientWaitTime));
+        float waitTime = GameData.Instance.clientWaitTimeMultiplier * Random.Range(minClientWaitTime, maxClientWaitTime);
+        client.targetTable.SetPlat(plat, waitTime);
     }
 
     private void OnClientFinished(Client client, ClientResult result, float satisfactionLevel)

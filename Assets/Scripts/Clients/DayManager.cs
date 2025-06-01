@@ -7,7 +7,7 @@ public class DayManager : MonoBehaviour
     public static DayManager Instance { get; private set; }
 
     [Header("Day Settings")]
-    public float dayDurationInSeconds = 1200f; // 20 minutes
+    public float dayDurationInSeconds = 600f; // 10 minutes
     public AnimationCurve rushHourCurve; // Customizable via Unity Editor (time of day vs intensity)
 
 
@@ -67,8 +67,6 @@ public class DayManager : MonoBehaviour
 
             yield return null;
         }
-
-        DayEnd();
     }
 
 
@@ -78,7 +76,7 @@ public class DayManager : MonoBehaviour
         return rushHourCurve.Evaluate(CurrentTimePercent);
     }
 
-    private void DayEnd()
+    public void DayEnd()
     {
         OnDayEnd?.Invoke();
         dayStats.PrintSummary();
