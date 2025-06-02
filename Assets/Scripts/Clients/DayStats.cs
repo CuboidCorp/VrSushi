@@ -1,6 +1,7 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
+[Serializable]
 public class DayStats
 {
     public int totalClients;
@@ -9,8 +10,6 @@ public class DayStats
     public int notServedClients;
     public float totalSatisfaction;
     public int wastedIngredients;
-
-    public List<KitchenItem> recipesServed = new();
 
     public float AverageSatisfaction =>
         satisfiedClients == 0 ? 0f : totalSatisfaction / satisfiedClients;
@@ -25,8 +24,6 @@ public class DayStats
             case ClientResult.Satisfied:
                 satisfiedClients++;
                 totalSatisfaction += satisfactionLevel;
-                if (dish != null)
-                    recipesServed.Add(dish);
                 break;
 
             case ClientResult.Unsatisfied:
@@ -50,18 +47,5 @@ public class DayStats
         Debug.Log($"Total Clients: {totalClients}");
         Debug.Log($"Satisfied: {satisfiedClients}, Unsatisfied: {unsatisfiedClients}, Not Served: {notServedClients}");
         Debug.Log($"Average Satisfaction: {AverageSatisfaction:F2}");
-
-        if (recipesServed.Count > 0)
-        {
-            Debug.Log("Recipes Served:");
-            foreach (var recipe in recipesServed)
-            {
-                Debug.Log($"- {recipe.name}");
-            }
-        }
-        else
-        {
-            Debug.Log("No recipes served today.");
-        }
     }
 }

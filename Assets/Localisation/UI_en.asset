@@ -150,6 +150,14 @@ MonoBehaviour:
     m_Localized: Score
     m_Metadata:
       m_Items: []
+  - m_Id: 7608783358881792
+    m_Localized: Resume game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7609329700532224
+    m_Localized: New game
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -6,10 +6,14 @@ public class GameData : MonoBehaviour
 {
     public static GameData Instance;
 
+    private GameDataSave gameDataSave;
+
     public int currentDay = 1;
     public List<DayStats> dayStats = new();
 
     public int nbClients = 10;
+
+    public int nbClientsPremium = 0;
 
     [Header("Multipliers")]
     public float clientWaitTimeMultiplier = 1f;
@@ -26,6 +30,21 @@ public class GameData : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            NewGame ng = FindAnyObjectByType<NewGame>();
+            if (ng != null && !ng.isNewGame && SaveManager.SaveExists())
+            {
+                gameDataSave = SaveManager.LoadGame();
+                currentDay = gameDataSave.currentDay;
+                dayStats = gameDataSave.dayStats;
+                nbClients = gameDataSave.nbClients;
+                nbClientsPremium = gameDataSave.nbClientsPremium;
+
+                clientWaitTimeMultiplier = gameDataSave.clientWaitTimeMultiplier;
+                knifeDamageMultiplier = gameDataSave.knifeDamageMultiplier;
+                fishLifeMultiplier = gameDataSave.fishLifeMultiplier;
+                overcookTimeMultiplier = gameDataSave.overcookTimeMultiplier;
+                cookingSpeedMultiplier = gameDataSave.cookingSpeedMultiplier;
+            }
         }
         else
         {
@@ -41,6 +60,21 @@ public class GameData : MonoBehaviour
     private void OnDayEnded()
     {
         dayStats.Add(DayManager.Instance.dayStats);
+
+        //On fait choisir bonus/malus au joueur
+
+        SaveManager.SaveGame(new GameDataSave
+        {
+            currentDay = currentDay,
+            dayStats = dayStats,
+            nbClients = nbClients,
+            nbClientsPremium = nbClientsPremium,
+            clientWaitTimeMultiplier = clientWaitTimeMultiplier,
+            knifeDamageMultiplier = knifeDamageMultiplier,
+            fishLifeMultiplier = fishLifeMultiplier,
+            overcookTimeMultiplier = overcookTimeMultiplier,
+            cookingSpeedMultiplier = cookingSpeedMultiplier
+        });
     }
 
     public void StartNewDay()
