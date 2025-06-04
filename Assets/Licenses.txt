@@ -4,3 +4,16 @@ Sons pixabay :
 Gaz stove : Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=67789">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=67789">Pixabay</a>
 Eating : Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=46440">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=46440">Pixabay</a>
 Sink : Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=100287">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=100287">Pixabay</a>
+
+Icons from svgrepo : 
+burnerIcon :  https://www.svgrepo.com/svg/16198/two-burners-from-top-view by svgrepo.com
+warning : https://www.svgrepo.com/svg/334640/error by boxicons
+crown : https://www.svgrepo.com/svg/532255/crown by Dazzle UI
+fire : https://www.svgrepo.com/svg/522118/fire-2 by Catalin Fertu
+minus : https://www.svgrepo.com/svg/532960/minus by Dazzle UI
+plus : https://www.svgrepo.com/svg/532997/plus-large by Dazzle UI
+saucepan : https://www.svgrepo.com/svg/194211/pot-saucepan by SVG repo
+fish : https://www.svgrepo.com/svg/268980/fish by SVG Repo
+knife : https://www.svgrepo.com/svg/300382/knife by SVG Repo
+user plus : https://www.svgrepo.com/svg/532381/user-plus-alt-1 by Dazzle UI
+clock lines : https://www.svgrepo.com/svg/532105/clock-lines by Dazzle UI
