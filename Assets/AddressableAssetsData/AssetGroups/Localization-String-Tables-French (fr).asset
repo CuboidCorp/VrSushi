@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-fr
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57d3f7ec1156cec429aa72b195bf8204
+    m_Address: Notifications_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78c5f158a1563fb4396250a23cd1c932
     m_Address: KitchenItems_fr
     m_ReadOnly: 1

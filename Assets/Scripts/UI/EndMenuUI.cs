@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EndMenuUI : MonoBehaviour
 {
@@ -14,10 +13,10 @@ public class EndMenuUI : MonoBehaviour
 
     private void Start()
     {
-        DayManager.Instance.OnDayEnd.AddListener(ShowEndMenu);
+        BonusMalusUI.Instance.onChoicesConfirmed.AddListener(ShowEndMenu);
     }
 
-    private void ShowEndMenu()
+    private void ShowEndMenu(EndBonus bonus, EndMalus malus)
     {
         Debug.Log("Day ended. Showing end menu...");
         transform.GetChild(0).gameObject.SetActive(true);
@@ -27,14 +26,5 @@ public class EndMenuUI : MonoBehaviour
         nbUnsatisfied.text = dayStats.unsatisfiedClients.ToString();
         nbUnserved.text = dayStats.notServedClients.ToString();
         score.text = dayStats.GetScore().ToString();
-    }
-
-    /// <summary>
-    /// Redemarre le jeu, pour le moment, il ne fait que recharger la scene actuelle.
-    /// </summary>
-    public void RestartGame()
-    {
-        Debug.Log("Restarting game... ");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-English (en)
   m_GUID: 0d8d4dd4a4ab8054181365e651a9785a
   m_SerializeEntries:
+  - m_GUID: 641c1dc3aef5d3249a87689f934e3dff
+    m_Address: Notifications_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 790ef77b159b30c4585ca51936346122
     m_Address: KitchenItems_en
     m_ReadOnly: 1

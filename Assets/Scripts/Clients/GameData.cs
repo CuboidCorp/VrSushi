@@ -13,6 +13,7 @@ public class GameData : MonoBehaviour
 
     public int nbClients = 10;
 
+    //NYI
     public int nbClientsPremium = 0;
 
     [Header("Multipliers")]
@@ -22,6 +23,9 @@ public class GameData : MonoBehaviour
 
     public float overcookTimeMultiplier = 1f;
     public float cookingSpeedMultiplier = 1f;
+
+    //NYI
+    public bool stoveFailure = false;
 
 
     private void Awake()
@@ -44,6 +48,8 @@ public class GameData : MonoBehaviour
                 fishLifeMultiplier = gameDataSave.fishLifeMultiplier;
                 overcookTimeMultiplier = gameDataSave.overcookTimeMultiplier;
                 cookingSpeedMultiplier = gameDataSave.cookingSpeedMultiplier;
+
+                stoveFailure = gameDataSave.stoveFailure;
             }
         }
         else
@@ -54,14 +60,15 @@ public class GameData : MonoBehaviour
 
     private void Start()
     {
-        DayManager.Instance.OnDayEnd.AddListener(OnDayEnded);
+        BonusMalusUI.Instance.onChoicesConfirmed.AddListener(OnDayEnded);
     }
 
-    private void OnDayEnded()
+    private void OnDayEnded(EndBonus bonus, EndMalus malus)
     {
         dayStats.Add(DayManager.Instance.dayStats);
 
-        //On fait choisir bonus/malus au joueur
+        HandleBonus(bonus);
+        HandleMalus(malus);
 
         SaveManager.SaveGame(new GameDataSave
         {
@@ -73,8 +80,52 @@ public class GameData : MonoBehaviour
             knifeDamageMultiplier = knifeDamageMultiplier,
             fishLifeMultiplier = fishLifeMultiplier,
             overcookTimeMultiplier = overcookTimeMultiplier,
-            cookingSpeedMultiplier = cookingSpeedMultiplier
+            cookingSpeedMultiplier = cookingSpeedMultiplier,
+            stoveFailure = stoveFailure
         });
+    }
+
+    private void HandleBonus(EndBonus bonus)
+    {
+        switch (bonus)
+        {
+            case EndBonus.MORE_CLIENT_WAIT_TIME:
+                clientWaitTimeMultiplier += 0.05f;
+                break;
+            case EndBonus.BETTER_KNIFE:
+                knifeDamageMultiplier += 0.05f;
+                break;
+            case EndBonus.MORE_OVERCOOK_TIME:
+                overcookTimeMultiplier += 0.1f;
+                break;
+            case EndBonus.FASTER_COOKING:
+                cookingSpeedMultiplier += 0.05f;
+                break;
+        }
+    }
+
+    private void HandleMalus(EndMalus malus)
+    {
+        switch (malus)
+        {
+            case EndMalus.MORE_CLIENTS:
+                nbClients += 2;
+                break;
+            case EndMalus.STRONGER_FISHES:
+                fishLifeMultiplier += 0.1f;
+                break;
+            case EndMalus.LESS_OVERCOOK_TIME:
+                overcookTimeMultiplier -= 0.1f;
+                if (overcookTimeMultiplier < 0.1f) overcookTimeMultiplier = 0.1f; // Prevent negative overcook time
+                break;
+            case EndMalus.RUSHED_CLIENT:
+                nbClientsPremium += 1;
+                break;
+            case EndMalus.PLATE_MALFUNCTION:
+                stoveFailure = true;
+                break;
+
+        }
     }
 
     public void StartNewDay()

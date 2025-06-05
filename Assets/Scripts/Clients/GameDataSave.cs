@@ -14,4 +14,6 @@ public class GameDataSave
     public float fishLifeMultiplier;
     public float overcookTimeMultiplier;
     public float cookingSpeedMultiplier;
+
+    public bool stoveFailure;
 }
