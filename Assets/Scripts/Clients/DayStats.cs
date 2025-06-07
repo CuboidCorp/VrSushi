@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public class DayStats
 {
+    public int day;
     public int totalClients;
     public int satisfiedClients;
     public int unsatisfiedClients;

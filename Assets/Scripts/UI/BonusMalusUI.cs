@@ -16,7 +16,7 @@ public class BonusMalusUI : MonoBehaviour
     [SerializeField] private Transform bonusContainer;
     [SerializeField] private Transform malusContainer;
     [SerializeField] private GameObject choicePrefab;
-    public Button confirmButton;
+    [SerializeField] private Button confirmButton;
 
     [Header("Localized Descriptions")]
     [SerializeField] private LocalizedString[] bonusDescriptions;
@@ -30,14 +30,19 @@ public class BonusMalusUI : MonoBehaviour
     private EndMalus selectedMalus;
     private GameObject selectedBonusGo;
     private GameObject selectedMalusGo;
-    private bool bonusChosen = false;
-    private bool malusChosen = false;
+    [SerializeField] private bool bonusChosen = false;
+    [SerializeField] private bool malusChosen = false;
 
     [HideInInspector] public UnityEvent<EndBonus, EndMalus> onChoicesConfirmed;
 
     [Header("Notifications")]
     [SerializeField] private LocalizedString chooseString;
     [SerializeField] private LocalizedString noChoiceWarning;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -74,6 +79,7 @@ public class BonusMalusUI : MonoBehaviour
                     SetButtonHighlight(selectedBonusGo, false, true);
 
                 // Update selection
+                bonusChosen = true;
                 selectedBonus = bonus;
                 selectedBonusGo = go;
                 SetButtonHighlight(selectedBonusGo, true, true);
@@ -102,6 +108,7 @@ public class BonusMalusUI : MonoBehaviour
                 if (selectedMalusGo != null)
                     SetButtonHighlight(selectedMalusGo, false, false);
 
+                malusChosen = true;
                 selectedMalus = malus;
                 selectedMalusGo = go;
                 SetButtonHighlight(selectedMalusGo, true, false);
@@ -132,6 +139,7 @@ public class BonusMalusUI : MonoBehaviour
 
     private void Confirm()
     {
+        Debug.Log("Confirming choices...");
         if (!bonusChosen || !malusChosen)
         {
             PlayerHudNotification.Instance.ShowText(noChoiceWarning.GetLocalizedString(), 3f);

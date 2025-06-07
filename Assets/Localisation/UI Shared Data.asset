@@ -151,6 +151,66 @@ MonoBehaviour:
     m_Key: NEW_GAME
     m_Metadata:
       m_Items: []
+  - m_Id: 9252378188935168
+    m_Key: NEXT_DAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9253981360975872
+    m_Key: WASTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9260176356372480
+    m_Key: STATS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9262604543815680
+    m_Key: CURRENT_DAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9265220547997696
+    m_Key: DAY_X
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9277012892413952
+    m_Key: MODIFIERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9277872812814336
+    m_Key: PREMIUMCLIENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9278538234949632
+    m_Key: CLIENTWAITTIMEMULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9278981954564096
+    m_Key: KNIFEDAMAGEMULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9279264113782784
+    m_Key: FISHLIFEMULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9279480372097024
+    m_Key: OVERCOOKTIMEMULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9279831653445632
+    m_Key: COOKINGSPEEDMULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9280253969526784
+    m_Key: STOVEFAILURE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9280358793572352
+    m_Key: TRUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9280529581436928
+    m_Key: FALSE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

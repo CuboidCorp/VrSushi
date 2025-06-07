@@ -34,6 +34,7 @@ public class DayManager : MonoBehaviour
     private void Start()
     {
         dayStats = new DayStats();
+        dayStats.day = GameData.Instance.currentDay;
         // Initialize the day
         StartDay();
     }

@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 4251a1dec2d6b9441a70f2e023cf38c3, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 5443724016553033840
   m_TableData:
   - m_Id: 1811344224256
     m_Localized: Fridge
@@ -158,6 +159,73 @@ MonoBehaviour:
     m_Localized: New game
     m_Metadata:
       m_Items: []
+  - m_Id: 9252378188935168
+    m_Localized: Next day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9253981360975872
+    m_Localized: Wasted ingredients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9260176356372480
+    m_Localized: Statistics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9262604543815680
+    m_Localized: 'Current day : '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9265220547997696
+    m_Localized: Day {nb}
+    m_Metadata:
+      m_Items:
+      - rid: 5443724016553033840
+  - m_Id: 9277012892413952
+    m_Localized: Modifiers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9277872812814336
+    m_Localized: Number of premium clients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9278538234949632
+    m_Localized: Client wait time multiplier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9278981954564096
+    m_Localized: Knife damage multiplier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9279264113782784
+    m_Localized: Fish life multiplier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9279480372097024
+    m_Localized: Overcook time multiplier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9279831653445632
+    m_Localized: Cooking speed multiplier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9280253969526784
+    m_Localized: Stove failure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9280358793572352
+    m_Localized: true
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9280529581436928
+    m_Localized: false
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5443724016553033840
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 9265220547997696
