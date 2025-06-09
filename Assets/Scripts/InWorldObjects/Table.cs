@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using System.Collections;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.Audio;
 
 public class Table : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Table : MonoBehaviour
     [SerializeField] private GameObject progressBar;
     [SerializeField] private Image progressBarImage;
     [SerializeField] private Image itemImage;
+
+    [SerializeField] private AudioSource audioSource;
 
     public KitchenItem expectedPlat;
     private float timeLimit; // Temps limite pour placer le plat
@@ -49,6 +52,7 @@ public class Table : MonoBehaviour
 
     public void SetPlat(KitchenItem item, float timeLimit)
     {
+        audioSource.Play();
         expectedPlat = item;
         Debug.Log($"Plat attendu : {expectedPlat.name}");
         Debug.Log($"Temps attendu : {timeLimit}");

@@ -9,7 +9,8 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
 
     [Header("Audio")]
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource boilingAudioSource;
+    [SerializeField] private AudioSource pouringAudioSource;
     [SerializeField] private float baseVolume;
     [SerializeField] private float overboilingVolume;
 
@@ -23,6 +24,9 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
     [SerializeField] private GameObject canvaProgressbar;
     [SerializeField] private Image boilingProgressBar;
     [SerializeField] private Image overboilingProgressBar;
+
+    [Header("AudioSources")]
+
 
     private MeshRenderer meshRenderer;
     private GameObject currentBoilingItem = null;
@@ -39,8 +43,7 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.volume = baseVolume;
+        boilingAudioSource.volume = baseVolume;
         boilingParticles.SetActive(false);
         meshRenderer = GetComponent<MeshRenderer>();
         SetWaterMaterial(emptyWaterMaterial);
@@ -55,6 +58,8 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
         XRGrabInteractable grabInteractable = other.GetComponent<XRGrabInteractable>();
         if (grabInteractable != null && grabInteractable.isSelected)
             return;
+
+        grabInteractable.enabled = false;
 
         if (!other.TryGetComponent(out Boilable boilable))
         {
@@ -76,49 +81,6 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
         isBoiling = true;
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("Bouillable"))
-            return;
-
-        if (currentBoilingItem != null && (other.gameObject == currentBoilingItem || other.gameObject == spawnedBoiledItem))
-        {
-            boilingParticles.SetActive(false);
-            audioSource.Stop();
-            audioSource.volume = baseVolume;
-            Debug.Log($"Boiling pot exit bouillable: {other.name}");
-
-            if (spawnedBoiledItem != null)
-            {
-                // Detach from pot
-                spawnedBoiledItem.transform.SetParent(null);
-
-                // The spawned item is now the main item, so we can destroy the original
-                WasteManager.Instance.UseIngredient(currentBoilingItem);
-                Destroy(currentBoilingItem);
-                spawnedBoiledItem = null;
-            }
-
-            currentBoilingItem = null;
-            boilableCurrentItem = null;
-
-            // Reset pot state
-            if (isFilled)
-            {
-                SetWaterMaterial(waterMaterial); // Just reset to normal water
-            }
-            else
-            {
-                SetWaterMaterial(emptyWaterMaterial);
-            }
-
-            isBoiling = false;
-            hasBoiled = false;
-            hasOverboiled = false;
-            canvaProgressbar.SetActive(false);
-        }
-    }
-
     public void Empty()
     {
         if (!isFilled && currentBoilingItem == null)
@@ -126,8 +88,10 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
         Debug.Log("Emptying boiling pot");
 
-        audioSource.Stop();
-        audioSource.volume = baseVolume;
+        boilingAudioSource.Stop();
+        boilingAudioSource.volume = baseVolume;
+
+        pouringAudioSource.Play();
 
         SetWaterMaterial(emptyWaterMaterial);
         boilingParticles.SetActive(false);
@@ -142,7 +106,12 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
                 {
                     itemRb.AddForce((transform.up * -1 + transform.forward) * 0.5f, ForceMode.Impulse);
                 }
-                WasteManager.Instance.UseIngredient(currentBoilingItem);
+
+                if (spawnedBoiledItem.TryGetComponent(out XRGrabInteractable interactable))
+                {
+                    interactable.enabled = true;
+                }
+
                 Destroy(currentBoilingItem);
                 spawnedBoiledItem = null;
             }
@@ -154,7 +123,13 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
                 {
                     itemRb.AddForce((transform.up * -1 + transform.forward) * 0.5f, ForceMode.Impulse);
                 }
+
+                if (currentBoilingItem.TryGetComponent(out XRGrabInteractable interactable))
+                {
+                    interactable.enabled = true;
+                }
             }
+
 
             currentBoilingItem = null;
             boilableCurrentItem = null;
@@ -174,7 +149,7 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
 
         if (currentBoilingTime == 0)
         {
-            audioSource.Play();
+            boilingAudioSource.Play();
             boilingParticles.SetActive(true);
 
             canvaProgressbar.SetActive(true);
@@ -195,11 +170,17 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
                 overboilingProgressBar.fillAmount = 1;
                 SetWaterMaterial(overboilingWaterMaterial);
 
+                WasteManager.Instance.UseIngredient(spawnedBoiledItem);
+
                 if (spawnedBoiledItem != null) Destroy(spawnedBoiledItem);
 
                 spawnedBoiledItem = Instantiate(boilableCurrentItem.overboiledObjectPrefab, boilingAttachPoint.position, Quaternion.identity);
                 spawnedBoiledItem.transform.SetParent(boilingAttachPoint);
                 spawnedBoiledItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                if (spawnedBoiledItem.TryGetComponent(out XRGrabInteractable newInteractable))
+                {
+                    newInteractable.enabled = false;
+                }
                 WasteManager.Instance.AddIngredient(spawnedBoiledItem);
                 HideOriginalItem();
                 hasOverboiled = true;
@@ -209,13 +190,17 @@ public class BoilingPot : MonoBehaviour, ICookingUtensil, IFillable
         {
             if (!hasBoiled)
             {
-                audioSource.volume = overboilingVolume;
+                boilingAudioSource.volume = overboilingVolume;
                 boilingProgressBar.fillAmount = 1;
                 SetWaterMaterial(boilingWaterMaterial);
-                WasteManager.Instance.UseIngredient(spawnedBoiledItem);
+                WasteManager.Instance.UseIngredient(currentBoilingItem);
                 spawnedBoiledItem = Instantiate(boilableCurrentItem.boiledObjectPrefab, boilingAttachPoint.position, Quaternion.identity);
                 spawnedBoiledItem.transform.SetParent(boilingAttachPoint);
                 spawnedBoiledItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                if (spawnedBoiledItem.TryGetComponent(out XRGrabInteractable newInteractable))
+                {
+                    newInteractable.enabled = false;
+                }
                 WasteManager.Instance.AddIngredient(spawnedBoiledItem);
                 HideOriginalItem();
                 hasBoiled = true;

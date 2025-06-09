@@ -29,11 +29,16 @@ public class Client : MonoBehaviour
 
     [Header("Emotions")]
     [SerializeField] private GameObject emotionGo;
+    private AudioSource emotionAudioSource;
     private ParticleSystemRenderer emotionsPs;
 
     [SerializeField] private Material angryMaterial;
     [SerializeField] private Material happyMaterial;
     [SerializeField] private Material disappointedMaterial;
+
+    [SerializeField] private AudioClip angrySound;
+    [SerializeField] private AudioClip happySound;
+    [SerializeField] private AudioClip disappointedSound;
 
     [Header("Footsteps")]
     [SerializeField] private AudioClip[] footstepSounds;
@@ -51,6 +56,7 @@ public class Client : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         emotionsPs = emotionGo.GetComponent<ParticleSystemRenderer>();
+        emotionAudioSource = emotionGo.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -121,14 +127,17 @@ public class Client : MonoBehaviour
         {
             case ClientResult.Satisfied:
                 emotionsPs.sharedMaterial = happyMaterial;
+                emotionAudioSource.PlayOneShot(happySound);
                 satifactionLevel = 1;
                 break;
             case ClientResult.Unsatisfied:
                 emotionsPs.sharedMaterial = disappointedMaterial;
+                emotionAudioSource.PlayOneShot(disappointedSound);
                 satifactionLevel = 0;
                 break;
             case ClientResult.NotServed:
                 emotionsPs.sharedMaterial = angryMaterial;
+                emotionAudioSource.PlayOneShot(angrySound);
                 satifactionLevel = -1;
                 break;
         }

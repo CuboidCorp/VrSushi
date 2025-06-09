@@ -318,6 +318,18 @@ PrefabInstance:
       propertyPath: isPremium
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4423910179312488867, guid: af7d9eaf279147f40aa459639d6cb7cd, type: 3}
+      propertyPath: angrySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 42e36a3330673844db59521305eec5bf, type: 3}
+    - target: {fileID: 4423910179312488867, guid: af7d9eaf279147f40aa459639d6cb7cd, type: 3}
+      propertyPath: happySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 413cbd1a5283d9c46b0a2f7eaad696c5, type: 3}
+    - target: {fileID: 4423910179312488867, guid: af7d9eaf279147f40aa459639d6cb7cd, type: 3}
+      propertyPath: disappointedSound
+      value: 
+      objectReference: {fileID: 8300000, guid: e2327a23f1fb4db45b26d1152676dd02, type: 3}
     - target: {fileID: 4661563235439521561, guid: af7d9eaf279147f40aa459639d6cb7cd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -5.820182

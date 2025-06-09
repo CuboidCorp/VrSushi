@@ -16,6 +16,9 @@ public class ClientManager : MonoBehaviour
     [SerializeField] private Table[] tables;
     [SerializeField] private KitchenItem[] plats;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource clientSpawnAudioSource;
+
     private DayManager dayManager;
 
     private List<Table> availableTables;
@@ -153,6 +156,8 @@ public class ClientManager : MonoBehaviour
         client.OnClientFinished += OnClientFinished;
         client.OnClientDespawn += OnClientDespawn;
         clients.Add(clientGo);
+
+        clientSpawnAudioSource.Play();
         nbClients++;
     }
 

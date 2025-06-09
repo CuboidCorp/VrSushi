@@ -371,6 +371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18915f398917f64ca4384575b984a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clientId: 0
+  isPremium: 0
   targetTable: {fileID: 0}
   eatingDuration: 7
   eatingAudioSource: {fileID: 1559445922236243365}
@@ -378,6 +380,9 @@ MonoBehaviour:
   angryMaterial: {fileID: 2100000, guid: 65c19dc1461671348a5706becccba88b, type: 2}
   happyMaterial: {fileID: 2100000, guid: 0553ad7d8a3a67a4896b6c402037ed13, type: 2}
   disappointedMaterial: {fileID: 2100000, guid: 13fd391836beb844fa31e14ee5ec1025, type: 2}
+  angrySound: {fileID: 8300000, guid: 42e36a3330673844db59521305eec5bf, type: 3}
+  happySound: {fileID: 8300000, guid: 413cbd1a5283d9c46b0a2f7eaad696c5, type: 3}
+  disappointedSound: {fileID: 8300000, guid: e2327a23f1fb4db45b26d1152676dd02, type: 3}
   footstepSounds:
   - {fileID: 8300000, guid: 8e001351cd7065543a068386cde4c960, type: 3}
   - {fileID: 8300000, guid: 76c66b3ae15685a45a334b0628d1edd1, type: 3}
