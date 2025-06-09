@@ -1004,7 +1004,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minClientWaitTime: 90
   maxClientWaitTime: 120
-  rushHourLookAheadSeconds: 60
   clientPrefabs:
   - {fileID: 6416047281404248902, guid: af7d9eaf279147f40aa459639d6cb7cd, type: 3}
   - {fileID: 5447373252503120822, guid: f0147cc353d1a9442a2463612d1b2f12, type: 3}
@@ -1013,6 +1012,10 @@ MonoBehaviour:
   - {fileID: 6213277154393027017, guid: 1c406bc1b898fb74bb3880bfb3000de9, type: 3}
   - {fileID: 3110759050173446220, guid: 53289668968801b458f3ee4acbc85f18, type: 3}
   - {fileID: 6226060383840526496, guid: 29e80156643c37a4eb0b04b70c83bc31, type: 3}
+  premiumClientPrefabs:
+  - {fileID: 3394810316090224887, guid: 52f8788d3a1174e41ba60ac96be85bca, type: 3}
+  - {fileID: 3473718189136570221, guid: 3c961d74b3ef6a54ab5622df686eb6a1, type: 3}
+  - {fileID: 183939185519433955, guid: 9d45c0a33c3e35c409a29384b8617c6b, type: 3}
   spawnPoint: {fileID: 2017613012}
   despawnPoint: {fileID: 1278045591}
   tables:
@@ -4591,7 +4594,7 @@ MonoBehaviour:
   fishLifeMultiplier: 1
   overcookTimeMultiplier: 1
   cookingSpeedMultiplier: 1
-  stoveFailure: 0
+  stoveFailure: 1
 --- !u!4 &216374499
 Transform:
   m_ObjectHideFlags: 0
@@ -8467,6 +8470,10 @@ PrefabInstance:
     - target: {fileID: 6801809686691419085, guid: 0a7f21a18dc9667409901d3af7179542, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040655908808528578, guid: 0a7f21a18dc9667409901d3af7179542, type: 3}
+      propertyPath: canHaveFailure
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38254,7 +38261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8457069287960121318, guid: 70623ee0d2a41b642850c8e57d30389c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.212
+      value: -1.994
       objectReference: {fileID: 0}
     - target: {fileID: 8457069287960121318, guid: 70623ee0d2a41b642850c8e57d30389c, type: 3}
       propertyPath: m_LocalPosition.y

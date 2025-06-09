@@ -9,6 +9,7 @@ using UnityEngine.Audio;
 public class Client : MonoBehaviour
 {
     public int clientId;
+    [SerializeField] private bool isPremium = false;
     private NavMeshAgent agent;
     private Transform targetPosition;
     private Transform despawnPoint;
@@ -41,7 +42,7 @@ public class Client : MonoBehaviour
 
     private float lastFootstepTime = 0f;
 
-    public event Action<Client> OnStartWaiting;
+    public event Action<Client, bool> OnStartWaiting;
     public event Action<Client, ClientResult, float> OnClientFinished;
     public event Action<Client> OnClientDespawn;
 
@@ -226,7 +227,7 @@ public class Client : MonoBehaviour
         //On ajoute des listeners au events de la table 
         targetTable.OnPlatPlaced += Serve;
         targetTable.OnPlatTimeout += WaitTimeOut;
-        OnStartWaiting?.Invoke(this);
+        OnStartWaiting?.Invoke(this, isPremium);
 
         StartCoroutine(EatingSequence());
     }

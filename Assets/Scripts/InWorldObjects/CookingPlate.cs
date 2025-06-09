@@ -6,6 +6,8 @@ public class CookingPlate : MonoBehaviour
 
     private Coroutine cookdamageCoroutine;
 
+    [SerializeField] private bool canHaveFailure = false;
+
     [Header("Cooking Settings")]
     [SerializeField] private bool isActive = false;
     [SerializeField] private GameObject particles;
@@ -20,6 +22,15 @@ public class CookingPlate : MonoBehaviour
     private void Awake()
     {
         audioSourceGazStoveSfx = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        if (canHaveFailure && GameData.Instance.stoveFailure)
+        {
+            enabled = false;
+            GameData.Instance.stoveFailure = false;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {

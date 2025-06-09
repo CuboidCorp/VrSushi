@@ -7,11 +7,10 @@ public class ClientManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField, Tooltip("Min time the client waits before leaving")] private float minClientWaitTime = 90f;
     [SerializeField, Tooltip("Maximum time the client waits before leaving")] private float maxClientWaitTime = 120f;
-    [SerializeField, Tooltip("How many seconds ahead to look when evaluating rush hour intensity (helps shift rush earlier)")]
-    private float rushHourLookAheadSeconds = 60f;
 
     [Header("References")]
     [SerializeField] private GameObject[] clientPrefabs;
+    [SerializeField] private GameObject[] premiumClientPrefabs;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform despawnPoint;
     [SerializeField] private Table[] tables;
@@ -23,7 +22,7 @@ public class ClientManager : MonoBehaviour
 
 
     private readonly List<GameObject> clients = new();
-    private List<float> clientSpawnTimes = new();
+    private List<(float, bool)> clientSpawnTimes = new();
 
     private Coroutine spawnClientCoroutine;
     private const int MAX_CLIENTS = 6;
@@ -54,6 +53,7 @@ public class ClientManager : MonoBehaviour
     {
         clientSpawnTimes.Clear();
 
+        int totalClients = GameData.Instance.nbClients + GameData.Instance.nbClientsPremium;
         int sampleCount = 1000;
         float totalCurveValue = 0f;
         float[] curveValues = new float[sampleCount];
@@ -74,20 +74,33 @@ public class ClientManager : MonoBehaviour
             cumulativeDistribution[i] = runningTotal / totalCurveValue;
         }
 
-        for (int c = 0; c < GameData.Instance.nbClients; c++)
+        for (int c = 0; c < totalClients; c++)
         {
-            float target = (c + 0.5f) / GameData.Instance.nbClients;
+            float target = (c + 0.5f) / totalClients;
             int index = System.Array.FindIndex(cumulativeDistribution, val => val >= target);
             float timePercent = index / (float)(sampleCount - 1);
             float spawnTime = timePercent * dayManager.dayDurationInSeconds;
-            clientSpawnTimes.Add(spawnTime);
+            clientSpawnTimes.Add((spawnTime, false)); // normal by default
         }
 
-        foreach (float spawnTime in clientSpawnTimes)
+        // Randomly mark nbPremiumClients as premium
+        for (int i = 0; i < GameData.Instance.nbClientsPremium; i++)
         {
-            Debug.Log($"Client will spawn at: {spawnTime} seconds");
+            int idx;
+            do
+            {
+                idx = Random.Range(0, totalClients);
+            } while (clientSpawnTimes[idx].Item2);
+
+            clientSpawnTimes[idx] = (clientSpawnTimes[idx].Item1, true);
         }
-        clientSpawnTimes.Sort();
+
+        clientSpawnTimes.Sort((a, b) => a.Item1.CompareTo(b.Item1));
+
+        foreach ((float, bool) spawnData in clientSpawnTimes)
+        {
+            Debug.Log($"Client will spawn at: {spawnData.Item1}s (Premium: {spawnData.Item2})");
+        }
     }
 
 
@@ -99,11 +112,11 @@ public class ClientManager : MonoBehaviour
         {
             float currentTime = dayManager.CurrentTimePercent * dayManager.dayDurationInSeconds;
 
-            if (currentTime >= clientSpawnTimes[nextClientIndex])
+            if (currentTime >= clientSpawnTimes[nextClientIndex].Item1)
             {
                 if (clients.Count < MAX_CLIENTS)
                 {
-                    SpawnClient();
+                    SpawnClient(clientSpawnTimes[nextClientIndex].Item2);
                     nextClientIndex++;
                 }
             }
@@ -113,7 +126,7 @@ public class ClientManager : MonoBehaviour
     }
 
 
-    private void SpawnClient()
+    private void SpawnClient(bool isPremium)
     {
         if (availableTables.Count == 0)
         {
@@ -121,11 +134,13 @@ public class ClientManager : MonoBehaviour
             return;
         }
 
+        Debug.Log($"Spawning client {nbClients} (Premium: {isPremium})");
+
         Table table = availableTables[Random.Range(0, availableTables.Count)];
         availableTables.Remove(table);
 
-
-        GameObject clientPrefab = clientPrefabs[Random.Range(0, clientPrefabs.Length)];
+        GameObject clientPrefab = isPremium ? premiumClientPrefabs[Random.Range(0, premiumClientPrefabs.Length)] : clientPrefabs[Random.Range(0, clientPrefabs.Length)];
+        Debug.Log("Spawning client prefab: " + clientPrefab.name);
         GameObject clientGo = Instantiate(clientPrefab, spawnPoint.position, Quaternion.identity);
         clientGo.name = $"Client_{nbClients}";
         Client client = clientGo.GetComponent<Client>();
@@ -161,11 +176,11 @@ public class ClientManager : MonoBehaviour
         Destroy(clientGo);
     }
 
-    private void OnClientStartWaiting(Client client)
+    private void OnClientStartWaiting(Client client, bool isPremium)
     {
         //Le client affiche sur la table un plat random parmi la liste des plats
         KitchenItem plat = plats[Random.Range(0, plats.Length)];
-        float waitTime = GameData.Instance.clientWaitTimeMultiplier * Random.Range(minClientWaitTime, maxClientWaitTime);
+        float waitTime = GameData.Instance.clientWaitTimeMultiplier * Random.Range(minClientWaitTime, maxClientWaitTime) * (isPremium ? .5f : 1f);
         client.targetTable.SetPlat(plat, waitTime);
     }
 
