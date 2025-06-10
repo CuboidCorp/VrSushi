@@ -24,7 +24,17 @@ public class Cuttable : MonoBehaviour
     {
         if (collision.transform.TryGetComponent(out Knife knifeScript))
         {
-            OnCut?.Invoke(knifeScript.cuttingPower);
+            Rigidbody knifeRb = knifeScript.GetComponent<Rigidbody>();
+            if (knifeRb != null)
+            {
+                //On verif si le couteau va vers le bas avec assez de vitesse
+                float downwardVelocity = Vector3.Dot(knifeRb.linearVelocity, Vector3.down);
+                if (downwardVelocity > 0.1f)
+                {
+                    OnCut?.Invoke(knifeScript.cuttingPower);
+                }
+            }
         }
     }
+
 }
