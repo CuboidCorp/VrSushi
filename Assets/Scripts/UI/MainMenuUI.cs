@@ -36,6 +36,13 @@ public class MainMenuUI : MonoBehaviour
     {
         GameObject go = new("NewGame");
         go.AddComponent<NewGame>().isNewGame = true;
+
+        //On check si y a game data si oui on le supprime
+        if (GameData.Instance != null)
+        {
+            Destroy(GameData.Instance.gameObject);
+        }
+
         DontDestroyOnLoad(go);
         SceneManager.LoadScene("Sushi");
     }

@@ -15,6 +15,7 @@ TagManager:
   - Vapeurable
   - CookingUtensil
   - Plate
+  - Waste
   layers:
   - Default
   - TransparentFX

@@ -8,6 +8,8 @@ public class WasteManager : MonoBehaviour
 
     private List<GameObject> trackedIngredients = new List<GameObject>();
 
+    private int deletedIngredients = 0;
+
     private void Awake()
     {
         Instance = this;
@@ -29,10 +31,19 @@ public class WasteManager : MonoBehaviour
         }
     }
 
+    public void DeleteIngredient(GameObject ingredient)
+    {
+        if (trackedIngredients.Contains(ingredient))
+        {
+            trackedIngredients.Remove(ingredient);
+            deletedIngredients++;
+        }
+    }
+
     public int GetRemainingIngredients()
     {
         trackedIngredients.RemoveAll(item => item == null); // Cleanup destroyed objects
-        return trackedIngredients.Count;
+        return trackedIngredients.Count + deletedIngredients;
     }
 
     public int CalculateWastePenalty()
