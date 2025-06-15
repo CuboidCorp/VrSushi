@@ -27,6 +27,7 @@ public class EndMenuUI : MonoBehaviour
     private void ShowEndMenu(EndBonus bonus, EndMalus malus)
     {
         Debug.Log("Day ended. Showing end menu...");
+        WasteManager.Instance.SetWaste();
         transform.GetChild(0).gameObject.SetActive(true);
         DayStats dayStats = DayManager.Instance.dayStats;
         nbClients.text = dayStats.totalClients.ToString();

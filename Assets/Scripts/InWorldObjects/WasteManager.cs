@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class WasteManager : MonoBehaviour
 {
     public static WasteManager Instance { get; private set; }
-    [SerializeField] private int penaltyPerIngredient = 5; // Points lost per wasted ingredient
 
     private List<GameObject> trackedIngredients = new List<GameObject>();
 
@@ -46,10 +45,9 @@ public class WasteManager : MonoBehaviour
         return trackedIngredients.Count + deletedIngredients;
     }
 
-    public int CalculateWastePenalty()
+    public void SetWaste()
     {
-        int wastedCount = GetRemainingIngredients();
-        return wastedCount * penaltyPerIngredient;
+        DayManager.Instance.dayStats.wastedIngredients = GetRemainingIngredients();
     }
 
     // For debugging or editor button

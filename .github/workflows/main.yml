@@ -1,0 +1,104 @@
+name: Actions 😎
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  test:
+    permissions:
+      checks: write
+    name: Test my project 🧪
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+    
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+      
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    name: Build my project ✨ for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        targetPlatform: [StandaloneWindows64, StandaleLinux64]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          unityVersion: 6000.0.38f1
+          buildName: ${{ vars.GAME_NAME }}
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: build
+
+  release:
+    name: Create GitHub Release 🚀
+    runs-on: ubuntu-latest
+    needs: [test, build]
+    permissions:
+      contents: write
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+  
+      - name: Clean and zip builds
+        run: |
+          for dir in Build-*; do
+            echo "Cleaning $dir"
+            find "$dir" -type d -iname '*DoNotShip*' -exec rm -rf {} +
+
+            inner=$(find "$dir" -mindepth 1 -maxdepth 1 -type d)
+            mv "$inner" "$dir/${{ vars.GAME_NAME }}"
+
+            (cd "$dir" && zip -r "../${{ vars.GAME_NAME }}-${dir#Build-}.zip" "${{ vars.GAME_NAME }}")
+          done
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          files: |
+            **/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -217,6 +217,42 @@ MonoBehaviour:
     m_Localized: non
     m_Metadata:
       m_Items: []
+  - m_Id: 12257448362995712
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12298706972274688
+    m_Localized: 'Un jeu de '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12299765476192256
+    m_Localized: "Mod\xE8les 3D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12300658401570816
+    m_Localized: Effets sonores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12300807974645760
+    m_Localized: Musique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12302864026660864
+    m_Localized: "Ic\xF4nes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12305363764736000
+    m_Localized: Skybox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12305736118267904
+    m_Localized: "Un grand merci \xE0 "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12337301405790208
+    m_Localized: "Se d\xE9coincer"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
