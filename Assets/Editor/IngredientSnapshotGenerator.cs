@@ -71,9 +71,7 @@ public class IngredientSnapshotGenerator : EditorWindow
         if (selectedModel != null)
         {
             manualInstance = Instantiate(selectedModel);
-            manualInstance.transform.position = Vector3.zero;
-            manualInstance.transform.rotation = Quaternion.Euler(defaultRotation);
-
+            manualInstance.transform.SetPositionAndRotation(Vector3.zero, Quaternion.Euler(defaultRotation));
             Bounds bounds = CalculateBounds(manualInstance);
             CenterModel(manualInstance, bounds);
             manualInstance.transform.position += defaultPositionOffset;
@@ -90,12 +88,12 @@ public class IngredientSnapshotGenerator : EditorWindow
 
         Directory.CreateDirectory(outputPath);
 
-        RenderTexture rt = new RenderTexture((int)textureSize.x, (int)textureSize.y, 24, RenderTextureFormat.ARGB32);
+        RenderTexture rt = new((int)textureSize.x, (int)textureSize.y, 24, RenderTextureFormat.ARGB32);
         renderCam.targetTexture = rt;
         renderCam.clearFlags = CameraClearFlags.SolidColor;
         renderCam.backgroundColor = backgroundColor;
 
-        Texture2D screenShot = new Texture2D((int)textureSize.x, (int)textureSize.y, TextureFormat.RGBA32, false);
+        Texture2D screenShot = new((int)textureSize.x, (int)textureSize.y, TextureFormat.RGBA32, false);
 
         renderCam.Render();
         RenderTexture.active = rt;
@@ -124,12 +122,12 @@ public class IngredientSnapshotGenerator : EditorWindow
         string[] modelGuids = AssetDatabase.FindAssets("t:Prefab", new[] { modelsPath });
         Directory.CreateDirectory(outputPath);
 
-        RenderTexture rt = new RenderTexture((int)textureSize.x, (int)textureSize.y, 24, RenderTextureFormat.ARGB32);
+        RenderTexture rt = new((int)textureSize.x, (int)textureSize.y, 24, RenderTextureFormat.ARGB32);
         renderCam.targetTexture = rt;
         renderCam.clearFlags = CameraClearFlags.SolidColor;
         renderCam.backgroundColor = backgroundColor;
 
-        Texture2D screenShot = new Texture2D((int)textureSize.x, (int)textureSize.y, TextureFormat.RGBA32, false);
+        Texture2D screenShot = new((int)textureSize.x, (int)textureSize.y, TextureFormat.RGBA32, false);
 
         foreach (string guid in modelGuids)
         {
