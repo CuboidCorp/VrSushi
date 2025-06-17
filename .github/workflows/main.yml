@@ -35,7 +35,7 @@ jobs:
 
   build:
     name: Build my project ✨ for StandaloneWindows64
-    runs-on: windows-il2cpp
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
