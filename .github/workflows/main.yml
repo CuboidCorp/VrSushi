@@ -56,7 +56,7 @@ jobs:
         run: |
           for dir in Build-*; do
             echo "Cleaning $dir"
-            find "$dir" -type d -iname '*DoNotShip*' -exec rm -rf {} +
+            find "$dir" -type d \( -iname '*DoNotShip*' -o -iname '*DontShip*' \) -exec rm -rf {} +
 
             inner=$(find "$dir" -mindepth 1 -maxdepth 1 -type d)
             mv "$inner" "$dir/${{ vars.GAME_NAME }}"

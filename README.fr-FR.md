@@ -1,47 +1,46 @@
 # VR Sushi
 
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
-[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](README.fr-FR.md)
 
-A short arcade style cooking game in VR for all headsets (in theory) for PCVR using OpenXR. 
+Un jeu de cuisine arcade en VR pour tous les casques (en théorie) pour PCVR utilisant OpenXR.
 
-## Screenshots & Videos : 
+## Captures d'écran et vidéos : 
 
-Coming soon, ...
+Pas encore de captures d'écran ou de vidéos, mais c'est pour bientôt.
 
-## How to play : 
+## Comment jouer : 
 
-Currently, the game is launched using SteamVR, and it uses Unity’s OpenXR plugin, meaning it should work with all headsets that support OpenXR (e.g., Valve Index, Oculus Rift/Quest via Link, HTC Vive, Pico, ...). I only have a Pico 4, so I have only tested it on that headset.
+Actuellement, le jeu se lance via SteamVR et utilise le plugin OpenXR de Unity, ce qui signifie qu'il devrait fonctionner avec tous les casques prenant en charge OpenXR (par exemple, Valve Index, Oculus Rift/Quest via Link, HTC Vive, Pico, ...). Je n'ai qu'un Pico 4, donc je ne peux le tester que sur ce casque.
+Pour jouer :
+1. Connectez votre casque VR à votre PC et lancez SteamVR.
+2. Exécutez l'exécutable VR Sushi (VRSushi.exe).
+3. Le jeu devrait apparaître dans SteamVR en tant qu'application active.
+4. Mettez votre casque et passez dans le jeu pour commencer à jouer.
 
-To play:
-1. Connect your VR headset to your PC and launch SteamVR.
-2. Run the VR Sushi executable (VRSushi.exe).
-3. The game should appear in SteamVR as an active application.
-4. Put on your headset and switch into the game to start playing.
+### Gameplay :
 
-### Gameplay : 
+En gros, vous êtes un chef sushi dans un restaurant et vous devez cuisiner des sushis pour vos clients. Pour cuisiner un sushi, vous pouvez jeter un œil à la fenêtre de recettes et voir le graphe de recette. La logique est simple, prenez du riz, faites-le bouillir, prenez du poisson, coupez-le, puis mettez-les ensemble pour faire un sushi, c'est la recette pour la plupart des sushis. Une fois le sushi prêt, vous pouvez le mettre sur la table devant le client, et il le mangera. Si vous avez mal compris la commande ou si vous n'avez pas réussi à le servir dans les temps, vous perdrez des points. Si vous servez la bonne commande, vous gagnerez des points. À la fin de la journée (10 minutes), vous verrez votre score et serez pénalisé si vous avez gaspillé des ingrédients. L'objectif est d'obtenir le meilleur score possible, et il n'y a pas de game over, vous pouvez continuer à jouer aussi longtemps que vous le souhaitez. Une fois une journée terminée, vous avez le choix d'une amélioration et d'une pénalité, le jeu sera sauvegardé et vous pourrez continuer plus tard.
 
-Basically, you are a sushi chef in a restaurant and you have to cook sushis for your customers. To cook a sushi, you can take a look at the recipe window and see the recipe graph. The logic is simple, take rice, boil it, take fish, cut it, and then put them together to make a sushi, that's the recipe for most of the sushis. Once the sushi is ready, you can put it on the table in front of the customer, and they will eat it. If you got the order wrong or failed to serve it, you will lose some points. If you serve the right order, you will gain some points. At the end of the day (10 minutes), you will see your score and be penalized if you wasted ingredients. The objective is to get the highest score, and there is no game over, you can keep playing as long as you want. Once a day is ended you have a choice for one upgrade and one penalty, the game will be saved, and you can continue later.
+## Releases :
 
-## Releases : 
+Vous pouvez télécharger la dernière version du jeu depuis les [Releases](https://github.com/CuboidCorp/VrSushi/releases/latest).
 
-You can download the latest release of the game from the [Releases](https://github.com/CuboidCorp/VrSushi/releases/latest).
 
-## Feedback & Bugs :
+## Feedback et bugs :
 
-Feel free to [open an issue](https://github.com/CuboidCorp/VrSushi/issues/new) if you find bugs or have suggestions for improvements. I am not planning to add new features right now, but I will try to fix any bugs and if the ideas are interesting, I might add them later. Please note that I only speak French and English, so if you want to report a bug or suggest an improvement, please do it in one of these two languages.
+N'hésitez pas à [ouvrir un ticket](https://github.com/CuboidCorp/VrSushi/issues/new) si vous trouvez des bugs ou avez des suggestions d'amélioration. Je ne prévois pas d'ajouter de nouvelles fonctionnalités pour le moment, mais je vais essayer de corriger les bugs et si les idées sont intéressantes, je pourrais les ajouter plus tard. Notez que je ne parle que français et anglais, donc si vous souhaitez signaler un bug ou suggérer une amélioration, veuillez le faire dans l'une de ces deux langues.
+
 
 ## Credits : 
 
-I've used the asset pack [Sushi Restaurant Kit](https://quaternius.com/packs/sushirestaurantkit.html) from Quaternius for most of the 3D models that I modified to integrate into the game.
+J'ai utilisé le pack d'assets [Sushi Restaurant Kit](https://quaternius.com/packs/sushirestaurantkit.html) de Quaternius pour la plupart des modèles 3D que j'ai modifiés pour les intégrer dans le jeu.
 
-The Unity VR template and Unity VR multiplayer template for the reuse of models and interfaces. They've been very helpful in getting started with VR development.
+Les templates VR et VR multijoueur d'Unity ont été utiles pour la réutilisation des modèles et des interfaces. 
 
-I have used the following Unity assets : 
+J'ai utilisé les assets Unity suivants :
+TODO : Lien vers tous les assets
 
-TODO : Link to all the assets
-
-I have used the following sounds from [Pixabay](https://pixabay.com/sound-effects/):
+J'ai utilisé les sons suivants de [Pixabay](https://pixabay.com/sound-effects/):
 
 - Gaz stove : Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=67789">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=67789">Pixabay</a>
 - Eating : Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=46440">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=46440">Pixabay</a>
@@ -54,7 +53,7 @@ I have used the following sounds from [Pixabay](https://pixabay.com/sound-effect
 - Sigh : Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6763">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6763">Pixabay</a>
 - Happy huming : Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6202">freesound_community</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6202">Pixabay</a>
 
-I have used the following icons from [svgrepo](https://www.svgrepo.com/):
+J'ai utilisé les icônes suivantes de [svgrepo](https://www.svgrepo.com/):
 - burnerIcon :  https://www.svgrepo.com/svg/16198/two-burners-from-top-view by svgrepo.com
 - warning : https://www.svgrepo.com/svg/334640/error by boxicons
 - crown : https://www.svgrepo.com/svg/532255/crown by Dazzle UI
@@ -67,5 +66,4 @@ I have used the following icons from [svgrepo](https://www.svgrepo.com/):
 - user plus : https://www.svgrepo.com/svg/532381/user-plus-alt-1 by Dazzle UI
 - clock lines : https://www.svgrepo.com/svg/532105/clock-lines by Dazzle UI
 
-For the generation of some colliders, I used VHACD, a technology that allows generating multiple convex colliders for concave objects, specifically this version: [Unity-Technologies/VHACD](https://github.com/Unity-Technologies/VHACD). I had to modify it to have a functional version on Unity 6, which you can find here: [Fork Unity 6](https://github.com/November304/VHACD).
-
+Pour la génération de certains colliders, j'ai utilisé VHACD, une technologie qui permet de générer plusieurs colliders convexes pour des objets concaves, en particulier cette version : [Unity-Technologies/VHACD](https://github.com/Unity-Technologies/VHACD). J'ai dû le modifier pour avoir une version fonctionnelle sur Unity 6, que vous pouvez trouver ici : [Fork Unity 6](https://github.com/November304/VHACD).
