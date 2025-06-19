@@ -32,8 +32,6 @@ public class RecipeStepPopup : MonoBehaviour
     [SerializeField] private LocalizedString[] spawnNames;
     [SerializeField] private LocalizedString[] methodNames;
 
-    private RecipeStep currentStep;
-
     public void Show(RecipeStep step)
     {
         gameObject.SetActive(true);

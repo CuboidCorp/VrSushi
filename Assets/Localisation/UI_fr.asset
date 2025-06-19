@@ -93,7 +93,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 15825130450944
     m_Localized: "<b>Attention</b>\n\nVous \xEAtes sur le point de quitter l'application
-      et de retourner sur le menu syst\xE8me."
+      et de retourner sur le menu syst\xE8me. Votre progression a \xE9t\xE9 sauvegard\xE9e."
     m_Metadata:
       m_Items: []
   - m_Id: 16092727046144

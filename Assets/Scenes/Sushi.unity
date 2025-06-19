@@ -5645,6 +5645,17 @@ MonoBehaviour:
   - Vapeurable
   - Plate
   - Waste
+--- !u!114 &215084058 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6422488900118881660, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+  m_PrefabInstance: {fileID: 987489213}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &216374497
 GameObject:
   m_ObjectHideFlags: 0
@@ -5683,7 +5694,7 @@ MonoBehaviour:
   fishLifeMultiplier: 1
   overcookTimeMultiplier: 1
   cookingSpeedMultiplier: 1
-  stoveFailure: 1
+  stoveFailure: 0
 --- !u!4 &216374499
 Transform:
   m_ObjectHideFlags: 0
@@ -7898,21 +7909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845ffa358c43240dda6ed5379b4f0c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_parameters:
-    m_concavity: 0.001
-    m_alpha: 0.05
-    m_beta: 0.05
-    m_minVolumePerCH: 0.0001
-    m_resolution: 100000
-    m_maxNumVerticesPerCH: 64
-    m_planeDownsampling: 4
-    m_convexhullDownsampling: 4
-    m_pca: 0
-    m_mode: 0
-    m_convexhullApproximation: 1
-    m_oclAcceleration: 0
-    m_maxConvexHulls: 1024
-    m_projectHullVertices: 1
 --- !u!4 &306023328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 920601080788327160, guid: ced3c4ab76bd3be47a3c3d94e7a87872, type: 3}
@@ -23290,6 +23286,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3870556441384876883, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3870556441384876883, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3870556441384876883, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 215084058}
+    - target: {fileID: 3870556441384876883, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3870556441384876883, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_text
+      objectReference: {fileID: 0}
+    - target: {fileID: 3870556441384876883, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TMPro.TMP_Text, Unity.TextMeshPro
+      objectReference: {fileID: 0}
+    - target: {fileID: 3870556441384876883, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8989436956902277554, guid: 75f15dedc62ade045948a9e3d6b64ee6, type: 3}
       propertyPath: m_Name
       value: CloseBtn
@@ -34995,6 +35019,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 669261947}
     m_Modifications:
+    - target: {fileID: 47246787333007832, guid: 91ce1a88475755c4cac0c1a7acd505e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 327284522152180916, guid: 91ce1a88475755c4cac0c1a7acd505e6, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -35014,6 +35042,14 @@ PrefabInstance:
     - target: {fileID: 709691186307966652, guid: 91ce1a88475755c4cac0c1a7acd505e6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 612869839}
+    - target: {fileID: 709691186307966652, guid: 91ce1a88475755c4cac0c1a7acd505e6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 709691186307966652, guid: 91ce1a88475755c4cac0c1a7acd505e6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: XRMultiplayer.PlayerOptions, VRMP
       objectReference: {fileID: 0}
     - target: {fileID: 1045616186826757402, guid: 91ce1a88475755c4cac0c1a7acd505e6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -35353,6 +35389,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6960164574678595174, guid: 91ce1a88475755c4cac0c1a7acd505e6, type: 3}
       propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096561166374355900, guid: 91ce1a88475755c4cac0c1a7acd505e6, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7522260192192761809, guid: 91ce1a88475755c4cac0c1a7acd505e6, type: 3}
@@ -41390,6 +41430,14 @@ PrefabInstance:
     - target: {fileID: 3261098046793603919, guid: e5cb102664e43194bbdd8de5e0db1004, type: 3}
       propertyPath: m_Name
       value: Recipe List
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897386453095590398, guid: e5cb102664e43194bbdd8de5e0db1004, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897386453095590398, guid: e5cb102664e43194bbdd8de5e0db1004, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5218125958977392094, guid: e5cb102664e43194bbdd8de5e0db1004, type: 3}
       propertyPath: m_Value

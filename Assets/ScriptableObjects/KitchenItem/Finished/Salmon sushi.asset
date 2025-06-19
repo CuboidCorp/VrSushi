@@ -22,7 +22,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   itemName: Salmon sushi
-  icon: {fileID: 21300000, guid: 1091ae3e3d581b6479a3ce8dae8bdb2f, type: 3}
+  icon: {fileID: 21300000, guid: 945dc0399270144418b4b8db5cf9c200, type: 3}
   prefab: {fileID: 2503310660714526820, guid: 30b00c9da02090045b0598d226b1db3a, type: 3}
   references:
     version: 2

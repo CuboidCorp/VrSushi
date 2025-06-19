@@ -4,7 +4,6 @@ using UnityEngine.Localization;
 [System.Serializable]
 public class RecipeStep
 {
-    public string stepDescription;
     public LocalizedString stepDescriptionLocalized;
 
     public ObtentionMethod method;
