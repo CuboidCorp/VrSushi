@@ -7887,28 +7887,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1283978327}
---- !u!1 &300958722 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -4638553613966484146, guid: b9f59c5a0fa9eec4698152c59791ae76, type: 3}
-  m_PrefabInstance: {fileID: 475938074}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &300958723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8057933781558731363, guid: b9f59c5a0fa9eec4698152c59791ae76, type: 3}
   m_PrefabInstance: {fileID: 475938074}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &300958726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 300958722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 845ffa358c43240dda6ed5379b4f0c8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &306023328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 920601080788327160, guid: ced3c4ab76bd3be47a3c3d94e7a87872, type: 3}
@@ -10990,9 +10973,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 644418661}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: -4638553613966484146, guid: b9f59c5a0fa9eec4698152c59791ae76, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 300958726}
     - targetCorrespondingSourceObject: {fileID: -7668385508474663706, guid: b9f59c5a0fa9eec4698152c59791ae76, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1866420560}
@@ -51009,6 +50989,10 @@ PrefabInstance:
     - target: {fileID: 2791583894575874624, guid: 70623ee0d2a41b642850c8e57d30389c, type: 3}
       propertyPath: m_Center.y
       value: -0.0017263889
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881023057082173406, guid: 70623ee0d2a41b642850c8e57d30389c, type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4303561623209291832, guid: 70623ee0d2a41b642850c8e57d30389c, type: 3}
       propertyPath: m_Target

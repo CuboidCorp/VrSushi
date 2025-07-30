@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8084548563099561682}
   m_Layer: 0
   m_Name: ConvexHull_7
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 3699586011543471042}
   m_Layer: 0
   m_Name: ConvexHull_11
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,6 +126,37 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &636256313454212400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6906592191498953566}
+  m_Layer: 6
+  m_Name: SocketAttach
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6906592191498953566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636256313454212400}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 666334170216922409}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1218698876754427892
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +170,7 @@ GameObject:
   - component: {fileID: 7555398654763193847}
   m_Layer: 0
   m_Name: ConvexHull_3
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -202,7 +233,7 @@ GameObject:
   - component: {fileID: 6888678375512342263}
   m_Layer: 0
   m_Name: ConvexHull_4
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -265,7 +296,7 @@ GameObject:
   - component: {fileID: 4375637745595536634}
   m_Layer: 0
   m_Name: ConvexHull_9
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5367,7 +5398,7 @@ GameObject:
   - component: {fileID: 8510010685121250579}
   m_Layer: 0
   m_Name: AttachPoint
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5474,7 +5505,7 @@ GameObject:
   - component: {fileID: 6705282107901928139}
   m_Layer: 0
   m_Name: Handle2
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5528,7 +5559,7 @@ GameObject:
   - component: {fileID: 6389861888797090112}
   m_Layer: 0
   m_Name: ConvexHull_6
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5591,7 +5622,7 @@ GameObject:
   - component: {fileID: 7724917081733452825}
   m_Layer: 0
   m_Name: ConvexHull_13
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5653,7 +5684,7 @@ GameObject:
   - component: {fileID: 659912234415894565}
   m_Layer: 0
   m_Name: Handle1
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5707,7 +5738,7 @@ GameObject:
   - component: {fileID: 4662790579855273259}
   m_Layer: 0
   m_Name: ConvexHull_12
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5770,7 +5801,7 @@ GameObject:
   - component: {fileID: 6712245793153894845}
   m_Layer: 0
   m_Name: ConvexHull_10
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5833,7 +5864,7 @@ GameObject:
   - component: {fileID: 6668423426823132284}
   m_Layer: 0
   m_Name: ConvexHull_8
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5896,7 +5927,7 @@ GameObject:
   - component: {fileID: 5873541890102191058}
   m_Layer: 0
   m_Name: ConvexHull_5
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5959,7 +5990,7 @@ GameObject:
   - component: {fileID: 1968420263645755151}
   m_Layer: 0
   m_Name: ConvexHull_2
-  m_TagString: Untagged
+  m_TagString: CookingUtensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6285,6 +6316,9 @@ PrefabInstance:
       addedObject: {fileID: 4830303926777373803}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cdb4a5a46814124b845df659490212d, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6906592191498953566}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cdb4a5a46814124b845df659490212d, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 6851877483923638466}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cdb4a5a46814124b845df659490212d, type: 3}
       insertIndex: -1
@@ -6381,6 +6415,18 @@ MonoBehaviour:
   m_Colliders:
   - {fileID: 659912234415894565}
   - {fileID: 6705282107901928139}
+  - {fileID: 1968420263645755151}
+  - {fileID: 7555398654763193847}
+  - {fileID: 6888678375512342263}
+  - {fileID: 5873541890102191058}
+  - {fileID: 6389861888797090112}
+  - {fileID: 8084548563099561682}
+  - {fileID: 6668423426823132284}
+  - {fileID: 4375637745595536634}
+  - {fileID: 6712245793153894845}
+  - {fileID: 3699586011543471042}
+  - {fileID: 4662790579855273259}
+  - {fileID: 7724917081733452825}
   m_InteractionLayers:
     m_Bits: 2
   m_DistanceCalculationMode: 1
@@ -6439,8 +6485,8 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 7098568186994201141}
-  m_SecondaryAttachTransform: {fileID: 7627477792917221797}
+  m_AttachTransform: {fileID: 6906592191498953566}
+  m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 1
   m_MatchAttachPosition: 1
   m_MatchAttachRotation: 1
